@@ -5,8 +5,14 @@
 
 `docker-compose down` # Stop the mongodb
 
+OR use [CloudMongoDB](https://cloud.mongodb.com/).
+
 ### Environment
 `cp .env.example .env` # Copy the environment file
+```shell
+PORT=3000 # Port to run the server (default 3000)
+MONGO_URI=mongodb://user:user@localhost:27017 # MongoDB URI
+```
 
 ### Express
 `yarn install` # Install the dependencies
@@ -15,18 +21,13 @@
 
 `yarn dev` # Start the server in development mode
 
-## Test in Postman
-Use the random data generator to test the API in postman
-```json
-{
-  "name": "{{$randomFirstName}} {{$randomLastName}}",
-  "email": "{{$randomBsBuzz}}@{{$randomDomainName}}",
-  "password": "test"
-}
-```
-Pre-request script
-```javascript
-pm.variables.replaceIn('{{$randomFirstName}} {{$randomLastName}}');
-pm.variables.replaceIn('{{$randomDomainName}}');
-pm.variables.replaceIn('{{$randomBsBuzz}}');
-```
+### Dependencies
+- express - Web framework
+- mongoose - MongoDB ORM
+- dotenv - Environment variables
+- tsconfig-paths - Resolve aliases in ts-node
+- ts-node - Run typescript files
+
+### TODO
+- [ ] Add authentication
+- [ ] Add UI
