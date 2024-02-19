@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "lib": ["ES6", "DOM"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "strict": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": ["global.d.ts", "src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

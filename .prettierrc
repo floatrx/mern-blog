@@ -1,0 +1,24 @@
+{
+  "tabWidth": 4,
+  "trailingComma": "all",
+  "printWidth": 140,
+  "arrowParens": "always",
+  "semi": true,
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "jsxSingleQuote": false,
+  "singleQuote": false,
+  "overrides": [
+    {
+      "files": [
+        "*.{ts,tsx,js,jsx}"
+      ],
+      "options": {
+        "arrowParens": "always",
+        "singleQuote": true,
+        "tabWidth": 2
+      }
+    }
+  ]
+}
