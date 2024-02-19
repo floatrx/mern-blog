@@ -2,6 +2,12 @@ import { Router } from 'express';
 import { PostController } from '@/post/PostController';
 import { UserController } from '@/user/UserController';
 
+/**
+ * API main routes
+ * @version 1.0
+ * @see PostController
+ * @see UserController
+ */
 export const router = Router()
   // Post CRUD routes
   .post('/posts', PostController.create)

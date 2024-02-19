@@ -1,5 +1,5 @@
-import { Request, Response, Router } from 'express';
 import { IUserCreatePayload, User } from '@/user/User';
+import { Request, Response } from 'express';
 
 export class UserController {
   /**
@@ -30,16 +30,18 @@ export class UserController {
   }
 
   /**
-   * List all users with their posts
-   * @returns status 200 if OK with JSON array of users with their posts
-   * TODO: Debug population option "select"
+   * Show user by ID
    */
-  static async publications(req: Request, res: Response) {
-    const users = await User.find().populate({
-      path: 'posts',
-      select: '-body', // useless fields
-    });
-    return res.json(users);
+  static async show(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ message: 'ID is required' });
+    }
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    return res.json(user);
   }
 
   /**
@@ -73,17 +75,15 @@ export class UserController {
   }
 
   /**
-   * Show user by ID
+   * List all users with their posts
+   * @returns status 200 if OK with JSON array of users with their posts
+   * TODO: Debug population option "select"
    */
-  static async show(req: Request, res: Response) {
-    const { id } = req.params;
-    if (!id) {
-      return res.status(400).json({ message: 'ID is required' });
-    }
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    return res.json(user);
+  static async publications(req: Request, res: Response) {
+    const users = await User.find().populate({
+      path: 'posts',
+      select: '-body', // useless fields
+    });
+    return res.json(users);
   }
 }

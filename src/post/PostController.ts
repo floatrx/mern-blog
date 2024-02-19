@@ -1,36 +1,8 @@
 import { IPost, IPostCreatePayload, Post } from './Post';
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import { User } from '@/user/User';
-import { handleError } from '@/utils';
 
 export class PostController {
-  /**
-   * Get all posts
-   * @returns status 200 if OK
-   */
-  static async list(_req: Request, res: Response) {
-    const posts = await Post.find().populate('author'); // populate author field with user data
-    res.json(posts);
-  }
-
-  /**
-   * Get one post by ID
-   * @returns status 200 if OK
-   * @returns status 404 if post not found
-   */
-  static async show(req: Request<{ id: string }>, res: Response) {
-    const { id } = req.params;
-    if (!id) {
-      handleError('id is required');
-    }
-    const post = await Post.find({ id }).select(['-_id', '-__v']);
-    if (post) {
-      res.json(post); // OK
-    } else {
-      res.status(404).json({ message: 'post not found' });
-    }
-  }
-
   /**
    * Create a new post
    * @returns status 201 if OK
@@ -63,6 +35,33 @@ export class PostController {
   }
 
   /**
+   * Get all posts
+   * @returns status 200 if OK
+   */
+  static async list(_req: Request, res: Response) {
+    const posts = await Post.find().populate('author'); // populate author field with user data
+    res.json(posts);
+  }
+
+  /**
+   * Get one post by ID
+   * @returns status 200 if OK
+   * @returns status 404 if post not found
+   */
+  static async show(req: Request<{ id: string }>, res: Response) {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({ message: 'id is required' });
+    }
+    const post = await Post.find({ id }).select(['-_id', '-__v']);
+    if (post) {
+      res.json(post); // OK
+    } else {
+      res.status(404).json({ message: 'post not found' });
+    }
+  }
+
+  /**
    * Update post by ID
    * @returns status 200 if OK
    */
@@ -79,12 +78,11 @@ export class PostController {
    */
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
-    console.log('id', id);
     if (!id) {
-      handleError('id is required');
+      res.status(400).json({ message: 'id is required' });
     }
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      handleError('bad id');
+      res.status(400).json({ message: 'invalid post id' });
     }
     const deletedPost = await Post.findByIdAndDelete(id);
     const posts = await Post.find();
