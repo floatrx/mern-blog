@@ -1,2 +1,22 @@
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
+*.db
+
+# Packages
+node_modules
+
+
+# Environment variables
 .env
-data
+
+
+# MongoDB data
+mongo/data
+
+
+# Other
+__tmp__

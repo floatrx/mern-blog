@@ -9,6 +9,11 @@ import { UserController } from '@/user/UserController';
  * @see UserController
  */
 export const router = Router()
+  // Welcome route
+  .get('/test', (_req, res) => {
+    res.status(200).send('👋 Express server!');
+  })
+
   // Post CRUD routes
   .post('/posts', PostController.create)
   .get('/posts', PostController.list)
