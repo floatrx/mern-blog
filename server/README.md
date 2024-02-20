@@ -1,12 +1,3 @@
-# Mongo, express
-
-### MongoDB
-`docker-compose up -d` # Start the mongodb
-
-`docker-compose down` # Stop the mongodb
-
-OR use [CloudMongoDB](https://cloud.mongodb.com/).
-
 ### Environment
 `cp .env.example .env` # Copy the environment file
 ```shell
@@ -29,5 +20,8 @@ MONGO_URI=mongodb://user:user@localhost:27017 # MongoDB URI
 - ts-node - Run typescript files
 
 ### TODO
-- [ ] Add authentication
-- [ ] Add UI
+- [x] MongoDB (Docker)
+- [ ] Authentication
+- [ ] UI (Client App)
+- [ ] Editor
+- [ ] Add tags
