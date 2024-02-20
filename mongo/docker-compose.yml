@@ -14,19 +14,3 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: user
-
-# Test the express server container
-#  server:
-#    # restart: always
-#    build:
-#      context: ./server
-#      dockerfile: Dockerfile
-#    environment:
-#      PORT: 3000
-#      MONGO_URI: mongodb://user:user@mongodb:27017
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - ./server:/app
-#    depends_on:
-#      - mongodb
