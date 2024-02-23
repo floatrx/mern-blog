@@ -1,6 +1,6 @@
-import { IPost, IPostCreatePayload, Post } from './Post';
-import { Request, Response } from 'express';
 import { User } from '@/user/User';
+import { Request, Response } from 'express';
+import { IPost, IPostCreatePayload, Post } from './Post';
 
 export class PostController {
   /**
@@ -28,7 +28,7 @@ export class PostController {
     }
 
     // Create a new post with the provided author
-    const post = await Post.create({ title, body, author: authorId });
+    const post = await Post.create({ title, body, authorId });
 
     // Respond with the created post
     res.status(201).json(post);
@@ -39,7 +39,7 @@ export class PostController {
    * @returns status 200 if OK
    */
   static async list(_req: Request, res: Response) {
-    const posts = await Post.find().populate('author'); // populate author field with user data
+    const posts = await Post.getAll(); // populate author field with user data
     res.json(posts);
   }
 
@@ -53,7 +53,7 @@ export class PostController {
     if (!id) {
       res.status(400).json({ message: 'id is required' });
     }
-    const post = await Post.find({ id }).select(['-_id', '-__v']);
+    const post = await Post.getAll(id);
     if (post) {
       res.json(post); // OK
     } else {
@@ -65,10 +65,21 @@ export class PostController {
    * Update post by ID
    * @returns status 200 if OK
    */
-  static async update(req: Request<never, never, IPost & { id: string }>, res: Response) {
-    const { id, title, body } = req.body;
-    const updatedPost = await Post.findByIdAndUpdate(id, { title, body });
-    return res.status(200).json(updatedPost);
+  static async update(req: Request<{ id: string }, never, IPost>, res: Response) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: 'id is required' });
+    }
+
+    try {
+      const { title, body, authorId } = req.body;
+      const updatedPost = await Post.findByIdAndUpdate(id, { title, body, authorId });
+      return res.status(200).json(updatedPost);
+    } catch (e) {
+      console.log('error', e.message);
+      return res.status(400).json({ status: 'failed', message: e.message });
+    }
   }
 
   /**

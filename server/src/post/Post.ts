@@ -1,26 +1,59 @@
-import mongoose, { Schema } from 'mongoose';
 import { IUser } from '@/user/User';
-import { ITag } from '@/tag/Tag';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IPost {
   title: string;
   body: string;
-  author?: IUser;
-  tags?: ITag[]; // tag names
+  authorId: string;
+}
+
+interface IPostDocument extends IPost, Document {}
+
+interface IPostModel extends Model<IPostDocument> {
+  getAll(id?: string): Promise<IPostDocument[]>; // Declare static method getAll
 }
 
 export interface IPostCreatePayload extends Pick<IPost, 'title' | 'body'> {
   authorId: string; // author _id
 }
 
-const postSchema = new Schema<IPost>(
+const postSchema = new Schema<IPostDocument>(
   {
     title: { type: String, required: true, unique: true, index: true },
     body: { type: String, required: true },
-    author: { type: Schema.Types.ObjectId, required: true, ref: 'User' }, // relation with User._id -> this data can be populated
-    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }], // relation with Tag._id -> this data can be populated
+    authorId: { type: String, required: true },
   },
   { versionKey: false }, // remove __v field
 );
 
-export const Post = mongoose.model<IPost>('Post', postSchema);
+postSchema.virtual('author', {
+  ref: 'User', // Reference the 'Post' model
+  localField: 'authorId', // Field in the User model that holds the reference
+  foreignField: '_id', // Field in the Post model that holds the reference to the User model
+  justOne: true, // Set false to populate with an array of documents
+  options: {
+    // Exclude _id from virtuals
+    excludeId: true,
+  },
+});
+
+postSchema.set('toJSON', {
+  virtuals: true, // also creates id from _id
+  transform: function (_, ret) {
+    const json = { ...ret };
+    delete json._id; // remove duplicate _id
+    return { id: ret.id, ...json };
+  },
+});
+
+postSchema.statics.getAll = function (_id?: string) {
+  return this.find(_id ? { _id } : {})
+    .populate({
+      path: 'author',
+    })
+    .exec();
+};
+
+const Post = mongoose.model<IPostDocument, IPostModel>('Post', postSchema);
+
+export { Post };

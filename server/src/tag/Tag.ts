@@ -1,10 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
+import { IPost } from '@/post/Post';
 
 export interface ITag {
   name: string;
 }
 
-const tagSchema = new mongoose.Schema<ITag>(
+interface ITagDocument extends ITag, Document {}
+
+interface ITagModel extends Model<ITagDocument> {
+  getAll(id?: string): Promise<ITagDocument[]>; // Declare static method getAll
+}
+
+const tagSchema = new mongoose.Schema<ITagDocument>(
   {
     name: {
       type: String,
@@ -14,4 +21,15 @@ const tagSchema = new mongoose.Schema<ITag>(
   { versionKey: false }, // remove __v field
 );
 
-export const Tag = mongoose.model<ITag>('Tag', tagSchema);
+tagSchema.statics.getAll = function (_id?: string) {
+  this.find({ _id })
+    .populate({
+      path: 'posts',
+      populate: { path: 'author' },
+    })
+    .exec();
+};
+
+const Tag = mongoose.model<ITagDocument, ITagModel>('Tag', tagSchema);
+
+export { Tag };

@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { App } from '@/components/App';
+import { Providers } from '@/components/Providers';
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+// Styles
+import '@/global.css';
+
+createRoot(document.getElementById('root')!).render(
+  <Providers>
     <App />
-  </React.StrictMode>,
-)
+  </Providers>,
+);

@@ -25,7 +25,7 @@ export class UserController {
    * @returns status 200 if OK with JSON array of users
    */
   static async list(_: Request, res: Response) {
-    const users = await User.find();
+    const users = await User.getAllWithVirtualPosts();
     return res.json(users);
   }
 
@@ -37,7 +37,7 @@ export class UserController {
     if (!id) {
       return res.status(400).json({ message: 'ID is required' });
     }
-    const user = await User.findById(id);
+    const user = await User.getAll(id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -55,6 +55,7 @@ export class UserController {
     if (!id) {
       return res.status(400).json({ message: 'id is required' });
     }
+
     const updatedUser = await User.findByIdAndUpdate(id, { name, email, password }, { new: true });
     //                                                                                                                           ^^^^^ debug
     return res.json(updatedUser);

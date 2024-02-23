@@ -15,8 +15,9 @@ node_modules
 
 
 # MongoDB data
-mongo/data
+_db/data
 
 
 # Other
 __tmp__
+.husky/
