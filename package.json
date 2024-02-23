@@ -8,7 +8,7 @@
     "client": "cd client && yarn dev",
     "server": "cd server && yarn dev",
     "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
-    "mongo": "cd _db && docker-compose up -d",
+    "mongo": "cd mongo && docker-compose up -d",
     "prepare": "husky install"
   },
   "dependencies": {

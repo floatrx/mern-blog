@@ -15,7 +15,7 @@ node_modules
 
 
 # MongoDB data
-_db/data
+mongo/data
 
 
 # Other
