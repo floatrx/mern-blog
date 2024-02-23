@@ -14,6 +14,10 @@ A simple express server with mongoose and dotenv with typescript and a client ap
 yarn dev
 ```
 
+> [!NOTE]
+> Mount the `mongo` container before running the server.
+
+
 ## Roadmap
 - [x] MongoDB (Docker)
 - [ ] Authentication
