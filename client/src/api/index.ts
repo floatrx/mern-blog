@@ -1,9 +1,14 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import qs from 'query-string';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:3000/api',
   paramsSerializer: (params) => qs.stringify(params, { skipEmptyString: true, skipNull: true }),
+  prepareHeaders: (headers) => {
+    const accessToken = localStorage.getItem('accessToken');
+    accessToken && headers.set('Authorization', `Bearer ${accessToken}`);
+    return headers;
+  },
 });
 
 /*

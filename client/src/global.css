@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+.grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1rem;
+}
+
 @layer base {
     :root {
-        --background: 0 0% 100%;
+        --background: 210 40% 96.1;
         --foreground: 222.2 84% 4.9%;
 
         --card: 0 0% 100%;
@@ -16,7 +22,7 @@
         --primary: 222.2 47.4% 11.2%;
         --primary-foreground: 210 40% 98%;
 
-        --secondary: 210 40% 96.1%;
+        --secondary: 210 40% 92%;
         --secondary-foreground: 222.2 47.4% 11.2%;
 
         --muted: 210 40% 96.1%;
@@ -70,7 +76,17 @@
     * {
         @apply border-border;
     }
+
+    html,
+    body,
+    #root {
+        @apply h-full; /* App full height */
+    }
+
     body {
-        @apply bg-background text-foreground p-2;
+        @apply text-foreground bg-background;
+    }
+    #root {
+        @apply flex flex-col;
     }
 }

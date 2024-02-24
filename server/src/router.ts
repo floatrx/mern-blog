@@ -1,11 +1,13 @@
+import { AuthController } from '@/controllers/auth';
 import { Router } from 'express';
-import { PostController } from '@/post/PostController';
-import { UserController } from '@/user/UserController';
+import { PostController } from '@/controllers/post';
+import { UserController } from '@/controllers/user';
+import { requireAuth } from '@/middleware/auth';
 
 /**
  * API main routes
  * @version 1.0
- * @see PostController
+ * @see Post
  * @see UserController
  */
 export const router = Router()
@@ -13,6 +15,12 @@ export const router = Router()
   .get('/test', (_req, res) => {
     res.status(200).send('👋 Express server!');
   })
+
+  // Public API
+
+  // Login
+  .post('/auth/login', AuthController.login)
+  .get('/check', requireAuth, AuthController.check)
 
   // Post CRUD routes
   .post('/posts', PostController.create)
@@ -26,7 +34,4 @@ export const router = Router()
   .get('/users', UserController.list)
   .get('/users/:id', UserController.show)
   .put('/users/:id', UserController.update)
-  .delete('/users/:id', UserController.delete)
-
-  // User posts
-  .get('/users/posts', UserController.publications);
+  .delete('/users/:id', UserController.delete);

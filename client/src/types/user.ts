@@ -14,7 +14,8 @@ export interface IUserCreate extends IUserBase {
   password: string; // password is required when creating a user
 }
 
-export interface IUserLoginRequest extends IUserBase {
+export interface IUserLoginRequest {
+  email: string;
   password: string; // password is required when creating a user
 }
 

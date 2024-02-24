@@ -16,7 +16,7 @@ export const UserList = () => {
         User list <Badge>{users.length}</Badge>
       </h2>
 
-      <div className="grid grid-cols-subgrid gap-2">
+      <div className="grid-auto grid gap-2">
         {users.map((user) => (
           <Card className="hover:bg-sky-100" key={user.id}>
             <CardHeader>
@@ -33,7 +33,7 @@ export const UserList = () => {
                 </h5>
                 <ol className="m-5 space-y-3">
                   {user.posts.map((post) => (
-                    <li key={post._id} className="grid grid-cols-[25px_1fr]">
+                    <li key={post.id} className="grid grid-cols-[25px_1fr]">
                       <span className="m-1 h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
                       <span className="font-medium">{post.title}</span>
                     </li>

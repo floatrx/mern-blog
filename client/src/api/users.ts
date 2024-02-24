@@ -1,5 +1,5 @@
-import type { IUser, IUserCreate } from '@/types/user';
 import { api } from '@/api/index';
+import type { IUser, IUserCreate } from '@/types/user';
 
 const path = '/users';
 const type = 'User';

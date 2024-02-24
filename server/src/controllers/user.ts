@@ -1,5 +1,10 @@
-import { IUserCreatePayload, User } from '@/user/User';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import { Role } from '@/models/role';
+import { User } from '@/models/user';
+import type { IUser, IUserCreatePayload, IUserLoginPayload } from '@/types/user';
+import type { TokenPayload } from '@/types/auth';
 
 export class UserController {
   /**
@@ -15,8 +20,16 @@ export class UserController {
       return res.status(400).json({ message: 'name, email and password are required' });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      idRole: 2,
+      name,
+      email,
+      password: hashedPassword,
+    };
+
     // Create user
-    const createdUser = await User.create({ name, email, password });
+    const createdUser = await User.create(newUser);
     return res.status(201).json(createdUser);
   }
 
@@ -56,9 +69,12 @@ export class UserController {
       return res.status(400).json({ message: 'id is required' });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, { name, email, password }, { new: true });
-    //                                                                                                                           ^^^^^ debug
-    return res.json(updatedUser);
+    try {
+      const updatedUser = await User.findByIdAndUpdate(id, { name, email, password });
+      return res.json(updatedUser);
+    } catch (e) {
+      return res.status(400).json({ message: 'User not found' });
+    }
   }
 
   /**
@@ -73,18 +89,5 @@ export class UserController {
     }
     await User.findByIdAndDelete(id);
     return res.status(204).send();
-  }
-
-  /**
-   * List all users with their posts
-   * @returns status 200 if OK with JSON array of users with their posts
-   * TODO: Debug population option "select"
-   */
-  static async publications(req: Request, res: Response) {
-    const users = await User.find().populate({
-      path: 'posts',
-      select: '-body', // useless fields
-    });
-    return res.json(users);
   }
 }

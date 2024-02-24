@@ -1,6 +1,7 @@
-import { User } from '@/user/User';
 import { Request, Response } from 'express';
-import { IPost, IPostCreatePayload, Post } from './Post';
+import { Post } from '@/models/post';
+import { User } from '@/models/user';
+import type { IPost, IPostCreatePayload } from '@/types/post';
 
 export class PostController {
   /**
