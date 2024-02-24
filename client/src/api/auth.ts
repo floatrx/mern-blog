@@ -13,7 +13,7 @@ const injectedRtkApi = api.injectEndpoints({
       },
     }),
     check: query<unknown, void>({
-      query: () => ({ url: '${path}/check' }),
+      query: () => ({ url: `${path}/check` }),
     }),
   }),
 });

@@ -20,7 +20,7 @@ export const router = Router()
 
   // Login
   .post('/auth/login', AuthController.login)
-  .get('/check', requireAuth, AuthController.check)
+  .get('/auth/check', requireAuth, AuthController.check)
 
   // Post CRUD routes
   .post('/posts', PostController.create)
