@@ -1,7 +1,8 @@
 import type { IPost } from '@/types/post.ts';
 
 export interface IUser extends IUserBase {
-  id: string;
+  id: number;
+  idRole: number;
   posts: IPost[];
 }
 
@@ -21,6 +22,7 @@ export interface IUserLoginRequest {
 
 export interface IUserLoginResponse extends IUserBase {
   accessToken: string;
+  profile: IUser;
 }
 
 export interface IUserUpdate extends Partial<IUserCreate> {} // same as IUserCreate but all fields are optional

@@ -12,6 +12,4 @@ export interface IPostModel extends Model<IPostDocument> {
   getAll(id?: string): Promise<IPostDocument[]>; // Declare static method getAll
 }
 
-export interface IPostCreatePayload extends Pick<IPost, 'title' | 'body'> {
-  authorId: string; // author _id
-}
+export interface IPostCreatePayload extends Pick<IPost, 'title' | 'body'> {}

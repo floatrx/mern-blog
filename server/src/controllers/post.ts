@@ -11,10 +11,14 @@ export class PostController {
    * @returns status 404 if author not found
    */
   static async create(req: Request<never, never, IPostCreatePayload>, res: Response) {
-    const { title, body, authorId } = req.body;
+    const { title, body } = req.body;
+
+    const authorId = req.userData?.id;
+
+    console.log('authorId', authorId, req.userData);
 
     if (!authorId) {
-      return res.status(400).json({ message: 'missing authorId' });
+      return res.status(401).json({ message: 'login required' });
     }
 
     // Check for missing or invalid parameters

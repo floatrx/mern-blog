@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import type { IUserLoginRequest } from '@/types/user';
 import { BiKey } from 'react-icons/bi';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
+import { UserLogoutButton } from '@/components/user/UserLogoutButton';
+import { cn } from '@/lib/utils';
 import { loginUserSchema } from '@/validators/user';
+import { selectIsLoggedIn, selectUser } from '@/store/auth';
+import { useAppSelector } from '@/hooks/redux';
+import { useForm } from 'react-hook-form';
 import { useLazyCheckQuery, useLoginMutation } from '@/api/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { cn } from '@/lib/utils';
-import type { IUserLoginRequest } from '@/types/user';
 
 const formFields = {
   email: {
@@ -27,8 +29,10 @@ const formFields = {
 
 export const LoginUserForm = () => {
   const [login, { isLoading }] = useLoginMutation(); // Create user
-  const [checkSession, { isError }] = useLazyCheckQuery(); // just for testing
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken'));
+  const [checkSession] = useLazyCheckQuery(); // just for testing
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const user = useAppSelector(selectUser);
 
   // Create form
   const form = useForm<IUserLoginRequest>({
@@ -43,26 +47,18 @@ export const LoginUserForm = () => {
   };
 
   const handleLogin = form.handleSubmit(async (values) => {
-    const response = await login(values).unwrap();
-    setIsLoggedIn(!!response.accessToken);
+    login(values);
   }, console.error);
 
   if (isLoggedIn) {
     return (
       <Card className="m-auto max-w-xs text-center">
         <CardHeader>
-          <CardTitle>Welcome back! {isError ? 'ERROR' : 'OK'}</CardTitle>
+          <CardTitle>Welcome back! {user.email}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex justify-center gap-2">
-            <Button
-              onClick={() => {
-                localStorage.removeItem('accessToken');
-                setIsLoggedIn(false);
-              }}
-            >
-              Logout
-            </Button>
+            <UserLogoutButton />
             <Button type="button" onClick={handleTest} variant="secondary">
               Test session
             </Button>

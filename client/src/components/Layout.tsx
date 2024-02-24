@@ -1,14 +1,16 @@
-import { cn } from '@/lib/utils';
 import type { PropsWithChildren } from 'react';
-import { BiKey, BiUser, BiUserPlus, BiLeaf } from 'react-icons/bi';
+import { Leaf, SquarePen, UserRoundPlus, UsersRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { UserProfileButton } from '@/components/user/UserProfileButton';
 import { UsersCounter } from '@/components/user/UsersCounter';
+import { cn } from '@/lib/utils';
 
 const menuItems = [
-  { to: '/list', label: 'Users', icon: <BiUser />, counter: <UsersCounter variant="outline" /> },
-  { to: '/add', label: 'New', icon: <BiUserPlus /> },
+  { to: '/list', label: 'Users', icon: <UsersRound />, counter: <UsersCounter variant="outline" /> },
+  { to: '/add', label: 'New', icon: <UserRoundPlus /> },
+  { to: '/post', label: 'Post', icon: <SquarePen /> },
   { type: 'divider' },
-  { to: '/login', label: 'Login', icon: <BiKey /> },
 ];
 
 export const Layout = (props: PropsWithChildren) => (
@@ -16,7 +18,7 @@ export const Layout = (props: PropsWithChildren) => (
     <header className="flex items-center gap-5 p-1">
       <h1 className="m-2 text-2xl font-bold">
         <Link to="/" className="flex items-center gap-1 text-blue-500">
-          <BiLeaf className="text-green-500" />
+          <Leaf className="text-green-500" />
           MongoBlog
         </Link>
       </h1>
@@ -32,6 +34,12 @@ export const Layout = (props: PropsWithChildren) => (
               )}
             </li>
           ))}
+          <li>
+            <UserProfileButton />
+          </li>
+          <li>
+            <ThemeToggle />
+          </li>
         </ul>
       </nav>
     </header>

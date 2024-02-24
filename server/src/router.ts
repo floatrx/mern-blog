@@ -23,7 +23,7 @@ export const router = Router()
   .get('/auth/check', requireAuth, AuthController.check)
 
   // Post CRUD routes
-  .post('/posts', PostController.create)
+  .post('/posts', requireAuth, PostController.create)
   .get('/posts', PostController.list)
   .get('/posts/:id', PostController.show)
   .put('/posts/:id', PostController.update)

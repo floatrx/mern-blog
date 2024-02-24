@@ -12,7 +12,7 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     createPost: mutation<IPost, IPostCreate>({
       query: (body) => ({ url: path, method: 'POST', body }),
-      invalidatesTags: [type],
+      invalidatesTags: [type, 'User'],
     }),
   }),
 });

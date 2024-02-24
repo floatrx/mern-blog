@@ -18,7 +18,7 @@ export const UserList = () => {
 
       <div className="grid-auto grid gap-2">
         {users.map((user) => (
-          <Card className="hover:bg-sky-100" key={user.id}>
+          <Card className="transition hover:bg-sky-100 dark:hover:bg-sky-950" key={user.id}>
             <CardHeader>
               <span className="font-medium">{user.name}</span>
               <CardDescription>
