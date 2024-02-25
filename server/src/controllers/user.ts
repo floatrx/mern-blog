@@ -38,7 +38,7 @@ export class UserController {
    * @returns status 200 if OK with JSON array of users
    */
   static async list(_: Request, res: Response) {
-    const users = await User.getAllWithVirtualPosts();
+    const users = await User.find().populate('posts').populate('role');
     return res.json(users);
   }
 

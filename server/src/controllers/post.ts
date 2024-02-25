@@ -46,7 +46,7 @@ export class PostController {
    */
   static async list(_req: Request, res: Response) {
     try {
-      const posts = await Post.getAll(); // populate author field with user data
+      const posts = await Post.find().populate('author'); // populate author field with user data
       res.json(posts);
     } catch (e) {
       res.status(500).json({ message: 'Internal server errors' });
@@ -64,7 +64,7 @@ export class PostController {
       res.status(400).json({ message: 'id is required' });
     }
     try {
-      const post = await Post.getAll(id);
+      const post = await Post.findById(id).populate('author');
       if (post) {
         res.json(post); // OK
       } else {
