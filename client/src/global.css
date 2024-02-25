@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.grid-auto {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1rem;
-}
-
 @layer base {
     :root {
         --background: 210 40% 96.1;
@@ -92,5 +86,23 @@
 
     button {
         cursor: pointer;
+    }
+}
+
+/* Grid */
+.grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1rem;
+}
+
+/* Markdown Editor */
+html[data-color-mode] {
+    .wmde-markdown,
+    .wmde-markdown-var {
+        --color-canvas-default: transparent;
+        --color-canvas-subtle: transparent;
+        font-family: inherit;
+        font-size: 1.2rem;
     }
 }
