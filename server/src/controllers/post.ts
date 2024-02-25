@@ -14,9 +14,6 @@ export class PostController {
     const { title, body } = req.body;
 
     const authorId = req.userData?.id;
-
-    console.log('authorId', authorId, req.userData);
-
     if (!authorId) {
       return res.status(401).json({ message: 'login required' });
     }
@@ -26,17 +23,21 @@ export class PostController {
       return res.status(400).json({ message: 'missing post details' });
     }
 
-    // Check if user with specified authorId exists
-    const author = await User.findById(authorId);
-    if (!author) {
+    try {
+      await User.findById(authorId); // Check if user with specified authorId exists
+    } catch (e) {
       return res.status(404).json({ message: 'user not found' });
     }
 
-    // Create a new post with the provided author
-    const post = await Post.create({ title, body, authorId });
+    try {
+      // Create a new post with the provided author
+      const post = await Post.create({ title, body, authorId });
 
-    // Respond with the created post
-    res.status(201).json(post);
+      // Respond with the created post
+      res.status(201).json(post);
+    } catch (e) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
   }
 
   /**
@@ -44,8 +45,12 @@ export class PostController {
    * @returns status 200 if OK
    */
   static async list(_req: Request, res: Response) {
-    const posts = await Post.getAll(); // populate author field with user data
-    res.json(posts);
+    try {
+      const posts = await Post.getAll(); // populate author field with user data
+      res.json(posts);
+    } catch (e) {
+      res.status(500).json({ message: 'Internal server errors' });
+    }
   }
 
   /**
@@ -58,11 +63,15 @@ export class PostController {
     if (!id) {
       res.status(400).json({ message: 'id is required' });
     }
-    const post = await Post.getAll(id);
-    if (post) {
-      res.json(post); // OK
-    } else {
-      res.status(404).json({ message: 'post not found' });
+    try {
+      const post = await Post.getAll(id);
+      if (post) {
+        res.json(post); // OK
+      } else {
+        res.status(404).json({ message: 'post not found' });
+      }
+    } catch (e) {
+      res.status(400).json({ status: 'failed', message: e.message });
     }
   }
 
@@ -100,12 +109,17 @@ export class PostController {
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       res.status(400).json({ message: 'invalid post id' });
     }
-    const deletedPost = await Post.findByIdAndDelete(id);
-    const posts = await Post.find();
-    if (deletedPost) {
-      res.json({ message: `${id} deleted`, posts });
-    } else {
-      res.status(400).json({ message: 'post already deleted' });
+
+    try {
+      const deletedPost = await Post.findByIdAndDelete(id);
+      console.log('deletedPost', deletedPost);
+      if (deletedPost) {
+        res.json({ message: `${id} deleted` });
+      } else {
+        res.status(400).json({ message: 'post already deleted' });
+      }
+    } catch (e) {
+      res.status(500).json({ message: 'Internal server error' });
     }
   }
 }

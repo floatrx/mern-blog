@@ -26,12 +26,12 @@ export const router = Router()
   .post('/posts', requireAuth, PostController.create)
   .get('/posts', PostController.list)
   .get('/posts/:id', PostController.show)
-  .put('/posts/:id', PostController.update)
-  .delete('/posts/:id', PostController.delete)
+  .put('/posts/:id', requireAuth, PostController.update)
+  .delete('/posts/:id', requireAuth, PostController.delete)
 
   // User CRUD routes
   .post('/users', UserController.create)
   .get('/users', UserController.list)
   .get('/users/:id', UserController.show)
-  .put('/users/:id', UserController.update)
-  .delete('/users/:id', UserController.delete);
+  .put('/users/:id', requireAuth, UserController.update)
+  .delete('/users/:id', requireAuth, UserController.delete);
