@@ -1,20 +1,22 @@
-import { MONGO_HOST, MONGO_URI, PORT } from '@/config';
-import { router } from '@/router';
-
-import { serverErrorHandler, syntaxErrorHandler } from '@/lib/utils';
-import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import fileUpload from 'express-fileupload';
+import cors from 'cors';
 
-import './migrations'; // Run migrations
+import { MONGO_HOST, MONGO_URI, PORT } from '@/config';
+import { serverErrorHandler, syntaxErrorHandler } from '@/lib/utils';
+
+import { router } from '@/router';
+
+import './migrations';
 
 // App
 const app = express();
 
 app.use(cors()); // enable CORS
 app.use(express.json()); // parse application/json
+app.use(fileUpload()); // enable file uploads
 app.use([serverErrorHandler, syntaxErrorHandler]); // handle errors globally
-
 app.use('/api', router); // mount routers
 
 (async () => {

@@ -21,6 +21,7 @@ yarn dev
 ## Roadmap
 - [x] MongoDB (Docker)
 - [ ] Authentication (server) -> JWT, bcrypt, middleware (Oauth?) ⏳
+- [x] Add file upload S3 (server) 
 - [ ] Add users ⏳
 - [ ] Add roles ⏳
 - [ ] Add posts (auth) ⏳

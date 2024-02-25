@@ -1,8 +1,10 @@
-import { AuthController } from '@/controllers/auth';
 import { Router } from 'express';
+import { requireAuth } from '@/middleware/auth';
+
+import { AuthController } from '@/controllers/auth';
+import { BucketController } from '@/controllers/bucket';
 import { PostController } from '@/controllers/post';
 import { UserController } from '@/controllers/user';
-import { requireAuth } from '@/middleware/auth';
 
 /**
  * API main routes
@@ -16,22 +18,26 @@ export const router = Router()
     res.status(200).send('👋 Express server!');
   })
 
-  // Public API
+  // -- Public API --
 
   // Login
   .post('/auth/login', AuthController.login)
   .get('/auth/check', requireAuth, AuthController.check)
 
-  // Post CRUD routes
+  // Post
   .post('/posts', requireAuth, PostController.create)
   .get('/posts', PostController.list)
   .get('/posts/:id', PostController.show)
   .put('/posts/:id', requireAuth, PostController.update)
   .delete('/posts/:id', requireAuth, PostController.delete)
 
-  // User CRUD routes
+  // User
   .post('/users', UserController.create)
   .get('/users', UserController.list)
   .get('/users/:id', UserController.show)
   .put('/users/:id', requireAuth, UserController.update)
-  .delete('/users/:id', requireAuth, UserController.delete);
+  .delete('/users/:id', requireAuth, UserController.delete)
+
+  // Upload to S3
+  .post('/upload', BucketController.uploadOne)
+  .post('/upload/bulk', BucketController.uploadBulk);
