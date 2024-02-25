@@ -1,10 +1,10 @@
 import type { IUserLoginRequest } from '@/types/user';
-import { BiKey } from 'react-icons/bi';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/Form';
+import { Input } from '@/components/ui/Input';
+import { Lock } from 'lucide-react';
+import { Spinner } from '@/components/ui/Spinner';
 import { UserLogoutButton } from '@/components/user/UserLogoutButton';
 import { cn } from '@/lib/utils';
 import { loginUserSchema } from '@/validators/user';
@@ -72,7 +72,7 @@ export const LoginUserForm = () => {
     <Card className={cn({ 'pointer-events-none opacity-65': isLoading }, 'm-auto max-w-[360px]')}>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span className="text-blue-500">Login</span> <BiKey className="rotate-90 text-4xl" />
+          <span className="text-blue-500">Login</span> <Lock />
         </CardTitle>
       </CardHeader>
       <CardContent>

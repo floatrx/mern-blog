@@ -1,5 +1,5 @@
 import { App } from '@/components/App';
-import { Providers } from '@/components/providers/Providers';
+import { Providers } from '@/components/providers';
 import { createRoot } from 'react-dom/client';
 
 // Styles

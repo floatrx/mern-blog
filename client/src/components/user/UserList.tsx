@@ -1,7 +1,8 @@
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
+import { Badge } from '@/components/ui/Badge';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/Card';
+import { Spinner } from '@/components/ui/Spinner';
 import { useSearchUsersQuery } from '@/api/users';
+import { Link } from 'react-router-dom';
 
 export const UserList = () => {
   const { data: users = [], error, isLoading, isFetching } = useSearchUsersQuery();
@@ -18,7 +19,7 @@ export const UserList = () => {
 
       <div className="grid-auto grid gap-2">
         {users.map((user) => (
-          <Card className="transition hover:bg-sky-100 dark:hover:bg-sky-950" key={user.id}>
+          <Card key={user.id}>
             <CardHeader>
               <span className="font-medium">{user.name}</span>
               <CardDescription>
@@ -33,9 +34,11 @@ export const UserList = () => {
                 </h5>
                 <ol className="m-5 space-y-3">
                   {user.posts.map((post) => (
-                    <li key={post.id} className="grid grid-cols-[25px_1fr]">
-                      <span className="m-1 h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-                      <span className="font-medium">{post.title}</span>
+                    <li key={post.id}>
+                      <Link to={`/posts/${post.id}`} className="grid grid-cols-[25px_1fr] hover:text-blue-500">
+                        <span className="m-1 h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+                        <span className="font-medium">{post.title}</span>
+                      </Link>
                     </li>
                   ))}
                 </ol>

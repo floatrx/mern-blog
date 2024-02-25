@@ -10,6 +10,10 @@ const injectedRtkApi = api.injectEndpoints({
       query: () => ({ url: path }),
       providesTags: [type],
     }),
+    getPost: query<IPost[], string | undefined>({
+      query: (id) => `${path}/${id}`,
+      providesTags: [type],
+    }),
     createPost: mutation<IPost, IPostCreate>({
       query: (body) => ({ url: path, method: 'POST', body }),
       invalidatesTags: [type, 'User'],
@@ -17,4 +21,4 @@ const injectedRtkApi = api.injectEndpoints({
   }),
 });
 
-export const { useSearchPostsQuery, useCreatePostMutation } = injectedRtkApi;
+export const { useSearchPostsQuery, useGetPostQuery, useCreatePostMutation } = injectedRtkApi;

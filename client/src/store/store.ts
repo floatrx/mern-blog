@@ -2,26 +2,37 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from '@/api';
 import auth from '@/store/auth';
 
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+
 // Combine reducers
 export const rootReducer = combineReducers({
   auth,
   [api.reducerPath]: api.reducer,
 });
 
+// Persist config
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'],
+};
+
 // Setup store
 const setupStore = () =>
   configureStore({
-    reducer: rootReducer,
+    reducer: persistReducer(persistConfig, rootReducer),
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         immutableCheck: false,
         serializableCheck: false,
         thunk: true,
-        devTools: true, //process.env.NODE_ENV !== 'production',
+        devTools: process.env.NODE_ENV !== 'production',
       }).concat([api.middleware]),
   });
 
 export const store = setupStore();
+export const persistor = persistStore(store);
 
 /*
  * * Types

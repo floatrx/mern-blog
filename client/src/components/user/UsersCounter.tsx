@@ -1,5 +1,5 @@
 import { useSearchUsersQuery } from '@/api/users';
-import { Badge, type BadgeProps } from '@/components/ui/badge';
+import { Badge, type BadgeProps } from '@/components/ui/Badge';
 
 interface IProps extends Pick<BadgeProps, 'variant'> {}
 
