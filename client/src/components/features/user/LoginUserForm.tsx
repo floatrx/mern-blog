@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/Input';
 import { Lock } from 'lucide-react';
 import { Spinner } from '@/components/ui/Spinner';
-import { UserLogoutButton } from '@/components/user/UserLogoutButton';
+import { UserLogoutButton } from '@/components/features/user/UserLogoutButton';
 import { cn } from '@/lib/utils';
 import { loginUserSchema } from '@/validators/user';
 import { selectIsLoggedIn, selectUser } from '@/store/auth';

@@ -2,8 +2,8 @@ import type { PropsWithChildren } from 'react';
 import { Leaf, SquarePen, UserRoundPlus, UsersRound } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { UserProfileButton } from '@/components/user/UserProfileButton';
-import { UsersCounter } from '@/components/user/UsersCounter';
+import { UserProfileButton } from '@/components/features/user/UserProfileButton';
+import { UsersCounter } from '@/components/features/user/UsersCounter';
 import { cn } from '@/lib/utils';
 import { useAppSelector } from '@/hooks/redux';
 import { selectIsLoggedIn } from '@/store/auth';
@@ -48,7 +48,7 @@ export const Layout = (props: PropsWithChildren) => {
         </nav>
       </header>
 
-      <main className="flex-1 border-2 px-2 py-10">{props.children}</main>
+      <main className="mx-2 my-10 flex-1 p-10">{props.children}</main>
 
       <footer className="border-t">
         <div className="p-4 text-xs text-gray-400">

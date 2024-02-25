@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { useGetPostQuery } from '@/api/posts';
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 export const PostSinglePage = () => {
   const { id } = useParams();
@@ -14,8 +15,10 @@ export const PostSinglePage = () => {
   }
 
   return (
-    <div>
-      <h1>PostSinglePage</h1>
+    <div className="prose lg:prose-xl dark:prose-invert">
+      <h1>{post.title}</h1>
+      <MarkdownEditor.Markdown source={post.body} />
+
       <pre>{JSON.stringify(post, null, 2)}</pre>
     </div>
   );

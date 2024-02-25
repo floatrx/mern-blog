@@ -1,4 +1,3 @@
-import MDEditor from '@uiw/react-md-editor';
 import type { IPostCreate } from '@/types/post';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -7,6 +6,7 @@ import { Input } from '@/components/ui/Input';
 import { Spinner } from '@/components/ui/Spinner';
 import { useCreatePostMutation } from '@/api/posts';
 import { useForm } from 'react-hook-form';
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 const mkdStr = `
 # Markdown Editor
@@ -68,7 +68,7 @@ export const CreatePostForm = () => {
                 <FormItem>
                   <FormLabel>Content</FormLabel>
                   <FormControl>
-                    <MDEditor height={600} {...field} />
+                    <MarkdownEditor height="55vh" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

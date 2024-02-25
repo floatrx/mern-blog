@@ -10,7 +10,7 @@ const injectedRtkApi = api.injectEndpoints({
       query: () => ({ url: path }),
       providesTags: [type],
     }),
-    getPost: query<IPost[], string | undefined>({
+    getPost: query<IPost, string | undefined>({
       query: (id) => `${path}/${id}`,
       providesTags: [type],
     }),

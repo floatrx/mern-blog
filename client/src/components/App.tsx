@@ -1,4 +1,4 @@
-import { AppRoutes } from '@/components/AppRoutes';
+import { AppRoutes } from '@/components/router/AppRoutes';
 import { Layout } from '@/components/Layout';
 
 export const App = () => (
