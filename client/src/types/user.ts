@@ -1,9 +1,11 @@
 import type { IPost } from '@/types/post.ts';
+import type { IRole } from '@/types/role';
 
 export interface IUser extends IUserBase {
   id: number;
   idRole: number;
   posts: IPost[];
+  role: IRole;
 }
 
 interface IUserBase {
