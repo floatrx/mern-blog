@@ -6,7 +6,19 @@ import type { UploadedFile } from 'express-fileupload';
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '@/config';
 
 export class BucketController {
-  private static async uploadToS3(file: UploadedFile) {
+  static async uploadToS3(file: UploadedFile) {
+    // Check file size
+    if (file.size > 2 * 1024 * 1024) {
+      // 2MB limit
+      throw new Error('File size exceeds 2MB limit.');
+    }
+
+    // Check file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']; // Allowed image MIME types
+    if (!allowedTypes.includes(file.mimetype)) {
+      throw new Error('Only image files (JPEG, PNG, WEBP) are allowed.');
+    }
+
     // Create an S3 client
     const s3Client = new S3Client({
       region: S3_REGION, // Replace with your AWS region
@@ -21,7 +33,7 @@ export class BucketController {
       client: s3Client,
       params: {
         Bucket: S3_BUCKET,
-        Key: file.name,
+        Key: file.name.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_'),
         Body: file.data,
         ContentType: file.mimetype,
         ContentDisposition: 'inline', // Set Content-Disposition to 'inline' to display the file in the browser
@@ -50,11 +62,11 @@ export class BucketController {
 
     try {
       // Upload single file to S3
-      const result = await this.uploadToS3(file);
+      const result = await BucketController.uploadToS3(file);
       res.status(200).send(result); // OK
     } catch (err) {
       console.error('Error uploading file:', err.message);
-      res.status(500).send('Error uploading file to S3.');
+      res.status(500).send({ status: 500, message: 'Error uploading file to S3.', reason: err.message });
     }
   }
 
@@ -73,7 +85,7 @@ export class BucketController {
 
     try {
       // Upload all files to S3 in parallel
-      const results = await Promise.all(files.map((file) => this.uploadToS3(file)));
+      const results = await Promise.all(files.map((file) => BucketController.uploadToS3(file)));
       res.status(200).send(results); // OK
     } catch (err) {
       console.error('Error uploading files:', err.message);
