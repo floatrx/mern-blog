@@ -1,14 +1,12 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 
-import { MONGO_HOST, MONGO_URI, PORT } from '@/config';
 import { serverErrorHandler, syntaxErrorHandler } from '@/lib/utils';
+import { connectToMongo } from '@/mongo';
+import { PORT } from '@/config';
 
 import { router } from '@/router';
-
-import './migrations';
 
 // App
 const app = express();
@@ -17,14 +15,13 @@ app.use(cors()); // enable CORS
 app.use(express.json()); // parse application/json
 app.use(fileUpload()); // enable file uploads
 app.use([serverErrorHandler, syntaxErrorHandler]); // handle errors globally
+
 app.use('/api', router); // mount routers
 
+// Start server
 (async () => {
   try {
-    console.log(`📦 Connecting to MongoDB ${MONGO_HOST}`);
-    mongoose.set('toJSON', { virtuals: true }); // enable virtuals in query results
-    await mongoose.connect(MONGO_URI).then(() => console.log('📦 MongoDB connected!'));
-
+    await connectToMongo();
     app.listen(PORT, async () => {
       console.log(`👋 Express server is running! http://localhost:${PORT}/api/test`);
     });
