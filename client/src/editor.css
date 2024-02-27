@@ -8,7 +8,7 @@ div[role="toolbar"] {
 
 /* Editor */
 .mdxeditor-root-contenteditable {
-    @apply prose mt-2 rounded-xl border bg-transparent p-3 text-xl dark:prose-invert;
+    @apply prose mt-2 max-w-full rounded-xl border bg-transparent p-3 text-xl dark:prose-invert;
 
     div[class*="_placeholder"] {
         @apply pt-6; /* perfect pixel */
@@ -73,5 +73,5 @@ div[role="toolbar"] {
     --basePageBg: black;
 
     color: var(--baseText);
-    background: var(--basePageBg);
+    background: var(--background);
 }

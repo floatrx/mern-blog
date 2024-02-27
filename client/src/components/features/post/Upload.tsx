@@ -3,7 +3,7 @@ import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/Ca
 import { Input } from '@/components/ui/form/Input';
 import { Label } from '@/components/ui/form/Label';
 import { Trash2 } from 'lucide-react';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { useUploadMutation } from '@/api/upload';
 
 interface IProps {
@@ -14,13 +14,10 @@ interface IProps {
 
 type TUpload = React.ForwardRefExoticComponent<IProps & React.RefAttributes<HTMLInputElement>>;
 
-export const Upload: TUpload = forwardRef(({ onChange, ...props }, ref) => {
+export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) => {
   const [uploadFile, { isLoading }] = useUploadMutation(); // Upload file
 
-  const [thumbnail, setThumbnail] = useState<string | undefined>(props.value);
-
   const handleRemoveThumbnail = () => {
-    setThumbnail('');
     onChange?.('');
   };
 
@@ -40,9 +37,7 @@ export const Upload: TUpload = forwardRef(({ onChange, ...props }, ref) => {
     formData.append('file', file);
 
     try {
-      // Upload file
-      const { location } = await uploadFile(formData).unwrap();
-      setThumbnail(location);
+      const { location } = await uploadFile(formData).unwrap(); // Upload file
       onChange?.(location); // Pass the file location to the parent component
     } catch (e) {
       console.error('Error uploading file:', e.message);
@@ -54,16 +49,16 @@ export const Upload: TUpload = forwardRef(({ onChange, ...props }, ref) => {
       <CardHeader>
         <CardTitle className="flex items-start justify-between gap-5">
           {/* Thumbnail */}
-          {thumbnail && (
+          {value && (
             <div>
-              <img alt="thumbnail" className="h-32 w-full rounded-xl object-cover" src={thumbnail} />
+              <img alt="thumbnail" className="h-32 w-full rounded-xl object-cover" src={value} />
             </div>
           )}
 
           {/* Buttons */}
           <div className="flex gap-2">
             <Button type="button" variant="outline" loading={isLoading}>
-              <Label htmlFor="file">{thumbnail ? 'Replace thumbnail' : 'Choose file'}</Label>
+              <Label htmlFor="file">{value ? 'Replace thumbnail' : 'Choose file'}</Label>
             </Button>
             <Button type="button" variant="outline" size="icon" onClick={handleRemoveThumbnail}>
               <Trash2 size={20} />
@@ -74,10 +69,10 @@ export const Upload: TUpload = forwardRef(({ onChange, ...props }, ref) => {
           <Input id="file" type="file" onChange={handleUpload} className="hidden" />
 
           {/* Pass rest props from FormControl field */}
-          <Input readOnly ref={ref} {...props} className="hidden" />
+          <Input readOnly ref={ref} value={value} {...props} className="hidden" />
         </CardTitle>
 
-        {!thumbnail && <CardDescription className="truncate">File should be no larger than 2MB</CardDescription>}
+        {!value && <CardDescription className="truncate">File should be no larger than 2MB</CardDescription>}
       </CardHeader>
     </Card>
   );

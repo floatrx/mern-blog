@@ -10,7 +10,7 @@ export const Overview = () => {
   return (
     <>
       <h1 className="mb-2 flex items-center gap-2 text-2xl">
-        Posts <Badge variant="outline">{posts?.length}</Badge> <RefetchButton onClick={refetch} />
+        Posts <Badge variant="outline">{posts?.length || 0}</Badge> <RefetchButton onClick={refetch} />
       </h1>
 
       {isLoading && <p>Loading...</p>}
