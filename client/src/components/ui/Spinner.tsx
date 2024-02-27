@@ -1,9 +1,18 @@
-export const Spinner = () => {
+import { cn } from '@/lib/utils';
+
+interface IProps {
+  className?: string;
+  spinning?: boolean;
+}
+
+export const Spinner = ({ className, spinning }: IProps) => {
+  if (!spinning) return null;
   return (
     <div role="status">
       <svg
+        style={{ width: '2.3ch', height: '2.3ch' }}
         aria-hidden="true"
-        className="h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
+        className={cn(className, 'animate-spin fill-blue-500 text-blue-100 duration-500 dark:fill-blue-100 dark:text-blue-900')}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

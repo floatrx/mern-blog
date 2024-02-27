@@ -18,7 +18,7 @@ export const UserProfileButton = () => {
   return (
     <div className="flex items-center gap-2">
       <Link to="/profile" className="flex items-center gap-2">
-        {user.name}
+        {user.name} • <span className="text-muted-foreground">{user.id}</span>
       </Link>
       <UserLogoutButton circle />
     </div>

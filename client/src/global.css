@@ -74,12 +74,13 @@
     html,
     body,
     #root {
-        @apply h-full; /* App full height */
+        @apply h-full;
     }
 
     body {
-        @apply text-foreground bg-background;
+        @apply bg-background text-foreground;
     }
+
     #root {
         @apply flex flex-col;
     }
@@ -94,15 +95,4 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     gap: 1rem;
-}
-
-/* Markdown Editor */
-html[data-color-mode] {
-    .wmde-markdown,
-    .wmde-markdown-var {
-        --color-canvas-default: transparent;
-        --color-canvas-subtle: transparent;
-        font-family: inherit;
-        font-size: 1.2rem;
-    }
 }

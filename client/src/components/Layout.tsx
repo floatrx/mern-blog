@@ -48,7 +48,7 @@ export const Layout = (props: PropsWithChildren) => {
         </nav>
       </header>
 
-      <main className="mx-2 my-10 flex-1 p-10">{props.children}</main>
+      <main className="my-2 flex-1 p-10">{props.children}</main>
 
       <footer className="border-t">
         <div className="p-4 text-xs text-gray-400">

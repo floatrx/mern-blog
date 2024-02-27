@@ -1,80 +1,89 @@
-import type { IPostCreate } from '@/types/post';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/Form';
-import { Input } from '@/components/ui/Input';
-import { Spinner } from '@/components/ui/Spinner';
-import { useCreatePostMutation } from '@/api/posts';
 import { useForm } from 'react-hook-form';
-import MarkdownEditor from '@uiw/react-markdown-editor';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
+import { Input } from '@/components/ui/form/Input';
+import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
+import { Upload } from '@/components/features/post/Upload';
+import { createPostSchema } from '@/validators/post';
+import { useCreatePostMutation } from '@/api/posts';
 
-const mkdStr = `
-# Markdown Editor
-
----
-
-**Hello world!!!**
-
-[![](https://avatars.githubusercontent.com/u/1680273?s=80&v=4)](https://avatars.githubusercontent.com/u/1680273?v=4)
-
-\`\`\`javascript
-import React from "react";
-import ReactDOM from "react-dom";
-import MEDitor from '@uiw/react-md-editor';
-
-\`\`\`
-`;
+import type { IPostCreate } from '@/types/post';
 
 export const CreatePostForm = () => {
   const [createPost, { isLoading }] = useCreatePostMutation(); // Create user
 
   // Create form
   const form = useForm<IPostCreate>({
-    // resolver: zodResolver(createPostSchema),
-    defaultValues: { title: 'Test post #1', body: mkdStr },
+    resolver: zodResolver(createPostSchema),
+    defaultValues: { title: 'Test post', body: '', thumbnail: '' },
   });
 
   const handleCreate = async (values: IPostCreate) => {
-    createPost(values);
+    try {
+      const res = await createPost(values).unwrap();
+      console.log('Post created:', res);
+      form.reset();
+    } catch (e) {
+      console.error('Error creating post:', e.message);
+    }
   };
 
   return (
     <Card>
       <CardHeader className="flex gap-2">
-        <CardTitle>
+        <CardTitle className="flex gap-2">
           <span>Add a new post</span>
-          {isLoading && <Spinner />}
         </CardTitle>
       </CardHeader>
 
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleCreate)} className="space-y-3">
+          <form onSubmit={form.handleSubmit(handleCreate)} className="space-y-6">
             <FormField
               name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Post title" {...field} />
+                    <Input placeholder="Post title" accept="image/jpeg, image/png, image/webp" multiple={false} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            <FormField
+              name="thumbnail"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Thumbnail</FormLabel>
+                    <FormControl>
+                      <Upload {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+
             <FormField
               name="body"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Content</FormLabel>
                   <FormControl>
-                    <MarkdownEditor height="55vh" {...field} />
+                    <MarkdownEditor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Create New</Button>
+            <Button type="submit" loading={isLoading}>
+              Create New
+            </Button>
           </form>
         </Form>
       </CardContent>

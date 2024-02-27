@@ -1,0 +1,77 @@
+@import url("@radix-ui/colors/sky-dark.css");
+@import url("@radix-ui/colors/gray-dark.css");
+
+/* Toolbar */
+div[role="toolbar"] {
+    @apply rounded-xl border bg-transparent;
+}
+
+/* Editor */
+.mdxeditor-root-contenteditable {
+    @apply prose mt-2 rounded-xl border bg-transparent p-3 text-xl dark:prose-invert;
+
+    div[class*="_placeholder"] {
+        @apply pt-6; /* perfect pixel */
+    }
+}
+
+/* Popups */
+.mdxeditor-popup-container {
+    button,
+    & {
+        color: black;
+        .dark & {
+            color: white;
+        }
+    }
+}
+
+.dark .dark-editor {
+    --accentBase: var(--sky-1);
+    --accentBgSubtle: var(--sky-2);
+    --accentBg: var(--sky-3);
+    --accentBgHover: var(--sky-4);
+    --accentBgActive: var(--sky-5);
+    --accentLine: var(--sky-6);
+    --accentBorder: var(--sky-7);
+    --accentBorderHover: var(--sky-8);
+    --accentSolid: var(--sky-9);
+    --accentSolidHover: var(--sky-10);
+    --accentText: var(--sky-11);
+    --accentTextContrast: var(--sky-12);
+
+    --baseBase: var(--gray-1);
+    --baseBgSubtle: var(--gray-2);
+    --baseBg: var(--gray-1);
+    --baseBgHover: var(--gray-4);
+    --baseBgActive: var(--gray-5);
+    --baseLine: var(--gray-6);
+    --baseBorder: var(--gray-7);
+    --baseBorderHover: var(--gray-8);
+    --baseSolid: var(--gray-9);
+    --baseSolidHover: var(--gray-10);
+    --baseText: var(--gray-11);
+    --baseTextContrast: var(--gray-12);
+
+    --admonitionTipBg: var(--cyan4);
+    --admonitionTipBorder: var(--cyan8);
+
+    --admonitionInfoBg: var(--grass4);
+    --admonitionInfoBorder: var(--grass8);
+
+    --admonitionCautionBg: var(--amber4);
+    --admonitionCautionBorder: var(--amber8);
+
+    --admonitionDangerBg: var(--red4);
+    --admonitionDangerBorder: var(--red8);
+
+    --admonitionNoteBg: var(--gray-4);
+    --admonitionNoteBorder: var(--gray-8);
+
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    --basePageBg: black;
+
+    color: var(--baseText);
+    background: var(--basePageBg);
+}

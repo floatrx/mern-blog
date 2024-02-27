@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/hooks/redux';
 import { logout } from '@/store/auth';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button/Button';
 import { LogOut } from 'lucide-react';
 
 interface IProps {

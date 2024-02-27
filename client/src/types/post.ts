@@ -1,11 +1,15 @@
+import type { IUser } from '@/types/user';
+
 interface IPostBase {
   title: string;
   body: string;
+  thumbnail: string;
 }
 
 export interface IPost extends IPostBase {
-  authorId: string;
   id: string;
+  authorId: string;
+  author: IUser;
 }
 
 export interface IPostCreate extends IPostBase {

@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/Form';
-import { Input } from '@/components/ui/Input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
+import { Input } from '@/components/ui/form/Input';
 import { Spinner } from '@/components/ui/Spinner';
 import { createUserSchema } from '@/validators/user';
 import { useCreateUserMutation } from '@/api/users';

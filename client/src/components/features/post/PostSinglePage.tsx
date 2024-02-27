@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
+import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
 import { useGetPostQuery } from '@/api/posts';
-import MarkdownEditor from '@uiw/react-markdown-editor';
 
 export const PostSinglePage = () => {
   const { id } = useParams();
@@ -15,11 +15,10 @@ export const PostSinglePage = () => {
   }
 
   return (
-    <div className="prose lg:prose-xl dark:prose-invert">
+    <div className="prose dark:prose-invert lg:prose-xl">
+      {post.thumbnail && <img className="h-96 rounded-xl" src={post.thumbnail} alt={post.title} />}
       <h1>{post.title}</h1>
-      <MarkdownEditor.Markdown source={post.body} />
-
-      <pre>{JSON.stringify(post, null, 2)}</pre>
+      <MarkdownEditor value={post.body} readOnly mode="view" />
     </div>
   );
 };
