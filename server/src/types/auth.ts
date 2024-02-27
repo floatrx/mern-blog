@@ -1,3 +1,8 @@
+export interface IAuth {
+  userId: string;
+  accessToken: string;
+}
+
 export interface TokenPayload {
   id: string;
   email: string;

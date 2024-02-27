@@ -11,7 +11,7 @@ export class PostController {
    * @returns status 404 if author not found
    */
   static async create(req: Request<never, never, IPostCreatePayload>, res: Response) {
-    const { title, body } = req.body;
+    const { title, body, thumbnail } = req.body;
 
     const authorId = req.userData?.id;
     if (!authorId) {
@@ -31,7 +31,7 @@ export class PostController {
 
     try {
       // Create a new post with the provided author
-      const post = await Post.create({ title, body, authorId });
+      const post = await Post.create({ title, body, thumbnail, authorId });
 
       // Respond with the created post
       res.status(201).json(post);
@@ -47,7 +47,11 @@ export class PostController {
   static async list(_req: Request, res: Response) {
     try {
       const posts = await Post.find().populate('author'); // populate author field with user data
-      res.json(posts);
+      const response = posts.map((post) => ({
+        ...post.toJSON(),
+        body: post.body.length > 300 ? post.body.substring(0, 200) + '...' : post.body,
+      }));
+      res.json(response);
     } catch (e) {
       res.status(500).json({ message: 'Internal server errors' });
     }

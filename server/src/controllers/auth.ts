@@ -5,6 +5,7 @@ import { User } from '@/models/user';
 import { wait } from '@/lib/wait';
 import type { IUser, IUserLoginPayload } from '@/types/user';
 import type { TokenPayload } from '@/types/auth';
+import { Auth } from '@/models/auth';
 
 export class AuthController {
   /**
@@ -39,7 +40,9 @@ export class AuthController {
 
     // Generate access token
     const tokenPayload: TokenPayload = { id: user._id, email: user.email };
-    const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1h' });
+    const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1d' });
+
+    await Auth.findOneAndUpdate({ userId: user._id }, { accessToken }, { upsert: true, new: true });
 
     // Simulate a delay
     await wait();

@@ -2,12 +2,17 @@ import { setupJSONTransform } from '@/lib/transform';
 import type { IUser, IUserDocument, IUserModel } from '@/types/user';
 import mongoose, { Schema } from 'mongoose';
 
-const userSchema: Schema<IUserDocument> = new Schema<IUserDocument>({
-  idRole: { type: Number, required: true },
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
+const userSchema: Schema<IUserDocument> = new Schema<IUserDocument>(
+  {
+    idRole: { type: Number, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+  {
+    timestamps: true, // Automatically populate createdAt and updatedAt fields
+  },
+);
 
 // Find middleware
 userSchema.pre<IUser>('find', function (next) {
