@@ -4,18 +4,12 @@
   "license": "ISC",
   "author": "floatrx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && yarn dev",
     "server": "cd server && yarn dev",
     "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
-    "mongo": "cd mongo && docker-compose up -d",
-    "prepare": "husky install"
+    "mongo": "cd mongo && docker-compose up -d"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
-    "git-format-staged": "^3.0.0",
-    "prettier": "^3.2.5",
-    "husky": "^9.0.11",
-    "prettier-plugin-tailwindcss": "^0.5.11"
+    "concurrently": "^8.2.2"
   }
 }
