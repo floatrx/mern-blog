@@ -47,7 +47,7 @@ export class PostController {
    */
   static async list(_req: Request, res: Response) {
     try {
-      const posts = await Post.find().populate('author'); // populate author field with user data
+      const posts = await Post.find().populate('author').sort({ createdAt: -1 }); // populate author field with user data
       const response = posts.map((post) => ({
         ...post.toJSON(),
         body: post.body.length > 300 ? post.body.substring(0, 200) + '...' : post.body,
