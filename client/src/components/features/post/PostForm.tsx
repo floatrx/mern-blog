@@ -1,7 +1,7 @@
 import type { IPostCreate } from '@/types/post';
 import { Button } from '@/components/ui/button/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form/Form';
 import { Input } from '@/components/ui/form/Input';
 import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
 import { Upload } from '@/components/features/post/Upload';
@@ -51,9 +51,19 @@ export const PostForm = (props: IProps) => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Post title" accept="image/jpeg, image/png, image/webp" multiple={false} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="body"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <MarkdownEditor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -64,7 +74,6 @@ export const PostForm = (props: IProps) => {
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel>Thumbnail</FormLabel>
                     <FormControl>
                       <Upload {...field} />
                     </FormControl>
@@ -73,23 +82,12 @@ export const PostForm = (props: IProps) => {
                 );
               }}
             />
-            <FormField
-              name="body"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <MarkdownEditor {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <div className="flex gap-2">
-              <Button type="submit" loading={props.isLoading}>
+              <Button size="lg" type="submit" variant="outline" loading={props.isLoading}>
                 {props.id ? 'Update' : 'Create New'}
               </Button>
               <Button
+                size="lg"
                 type="reset"
                 variant="outline"
                 onClick={() => {

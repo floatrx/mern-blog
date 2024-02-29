@@ -58,7 +58,7 @@ export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) =
           {/* Buttons */}
           <div className="flex gap-2">
             <Button type="button" variant="outline" loading={isLoading} onClick={() => uploadRef?.current?.click()}>
-              {value ? 'Replace thumbnail' : 'Choose file'}
+              {value ? 'Replace' : 'Choose'} {props.name}
             </Button>
             {value && (
               <Button type="button" variant="destructive" size="icon" onClick={handleRemoveThumbnail}>
