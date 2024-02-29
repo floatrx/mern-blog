@@ -4,6 +4,7 @@ import { requireAuth } from '@/middleware/auth';
 import { AuthController } from '@/controllers/auth';
 import { BucketController } from '@/controllers/bucket';
 import { PostController } from '@/controllers/post';
+import { TagController } from '@/controllers/tag';
 import { UserController } from '@/controllers/user';
 
 /**
@@ -30,6 +31,13 @@ export const router = Router()
   .get('/posts/:id', PostController.show)
   .put('/posts/:id', requireAuth, PostController.update)
   .delete('/posts/:id', requireAuth, PostController.delete)
+
+  // Post
+  .post('/tags', requireAuth, TagController.create)
+  .get('/tags', TagController.list)
+  .get('/tags/:id', TagController.show)
+  .put('/tags/:id', requireAuth, TagController.update)
+  .delete('/tags/:id', requireAuth, TagController.delete)
 
   // User
   .post('/users', UserController.create)

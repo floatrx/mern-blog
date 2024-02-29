@@ -1,12 +1,14 @@
-import { UserList } from '@/components/features/user/UserList';
 import { Heading } from '@/components/Heading';
 import { PostsList } from '@/components/features/post/PostsList';
+import { TagsList } from '@/components/features/tag/TagList';
 
 export const Overview = () => {
   return (
     <div className="flex flex-col space-y-4">
-      <Heading text="Users" />
-      <UserList />
+      <Heading text="Tags" />
+      <TagsList />
+
+      <hr />
 
       <Heading text="Posts" />
       <PostsList />

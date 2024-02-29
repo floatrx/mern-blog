@@ -5,11 +5,7 @@ import { PostDeleteButton } from '@/components/features/post/PostDeleteButton';
 import { PostEditButton } from '@/components/features/post/PostEditButton';
 import { RichText } from '@/components/ui/RichText';
 
-interface IProps {
-  post: IPost;
-}
-
-export const PostCardItem = ({ post }: IProps) => (
+export const PostCardItem = ({ post }: { post: IPost }) => (
   <Card>
     <CardHeader>
       <div className="">

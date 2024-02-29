@@ -1,13 +1,12 @@
+import type { IUserCreate } from '@/types/user';
 import { Button } from '@/components/ui/button/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
 import { Input } from '@/components/ui/form/Input';
-import { Spinner } from '@/components/ui/Spinner';
 import { createUserSchema } from '@/validators/user';
 import { useCreateUserMutation } from '@/api/users';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { IUserCreate } from '@/types/user';
 
 const formFields = {
   name: {
@@ -24,8 +23,9 @@ const formFields = {
   },
 };
 
-export const CreateUserForm = () => {
+export const CreateUserForm = ({ onFinish }: { onFinish?: () => void }) => {
   const [createUser, { isLoading }] = useCreateUserMutation(); // Create user
+  const { toast } = useToast();
 
   // Create form
   const form = useForm<IUserCreate>({
@@ -33,37 +33,40 @@ export const CreateUserForm = () => {
     defaultValues: { name: '', email: '', password: '' },
   });
 
-  return (
-    <Card className="max-w-sm">
-      <CardHeader className="flex gap-2">
-        <CardTitle>
-          <span>Add a new user</span>
-          {isLoading && <Spinner />}
-        </CardTitle>
-      </CardHeader>
+  const handleCreateUser = form.handleSubmit(async (values) => {
+    try {
+      await createUser(values);
+      form.reset();
+      onFinish?.();
+      toast({ title: 'User created', description: 'User has been created successfully' });
+    } catch (e) {
+      console.error(e.message);
+      toast({ title: 'Error', description: e.message });
+    }
+  });
 
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(createUser)} className="space-y-3">
-            {Object.entries(formFields).map(([name, { label, placeholder }]) => (
-              <FormField
-                key={name}
-                name={name}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{label}</FormLabel>
-                    <FormControl>
-                      <Input placeholder={placeholder} {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
-            <Button type="submit">Create New</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+  return (
+    <Form {...form}>
+      <form onSubmit={handleCreateUser} className="w-full space-y-3">
+        {Object.entries(formFields).map(([name, { label, placeholder }]) => (
+          <FormField
+            key={name}
+            name={name}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{label}</FormLabel>
+                <FormControl>
+                  <Input placeholder={placeholder} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
+        <Button type="submit" loading={isLoading} variant="outline" size="lg">
+          Submit
+        </Button>
+      </form>
+    </Form>
   );
 };

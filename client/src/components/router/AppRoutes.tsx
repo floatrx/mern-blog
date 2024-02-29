@@ -1,19 +1,20 @@
 import type { ReactNode } from 'react';
 import { AuthRequired } from '@/components/router/AuthRequired';
 import { CreatePostForm } from '@/components/features/post/CreatePostForm';
-import { CreateUserForm } from '@/components/features/user/CreateUserForm';
 import { LoginUserForm } from '@/components/features/user/LoginUserForm';
 import { Overview } from '@/components/Overview';
 import { Page404 } from '@/components/Page404';
 import { PostSinglePage } from '@/components/features/post/PostSinglePage';
 import { Route, Routes } from 'react-router-dom';
+import { TagsSearchPage } from '@/components/features/tag/TagsSearchPage';
 import { UpdatePostForm } from '@/components/features/post/UpdatePostForm';
-import { UserList } from '@/components/features/user/UserList';
+import { UsersSearchPage } from '@/components/features/user/UsersSearchPage';
 
 type RouteItem = {
   path: string;
   children?: RouteItem[];
   element?: ReactNode;
+  index?: boolean;
 };
 
 // Define a type for the routes array
@@ -24,16 +25,11 @@ const routes: RouteItem[] = [
   },
   {
     path: 'users',
-    children: [
-      {
-        path: 'create',
-        element: <AuthRequired element={<CreateUserForm />} />,
-      },
-      {
-        path: 'list',
-        element: <UserList />,
-      },
-    ],
+    element: <UsersSearchPage />,
+  },
+  {
+    path: 'tags',
+    element: <TagsSearchPage />,
   },
   {
     path: 'posts',
