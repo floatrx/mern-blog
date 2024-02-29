@@ -1,6 +1,7 @@
-import { useParams } from 'react-router';
-import { MarkdownEditor } from '@/components/editor/MarkdownEditor';
+import { PostEditButton } from '@/components/features/post/PostEditButton';
+import { RichText } from '@/components/features/post/RichText';
 import { useGetPostQuery } from '@/api/posts';
+import { useParams } from 'react-router';
 
 export const PostSinglePage = () => {
   const { id } = useParams();
@@ -16,9 +17,15 @@ export const PostSinglePage = () => {
 
   return (
     <div className="prose dark:prose-invert lg:prose-xl">
-      {post.thumbnail && <img className="h-96 rounded-xl" src={post.thumbnail} alt={post.title} />}
+      {post.thumbnail && <img className="h-full rounded-xl" src={post.thumbnail} alt={post.title} />}
+      <div className="mb-10 flex items-center gap-2">
+        <span className="text-muted-foreground">
+          {post.author.name} • {post.author.email}
+        </span>
+        <PostEditButton id={post.id} />
+      </div>
       <h1>{post.title}</h1>
-      <MarkdownEditor value={post.body} readOnly mode="view" />
+      <RichText content={post.body} />
     </div>
   );
 };

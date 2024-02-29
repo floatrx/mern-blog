@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button/Button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/form/Input';
-import { Label } from '@/components/ui/form/Label';
 import { Trash2 } from 'lucide-react';
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { useUploadMutation } from '@/api/upload';
 
 interface IProps {
@@ -15,6 +14,7 @@ interface IProps {
 type TUpload = React.ForwardRefExoticComponent<IProps & React.RefAttributes<HTMLInputElement>>;
 
 export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) => {
+  const uploadRef = useRef<HTMLInputElement>(null);
   const [uploadFile, { isLoading }] = useUploadMutation(); // Upload file
 
   const handleRemoveThumbnail = () => {
@@ -51,23 +51,23 @@ export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) =
           {/* Thumbnail */}
           {value && (
             <div>
-              <img alt="thumbnail" className="h-32 w-full rounded-xl object-cover" src={value} />
+              <img alt="thumbnail" className="h-48 w-full rounded-xl object-cover" src={value} />
             </div>
           )}
 
           {/* Buttons */}
           <div className="flex gap-2">
-            <Button type="button" variant="outline" loading={isLoading}>
-              <Label htmlFor="file">{value ? 'Replace thumbnail' : 'Choose file'}</Label>
+            <Button type="button" variant="outline" loading={isLoading} onClick={() => uploadRef?.current?.click()}>
+              {value ? 'Replace thumbnail' : 'Choose file'}
             </Button>
-            <Button type="button" variant="outline" size="icon" onClick={handleRemoveThumbnail}>
-              <Trash2 size={20} />
-            </Button>
+            {value && (
+              <Button type="button" variant="destructive" size="icon" onClick={handleRemoveThumbnail}>
+                <Trash2 size={20} />
+              </Button>
+            )}
           </div>
 
-          {/* File trigger */}
-          <Input id="file" type="file" onChange={handleUpload} className="hidden" />
-
+          <Input ref={uploadRef} id="upload" type="file" onChange={handleUpload} className="hidden" />
           {/* Pass rest props from FormControl field */}
           <Input readOnly ref={ref} value={value} {...props} className="hidden" />
         </CardTitle>

@@ -1,14 +1,15 @@
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/Card';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button/Button';
-import { Trash2 } from 'lucide-react';
 import type { IPost } from '@/types/post';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Link } from 'react-router-dom';
+import { PostDeleteButton } from '@/components/features/post/PostDeleteButton';
+import { PostEditButton } from '@/components/features/post/PostEditButton';
+import { RichText } from '@/components/features/post/RichText';
 
 interface IProps {
   post: IPost;
-  onDelete?: (id: string) => void;
 }
-export const PostCardItem = ({ post, onDelete }: IProps) => (
+
+export const PostCardItem = ({ post }: IProps) => (
   <Card>
     <CardHeader>
       <div className="">
@@ -17,17 +18,16 @@ export const PostCardItem = ({ post, onDelete }: IProps) => (
           <h2 className="text-2xl">{post.title}</h2>
         </Link>
       </div>
-      <div className="text-muted-foreground">
-        {post.author.name} • {post.author.email}
+      <div className="flex items-center gap-2">
+        <span className="text-muted-foreground">
+          {post.author.name} • {post.author.email}
+        </span>
+        <PostDeleteButton id={post.id} />
+        <PostEditButton id={post.id} />
       </div>
     </CardHeader>
     <CardContent>
-      <p className="line-clamp-4">{post.body}</p>
+      <RichText content={post.body} excerpt />
     </CardContent>
-    <CardFooter>
-      <Button size="icon" className="size-8 p-2" variant="outline" onClick={() => onDelete?.(post.id)}>
-        <Trash2 size={20} />
-      </Button>
-    </CardFooter>
   </Card>
 );

@@ -1,11 +1,10 @@
 import { Badge } from '@/components/ui/Badge';
 import { RefetchButton } from '@/components/ui/button/RefetchButton';
 import { PostCardItem } from '@/components/features/post/PostCardItem';
-import { useDeletePostMutation, useSearchPostsQuery } from '@/api/posts';
+import { useSearchPostsQuery } from '@/api/posts';
 
 export const Overview = () => {
   const { data: posts, isLoading, isError, refetch } = useSearchPostsQuery();
-  const [deletePost] = useDeletePostMutation();
 
   return (
     <>
@@ -20,7 +19,7 @@ export const Overview = () => {
       {posts && (
         <div className="grid-auto grid gap-2">
           {posts.map((post) => (
-            <PostCardItem key={post.id} post={post} onDelete={deletePost} />
+            <PostCardItem key={post.id} post={post} />
           ))}
         </div>
       )}

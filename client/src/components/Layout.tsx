@@ -7,6 +7,7 @@ import { UsersCounter } from '@/components/features/user/UsersCounter';
 import { cn } from '@/lib/utils';
 import { useAppSelector } from '@/hooks/redux';
 import { selectIsLoggedIn } from '@/store/auth';
+import { Toaster } from '@/components/ui/toaster';
 
 const menuItems = [
   { to: '/users/list', label: 'Users', icon: <UsersRound />, counter: <UsersCounter variant="outline" /> },
@@ -55,6 +56,8 @@ export const Layout = (props: PropsWithChildren) => {
           <p>© 2021 MongoBlog. Test project for learning purposes.</p>
         </div>
       </footer>
+
+      <Toaster />
     </>
   );
 };

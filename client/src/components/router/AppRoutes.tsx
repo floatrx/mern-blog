@@ -1,13 +1,14 @@
+import type { ReactNode } from 'react';
+import { AuthRequired } from '@/components/router/AuthRequired';
 import { CreatePostForm } from '@/components/features/post/CreatePostForm';
 import { CreateUserForm } from '@/components/features/user/CreateUserForm';
 import { LoginUserForm } from '@/components/features/user/LoginUserForm';
+import { Overview } from '@/components/Overview';
 import { Page404 } from '@/components/Page404';
 import { PostSinglePage } from '@/components/features/post/PostSinglePage';
-import { AuthRequired } from '@/components/router/AuthRequired';
 import { Route, Routes } from 'react-router-dom';
+import { UpdatePostForm } from '@/components/features/post/UpdatePostForm';
 import { UserList } from '@/components/features/user/UserList';
-import type { ReactNode } from 'react';
-import { Overview } from '@/components/Overview';
 
 type RouteItem = {
   path: string;
@@ -44,6 +45,10 @@ const routes: RouteItem[] = [
       {
         path: ':id',
         element: <PostSinglePage />,
+      },
+      {
+        path: ':id/edit',
+        element: <AuthRequired element={<UpdatePostForm />} />,
       },
     ],
   },
