@@ -3,6 +3,8 @@ import {
   codeBlockPlugin,
   CodeToggle,
   CreateLink,
+  diffSourcePlugin,
+  DiffSourceToggleWrapper,
   frontmatterPlugin,
   headingsPlugin,
   imagePlugin,
@@ -32,7 +34,7 @@ const handleImageUpload = async (file: File) => {
     .then((res) => res.location);
 };
 
-export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default') =>
+export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default', initialValue?: string) =>
   [
     listsPlugin(),
     quotePlugin(),
@@ -44,6 +46,7 @@ export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default') =
     frontmatterPlugin(),
     codeBlockPlugin({ defaultCodeBlockLanguage: '' }),
     markdownShortcutPlugin(),
+    diffSourcePlugin({ diffMarkdown: initialValue, viewMode: 'rich-text' }),
     imagePlugin({
       imageUploadHandler: handleImageUpload,
     }),
@@ -63,6 +66,9 @@ export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default') =
                   <InsertImage />
                   <InsertTable />
                   <InsertThematicBreak />
+                  <DiffSourceToggleWrapper>
+                    <UndoRedo />
+                  </DiffSourceToggleWrapper>
                 </>
               ),
           }),

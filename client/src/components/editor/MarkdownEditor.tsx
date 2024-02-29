@@ -18,20 +18,22 @@ type TMarkdownEditor = React.ForwardRefExoticComponent<IProps & React.RefAttribu
 
 export const MarkdownEditor: TMarkdownEditor = forwardRef(({ className, value = '', mode, ...props }, _) => {
   const editorRef = useRef<MDXEditorMethods | null>(null);
+  const initialValue = useRef(value);
 
   // Compatibility with react-hook-form & ShadCN form
   useEffect(() => {
     if (!editorRef.current) return; // skip first render
+    if (value === editorRef.current.getMarkdown()) return;
     editorRef.current?.setMarkdown(value); // sync value from parent form control
   }, [value]);
 
   return (
     <MDXEditor
-      contentEditableClassName="prose dark:prose-invert lg:prose-2xl"
+      contentEditableClassName="prose dark:prose-invert lg:prose-2xl min-h-[300px]"
       markdown={value}
       placeholder="Write your text here..."
       className={cn('dark-editor', className)}
-      plugins={getMarkdownEditorPlugins(mode)}
+      plugins={getMarkdownEditorPlugins(mode, initialValue.current)}
       ref={editorRef}
       {...props}
     />

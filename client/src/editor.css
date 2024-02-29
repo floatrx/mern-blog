@@ -15,6 +15,22 @@ div[role="toolbar"] {
     }
 }
 
+.cm-editor {
+    .cm-gutterElement {
+        @apply text-xl;
+    }
+    .cm-line {
+        @apply text-xl text-foreground;
+    }
+    .cm-lineNumbers {
+        @apply text-foreground;
+    }
+}
+
+.mdxeditor-diff-source-wrapper {
+    @apply mt-2 rounded-xl border p-4;
+}
+
 /* Popups */
 /*noinspection CssUnusedSymbol*/
 .mdxeditor-popup-container {
@@ -27,7 +43,6 @@ div[role="toolbar"] {
     }
 }
 
-/*noinspection CssUnusedSymbol*/
 .dark .dark-editor {
     --accentBase: var(--sky-1);
     --accentBgSubtle: var(--sky-2);
@@ -76,4 +91,17 @@ div[role="toolbar"] {
 
     color: var(--baseText);
     background: var(--background);
+
+    .cm-editor {
+        .cm-selectionBackground {
+            background: var(--sky-10) !important; /* <- Override the default selection color */
+        }
+
+        background: var(--background);
+        color: var(--baseText);
+
+        .cm-activeLineGutter {
+            background: var(--baseBgSubtle);
+        }
+    }
 }
