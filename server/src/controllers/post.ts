@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Post } from '@/models/post';
 import { User } from '@/models/user';
 import type { IPost, IPostCreatePayload } from '@/types/post';
+import { wait } from '@/lib/wait';
 
 export class PostController {
   /**
@@ -51,6 +52,7 @@ export class PostController {
         ...post.toJSON(),
         body: post.body.length > 300 ? post.body.substring(0, 200) + '...' : post.body,
       }));
+      await wait(1.5);
       res.json(response);
     } catch (e) {
       res.status(500).json({ message: 'Internal server errors' });

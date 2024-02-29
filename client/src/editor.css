@@ -16,6 +16,7 @@ div[role="toolbar"] {
 }
 
 /* Popups */
+/*noinspection CssUnusedSymbol*/
 .mdxeditor-popup-container {
     button,
     & {
@@ -26,6 +27,7 @@ div[role="toolbar"] {
     }
 }
 
+/*noinspection CssUnusedSymbol*/
 .dark .dark-editor {
     --accentBase: var(--sky-1);
     --accentBgSubtle: var(--sky-2);

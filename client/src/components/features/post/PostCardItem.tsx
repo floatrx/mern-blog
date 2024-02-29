@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Link } from 'react-router-dom';
 import { PostDeleteButton } from '@/components/features/post/PostDeleteButton';
 import { PostEditButton } from '@/components/features/post/PostEditButton';
-import { RichText } from '@/components/features/post/RichText';
+import { RichText } from '@/components/ui/RichText';
 
 interface IProps {
   post: IPost;

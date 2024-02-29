@@ -18,7 +18,9 @@ export const UpdatePostForm = () => {
     try {
       await updatePost({ id, ...values }).unwrap();
       navigate(`/posts/${id}`); // Redirect to updated post
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
   };
 
   return <PostForm id={id} onSubmit={handleUpdate} isLoading={isLoading} initialValues={post} />;

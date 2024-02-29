@@ -1,28 +1,15 @@
-import { Badge } from '@/components/ui/Badge';
-import { RefetchButton } from '@/components/ui/button/RefetchButton';
-import { PostCardItem } from '@/components/features/post/PostCardItem';
-import { useSearchPostsQuery } from '@/api/posts';
+import { UserList } from '@/components/features/user/UserList';
+import { Heading } from '@/components/Heading';
+import { PostsList } from '@/components/features/post/PostsList';
 
 export const Overview = () => {
-  const { data: posts, isLoading, isError, refetch } = useSearchPostsQuery();
-
   return (
-    <>
-      <h1 className="mb-2 flex items-center gap-2 text-2xl">
-        Posts <Badge variant="outline">{posts?.length || 0}</Badge> <RefetchButton onClick={refetch} />
-      </h1>
+    <div className="flex flex-col space-y-4">
+      <Heading text="Users" />
+      <UserList />
 
-      {isLoading && <p>Loading...</p>}
-
-      {isError && <p>Error loading posts</p>}
-
-      {posts && (
-        <div className="grid-auto grid gap-2">
-          {posts.map((post) => (
-            <PostCardItem key={post.id} post={post} />
-          ))}
-        </div>
-      )}
-    </>
+      <Heading text="Posts" />
+      <PostsList />
+    </div>
   );
 };

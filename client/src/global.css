@@ -35,6 +35,7 @@
         --radius: 0.5rem;
     }
 
+    /*noinspection CssUnusedSymbol*/
     .dark {
         --background: 222.2 84% 4.9%;
         --foreground: 210 40% 98%;
@@ -71,14 +72,8 @@
         @apply border-border;
     }
 
-    html,
-    body,
-    #root {
-        @apply h-full;
-    }
-
     body {
-        @apply bg-background text-foreground;
+        @apply min-h-screen bg-background font-sans text-foreground antialiased;
     }
 
     #root {
@@ -94,5 +89,5 @@
 .grid-auto {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
 }

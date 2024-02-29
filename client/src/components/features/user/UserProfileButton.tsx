@@ -1,8 +1,8 @@
-import { useAppSelector } from '@/hooks/redux';
-import { selectUser } from '@/store/auth';
 import { Link } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import { UserLogoutButton } from '@/components/features/user/UserLogoutButton';
+import { selectUser } from '@/store/auth';
+import { useAppSelector } from '@/hooks/redux';
 
 export const UserProfileButton = () => {
   const user = useAppSelector(selectUser);

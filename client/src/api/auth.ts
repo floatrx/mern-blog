@@ -1,12 +1,12 @@
-import type { IUserLoginRequest, IUserLoginResponse } from '@/types/user';
 import { api } from '@/api/index';
 import { setToken, setUser } from '@/store/auth';
+import type { IAuthLoginRequest, IAuthLoginResponse } from '@/types/auth';
 
 const path = '/auth';
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
-    login: mutation<IUserLoginResponse, IUserLoginRequest>({
+    login: mutation<IAuthLoginResponse, IAuthLoginRequest>({
       query: (body) => ({ url: `${path}/login`, method: 'POST', body }),
       onCacheEntryAdded: async (_, { cacheDataLoaded, dispatch }) => {
         const { data } = await cacheDataLoaded;

@@ -14,11 +14,15 @@ export interface AuthState {
  */
 
 const userInitialState = {
-  id: 0,
+  id: '',
   idRole: 0,
   name: '',
   email: '',
   posts: [],
+  role: {
+    id: '',
+    name: '',
+  },
 };
 
 export const authInitialState: AuthState = {

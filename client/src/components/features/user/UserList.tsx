@@ -4,20 +4,20 @@ import { Spinner } from '@/components/ui/Spinner';
 import { useSearchUsersQuery } from '@/api/users';
 
 export const UserList = () => {
-  const { data: users = [], error, isLoading, isFetching } = useSearchUsersQuery();
+  const { data: users, error, isLoading, isFetching, isError } = useSearchUsersQuery();
 
-  if (isLoading || isFetching) return <Spinner />;
+  if (isLoading || isFetching) return <Spinner spinning />;
 
   if (error) return <div className="p-2">An error has occurred: {JSON.stringify(error)}</div>;
 
   return (
-    <div className="space-y-3 p-2">
-      <h2 className="text-lg">
-        User list <Badge>{users.length}</Badge>
-      </h2>
+    <>
+      {isLoading && <p>Loading...</p>}
 
-      <div className="grid-auto grid gap-2">
-        {users.map((user) => (
+      {isError && <p>Error loading posts</p>}
+
+      <div className="grid-auto">
+        {users?.map((user) => (
           <Card key={user.id}>
             <CardHeader>
               <div className="flex gap-2">
@@ -35,6 +35,6 @@ export const UserList = () => {
           </Card>
         ))}
       </div>
-    </div>
+    </>
   );
 };

@@ -1,5 +1,5 @@
 import { PostEditButton } from '@/components/features/post/PostEditButton';
-import { RichText } from '@/components/features/post/RichText';
+import { RichText } from '@/components/ui/RichText';
 import { useGetPostQuery } from '@/api/posts';
 import { useParams } from 'react-router';
 

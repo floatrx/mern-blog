@@ -8,7 +8,7 @@ import { persistor, store } from '@/store/store';
 export const Providers = (props: PropsWithChildren) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <ThemeProvider>
+      <ThemeProvider defaultTheme="system">
         <BrowserRouter>{props.children}</BrowserRouter>
       </ThemeProvider>
     </PersistGate>

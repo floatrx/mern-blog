@@ -1,4 +1,3 @@
-import type { IUserLoginRequest } from '@/types/user';
 import { Button } from '@/components/ui/button/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
@@ -13,6 +12,7 @@ import { useAppSelector } from '@/hooks/redux';
 import { useForm } from 'react-hook-form';
 import { useLazyCheckQuery, useLoginMutation } from '@/api/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { IAuthLoginRequest } from '@/types/auth';
 
 const formFields = {
   email: {
@@ -35,7 +35,7 @@ export const LoginUserForm = () => {
   const user = useAppSelector(selectUser);
 
   // Create form
-  const form = useForm<IUserLoginRequest>({
+  const form = useForm<IAuthLoginRequest>({
     resolver: zodResolver(loginUserSchema),
     defaultValues: { email: 'admin@test.com', password: '123' },
     disabled: isLoading,
