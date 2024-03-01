@@ -1,4 +1,4 @@
-import { Heading } from '@/components/Heading';
+import { Heading } from '@/components/ui/Heading';
 import { TagsList } from '@/components/features/tag/TagList';
 import { CreateTag } from '@/components/features/tag/CreateTag';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';

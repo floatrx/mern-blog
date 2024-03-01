@@ -1,4 +1,4 @@
-import { Heading } from '@/components/Heading';
+import { Heading } from '@/components/ui/Heading';
 import { PostsList } from '@/components/features/post/PostsList';
 import { TagsList } from '@/components/features/tag/TagList';
 
