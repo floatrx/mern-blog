@@ -2,14 +2,14 @@ import { PostEditButton } from '@/components/features/post/PostEditButton';
 import { RichText } from '@/components/ui/RichText';
 import { useGetPostQuery } from '@/api/posts';
 import { useParams } from 'react-router';
+import { TagsList } from '@/components/features/tag/TagsList';
+import { TogglePostTagsDropdownMenu } from '@/components/features/tag/TogglePostTagsDropdownMenu';
 
 export const PostSinglePage = () => {
   const { id } = useParams();
-  const { data: post, isFetching } = useGetPostQuery(id, { skip: !id });
+  const { data: post } = useGetPostQuery(id, { skip: !id });
 
   if (!id) return <div>No ID provided</div>;
-
-  if (isFetching) return <div>Loading...</div>;
 
   if (!post) {
     return <div>Post {id} not found!</div>;
@@ -23,7 +23,9 @@ export const PostSinglePage = () => {
           {post.author.name} • {post.author.email}
         </span>
         <PostEditButton id={post.id} />
+        <TogglePostTagsDropdownMenu post={post} />
       </div>
+      <TagsList tags={post.tags} />
       <h1>{post.title}</h1>
       <RichText content={post.body} />
     </div>

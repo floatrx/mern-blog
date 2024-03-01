@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/button/Button';
 import { DataBoundary } from '@/components/DataBoundary';
@@ -6,8 +5,9 @@ import { Input } from '@/components/ui/form/Input';
 import { X } from 'lucide-react';
 import { useDebounceCallback, useDebounceValue } from 'usehooks-ts';
 import { useDeleteTagMutation, useSearchTagsQuery } from '@/api/tags';
+import { useState } from 'react';
 
-export const TagsList = () => {
+export const TagsManager = () => {
   const [isEditMode, setEditMode] = useState(false);
   const [name, setValue] = useDebounceValue('', 500);
   const [deleteTag] = useDeleteTagMutation(); // Delete tag

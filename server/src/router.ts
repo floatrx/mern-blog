@@ -31,6 +31,7 @@ export const router = Router()
   .get('/posts/:id', PostController.show)
   .put('/posts/:id', requireAuth, PostController.update)
   .delete('/posts/:id', requireAuth, PostController.delete)
+  .put('/posts/:id/tag', requireAuth, PostController.tag)
 
   // Post
   .post('/tags', requireAuth, TagController.create)

@@ -9,6 +9,7 @@ const postSchema = new Schema<IPost>(
     body: { type: String, required: true },
     thumbnail: { type: String },
     authorId: { type: String, required: true },
+    tags: [{ type: Schema.Types.ObjectId, ref: 'Tag' }],
   },
   {
     timestamps: true, // Automatically populate createdAt and updatedAt fields

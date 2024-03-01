@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PostDeleteButton } from '@/components/features/post/PostDeleteButton';
 import { PostEditButton } from '@/components/features/post/PostEditButton';
 import { RichText } from '@/components/ui/RichText';
+import { TagsList } from '@/components/features/tag/TagsList';
 
 export const PostCardItem = ({ post }: { post: IPost }) => (
   <Card>
@@ -24,6 +25,7 @@ export const PostCardItem = ({ post }: { post: IPost }) => (
     </CardHeader>
     <CardContent>
       <RichText content={post.body} excerpt />
+      <TagsList tags={post.tags} />
     </CardContent>
   </Card>
 );

@@ -1,6 +1,6 @@
+import type { ITag, ITagCreatePayload } from '@/types/tag';
 import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
-import type { ITag, ITagCreatePayload } from '@/types/tag';
 import { wait } from '@/lib/wait';
 
 export class TagController {

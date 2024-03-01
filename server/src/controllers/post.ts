@@ -47,7 +47,7 @@ export class PostController {
    */
   static async list(_req: Request, res: Response) {
     try {
-      const posts = await Post.find().populate('author').sort({ createdAt: -1 }); // populate author field with user data
+      const posts = await Post.find().populate('author').populate('tags').sort({ createdAt: -1 }); // populate author field with user data
       const response = posts.map((post) => ({
         ...post.toJSON(),
         body: post.body.length > 300 ? post.body.substring(0, 200) + '...' : post.body,
@@ -70,7 +70,7 @@ export class PostController {
       res.status(400).json({ message: 'id is required' });
     }
     try {
-      const post = await Post.findById(id).populate('author');
+      const post = await Post.findById(id).populate('author').populate('tags');
       if (post) {
         res.json(post); // OK
       } else {
@@ -124,6 +124,34 @@ export class PostController {
       } else {
         res.status(400).json({ message: 'post already deleted' });
       }
+    } catch (e) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  // Tags
+  static async tag(req: Request<{ id: string }, IPost, { tagId: string }>, res: Response) {
+    const { id } = req.params;
+    const { tagId } = req.body;
+
+    if (!id) {
+      res.status(400).json({ message: 'id is required' });
+    }
+
+    const post = await Post.findById(id);
+
+    if (!post) {
+      res.status(404).json({ message: 'post not found' });
+    }
+
+    try {
+      const queryAction = post?.tags.includes(tagId) ? '$pull' : '$addToSet';
+      const updatedPost = await Post.findByIdAndUpdate(
+        id,
+        { [queryAction]: { tags: tagId } },
+        { new: true }, // This ensures that the updated document is returned
+      );
+      res.json(updatedPost);
     } catch (e) {
       res.status(500).json({ message: 'Internal server error' });
     }

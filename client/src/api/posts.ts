@@ -26,7 +26,18 @@ const injectedRtkApi = api.injectEndpoints({
       query: (id) => ({ url: `${path}/${id}`, method: 'DELETE' }),
       invalidatesTags: [type],
     }),
+    toggleTag: mutation<IPost, { id: string; tagId: string }>({
+      query: ({ id, ...body }) => ({ url: `${path}/${id}/tag`, method: 'PUT', body }),
+      invalidatesTags: [type],
+    }),
   }),
 });
 
-export const { useSearchPostsQuery, useGetPostQuery, useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation } = injectedRtkApi;
+export const {
+  useSearchPostsQuery,
+  useGetPostQuery,
+  useCreatePostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
+  useToggleTagMutation,
+} = injectedRtkApi;

@@ -1,4 +1,5 @@
 import type { IUser } from '@/types/user';
+import type { ITag } from '@/types/tag';
 
 interface IPostBase {
   title: string;
@@ -10,6 +11,7 @@ export interface IPost extends IPostBase {
   id: string;
   authorId: string;
   author: IUser;
+  tags: ITag[];
 }
 
 export interface IPostCreate extends IPostBase {
