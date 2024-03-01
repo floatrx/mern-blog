@@ -1,7 +1,6 @@
 import type { ITag, ITagCreatePayload } from '@/types/tag';
 import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
-import { wait } from '@/lib/wait';
 
 export class TagController {
   /**
@@ -23,7 +22,6 @@ export class TagController {
       const tag = await Tag.create({ name });
 
       // Respond with the created tag
-      await wait(0.5);
       res.status(201).json(tag);
     } catch (e) {
       res.status(500).json({ message: 'Internal server error' });

@@ -6,8 +6,8 @@ const type = 'Post';
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
-    searchPosts: query<IPost[], void>({
-      query: () => ({ url: path }),
+    searchPosts: query<IPost[], { title?: string }>({
+      query: (params) => ({ url: path, params }),
       providesTags: [type],
     }),
     getPost: query<IPost, string | undefined>({

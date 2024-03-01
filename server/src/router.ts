@@ -33,7 +33,7 @@ export const router = Router()
   .delete('/posts/:id', requireAuth, PostController.delete)
   .put('/posts/:id/tag', requireAuth, PostController.tag)
 
-  // Post
+  // Tags
   .post('/tags', requireAuth, TagController.create)
   .get('/tags', TagController.list)
   .get('/tags/:id', TagController.show)

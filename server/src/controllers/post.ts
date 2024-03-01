@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
-import { Post } from '@/models/post';
-import { User } from '@/models/user';
 import type { IPost, IPostCreatePayload } from '@/types/post';
-import { wait } from '@/lib/wait';
+import { Post } from '@/models/post';
+import { Request, Response } from 'express';
+import { User } from '@/models/user';
 
 export class PostController {
   /**
@@ -45,14 +44,15 @@ export class PostController {
    * Get all posts
    * @returns status 200 if OK
    */
-  static async list(_req: Request, res: Response) {
+  static async list(req: Request<never, IPost[], never, { title: string }>, res: Response) {
+    const { title = '' } = req.query;
+    const query = { title: { $regex: new RegExp(title, 'i') } };
     try {
-      const posts = await Post.find().populate('author').populate('tags').sort({ createdAt: -1 }); // populate author field with user data
+      const posts = await Post.find(query).populate('author').populate('tags').sort({ createdAt: -1 }); // populate author field with user data
       const response = posts.map((post) => ({
         ...post.toJSON(),
         body: post.body.length > 300 ? post.body.substring(0, 200) + '...' : post.body,
       }));
-      await wait(1.5);
       res.json(response);
     } catch (e) {
       res.status(500).json({ message: 'Internal server errors' });

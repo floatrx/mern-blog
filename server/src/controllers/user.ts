@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
+import type { IUserCreatePayload } from '@/types/user';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
-import type { IUserCreatePayload } from '@/types/user';
-import { wait } from '@/lib/wait';
 
 export class UserController {
   /**
@@ -28,7 +27,6 @@ export class UserController {
 
     // Create user
     const createdUser = await User.create(newUser);
-    await wait(1);
     return res.status(201).json(createdUser);
   }
 
@@ -38,7 +36,6 @@ export class UserController {
    */
   static async list(_: Request, res: Response) {
     const users = await User.find().populate('posts').populate('role');
-    await wait(1);
     return res.json(users);
   }
 
