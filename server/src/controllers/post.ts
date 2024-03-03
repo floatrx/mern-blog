@@ -3,6 +3,10 @@ import { Post } from '@/models/post';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
 
+/**
+ * Post Controller contains static methods for post operations
+ * @class
+ */
 export class PostController {
   /**
    * Create a new post
@@ -31,7 +35,7 @@ export class PostController {
 
     try {
       // Create a new post with the provided author
-      const post = await Post.create({ title, body, thumbnail, authorId });
+      const post = await Post.create({ title, body, thumbnail, author: authorId });
 
       // Respond with the created post
       res.status(201).json(post);
@@ -44,7 +48,7 @@ export class PostController {
    * Get all posts
    * @returns status 200 if OK
    */
-  static async list(req: Request<never, IPost[], never, { title: string }>, res: Response) {
+  static async search(req: Request<never, IPost[], never, { title: string }>, res: Response) {
     const { title = '' } = req.query;
     const query = { title: { $regex: new RegExp(title, 'i') } };
     try {
@@ -93,8 +97,8 @@ export class PostController {
     }
 
     try {
-      const { title, body, authorId } = req.body;
-      const updatedPost = await Post.findByIdAndUpdate(id, { title, body, authorId });
+      const { title, body, author } = req.body;
+      const updatedPost = await Post.findByIdAndUpdate(id, { title, body, author });
       return res.status(200).json(updatedPost);
     } catch (e) {
       console.log('error', e.message);
@@ -130,7 +134,7 @@ export class PostController {
   }
 
   // Tags
-  static async tag(req: Request<{ id: string }, IPost, { tagId: string }>, res: Response) {
+  static async toggleTag(req: Request<{ id: string }, IPost, { tagId: string }>, res: Response) {
     const { id } = req.params;
     const { tagId } = req.body;
 

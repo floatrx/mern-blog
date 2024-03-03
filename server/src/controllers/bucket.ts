@@ -5,6 +5,11 @@ import type { UploadedFile } from 'express-fileupload';
 
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '@/config';
 
+/**
+ * Bucket Controller contains static methods for file upload operations
+ * using AWS S3
+ * @class
+ */
 export class BucketController {
   static async uploadToS3(file: UploadedFile) {
     // Check file size

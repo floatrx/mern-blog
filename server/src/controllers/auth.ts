@@ -1,11 +1,13 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type { IUser, IUserLoginPayload } from '@/types/user';
-import type { TokenPayload } from '@/types/auth';
-import { Auth } from '@/models/auth';
+import type { ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
 
+/**
+ * Auth Controller contains static methods for auth operations
+ * @class
+ */
 export class AuthController {
   /**
    * Login user
@@ -14,10 +16,7 @@ export class AuthController {
    * @returns status 401 if invalid username or password
    * @returns status 500 if server error
    */
-  static async login(
-    req: Request<never, never, IUserLoginPayload>,
-    res: Response<{ accessToken: string; profile: IUser } | { message: string }>,
-  ) {
+  static async login(req: Request<never, never, ILoginPayload>, res: Response<ILoginResponse | { message: string }>) {
     const { email, password } = req.body;
 
     // Verify if the required fields are present
@@ -38,10 +37,8 @@ export class AuthController {
     }
 
     // Generate access token
-    const tokenPayload: TokenPayload = { id: user._id, email: user.email };
+    const tokenPayload: ITokenPayload = { id: user._id, email: user.email };
     const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1d' });
-
-    await Auth.findOneAndUpdate({ userId: user._id }, { accessToken }, { upsert: true, new: true });
 
     res.json({ accessToken, profile: user.toJSON() });
   }
@@ -49,7 +46,6 @@ export class AuthController {
   /**
    * Check if session is valid
    * @returns status 200 if OK
-   * @returns status 401 if invalid session (from middleware)
    */
   static check(req: Request, res: Response) {
     res.json({

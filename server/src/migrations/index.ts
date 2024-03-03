@@ -3,11 +3,15 @@ import { Role } from '@/models/role';
 import { USER_ROLES } from '@/config';
 import { User } from '@/models/user';
 
+/**
+ * Create initial data
+ * 1. Create roles if they don't exist
+ * 2. Create users if they don't exist
+ */
 (async () => {
-  console.log('📦 Create initial data');
+  console.log('📦 Check initial data');
 
   // Create roles if they don't exist
-  console.log('📦 Check roles');
   const { ADMIN, USER } = USER_ROLES;
   const rolesToCreate = [
     { id: ADMIN, name: 'admin' },
@@ -22,7 +26,6 @@ import { User } from '@/models/user';
   // Create users if they don't exist
   const usersCount = await User.countDocuments();
 
-  console.log('📦 Check if users exist');
   if (usersCount) return;
   console.log('📦 Create initial users');
 

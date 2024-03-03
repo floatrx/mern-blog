@@ -2,6 +2,12 @@ import { setupJSONTransform } from '@/lib/transform';
 import type { IUser, IUserDocument, IUserModel } from '@/types/user';
 import mongoose, { Schema } from 'mongoose';
 
+/**
+ * User schema
+ * This schema has a virtual field 'posts' that will be populated with user's posts and custom static methods
+ * @see https://mongoosejs.com/docs/guide.html#virtuals
+ * Note: Find middleware is used to exclude secrets & version key from query results
+ */
 const userSchema: Schema<IUserDocument> = new Schema<IUserDocument>(
   {
     idRole: { type: Number, required: true },
@@ -37,7 +43,7 @@ userSchema.virtual('role', {
   justOne: true,
 });
 
-// Now you can use 'userPosts' virtual field to populate user's posts
+// Add static method getAllWithVirtualPosts to the schema
 userSchema.statics.getAllWithVirtualPosts = function () {
   return this.find({}).select('-password').populate('posts').populate('role');
 };

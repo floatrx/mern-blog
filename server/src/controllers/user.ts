@@ -3,6 +3,10 @@ import type { IUserCreatePayload } from '@/types/user';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
 
+/**
+ * User Controller contains static methods for user operations
+ * @class
+ */
 export class UserController {
   /**
    * Create a new user

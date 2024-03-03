@@ -1,7 +1,10 @@
+// Interface for the Post model
+import type { IUser } from '@/types/user';
+
 export interface IPost {
   title: string;
   body: string;
-  authorId: string;
+  author: IUser; // author id referencing the User model
   thumbnail: string;
   tags: string[]; // tag ids referencing the Tag model
 }

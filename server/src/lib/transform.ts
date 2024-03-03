@@ -1,6 +1,14 @@
-// Mongoose transform functions
 import mongoose from 'mongoose';
 
+/**
+ * Setup JSON transform
+ * @param schema
+ * @returns schema modified with toJSON transform:
+ *  - Remove duplicate _id
+ *  - Remove version key
+ *  - Remove password
+ *  - Set id as first field
+ */
 export const setupJSONTransform = (schema: mongoose.Schema) => {
   schema.set('toJSON', {
     transform: (_: unknown, ret: Record<string, any>) => {

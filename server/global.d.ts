@@ -1,3 +1,7 @@
+declare interface IErrorResponse {
+  message: string; // error message
+}
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {

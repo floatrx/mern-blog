@@ -27,11 +27,11 @@ export const router = Router()
 
   // Post
   .post('/posts', requireAuth, PostController.create)
-  .get('/posts', PostController.list)
+  .get('/posts', PostController.search)
   .get('/posts/:id', PostController.show)
   .put('/posts/:id', requireAuth, PostController.update)
+  .put('/posts/:id/tag', requireAuth, PostController.toggleTag)
   .delete('/posts/:id', requireAuth, PostController.delete)
-  .put('/posts/:id/tag', requireAuth, PostController.tag)
 
   // Tags
   .post('/tags', requireAuth, TagController.create)
@@ -47,6 +47,6 @@ export const router = Router()
   .put('/users/:id', requireAuth, UserController.update)
   .delete('/users/:id', requireAuth, UserController.delete)
 
-  // Upload to S3
+  // Upload file to S3
   .post('/upload', BucketController.uploadOne)
   .post('/upload/bulk', BucketController.uploadBulk);

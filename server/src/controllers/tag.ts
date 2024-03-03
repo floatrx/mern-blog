@@ -2,6 +2,9 @@ import type { ITag, ITagCreatePayload } from '@/types/tag';
 import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
 
+/**
+ * Tag Controller contains static methods for tag operations
+ */
 export class TagController {
   /**
    * Create a new tag
