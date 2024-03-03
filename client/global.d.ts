@@ -3,6 +3,8 @@ declare interface FindResponse<T> {
   total: number;
 }
 
+declare type ID = string;
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {

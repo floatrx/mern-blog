@@ -1,4 +1,4 @@
-import type { IUserCreate } from '@/types/user';
+import type { IUserCreateRequest } from '@/types/user';
 import { Button } from '@/components/ui/button/Button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/Form';
 import { Input } from '@/components/ui/form/Input';
@@ -28,7 +28,7 @@ export const CreateUserForm = ({ onFinish }: { onFinish?: () => void }) => {
   const { toast } = useToast();
 
   // Create form
-  const form = useForm<IUserCreate>({
+  const form = useForm<IUserCreateRequest>({
     resolver: zodResolver(createUserSchema),
     defaultValues: { name: '', email: '', password: '' },
   });
