@@ -8,6 +8,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,
   paramsSerializer: (params) => qs.stringify(params, { skipEmptyString: true, skipNull: true }),
   prepareHeaders: (headers, { getState }) => {
+    console.log('Init API with base URL:', API_BASE_URL);
+
     const { accessToken } = (getState() as RootState).auth;
     accessToken && headers.set('Authorization', `Bearer ${accessToken}`);
     return headers;
