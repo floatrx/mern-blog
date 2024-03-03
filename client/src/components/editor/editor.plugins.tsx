@@ -1,6 +1,7 @@
 import {
   BoldItalicUnderlineToggles,
   codeBlockPlugin,
+  codeMirrorPlugin,
   CodeToggle,
   CreateLink,
   diffSourcePlugin,
@@ -25,6 +26,8 @@ import {
 import { uploadApi } from '@/api/upload';
 import { store } from '@/store/store';
 
+const codeBlockLanguages = ['', 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'scss', 'json', 'yaml', 'shell', 'markdown'];
+
 const handleImageUpload = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -44,7 +47,13 @@ export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default', i
     tablePlugin(),
     thematicBreakPlugin(),
     frontmatterPlugin(),
-    codeBlockPlugin({ defaultCodeBlockLanguage: '' }),
+    codeBlockPlugin({ defaultCodeBlockLanguage: 'javascript' }),
+    codeMirrorPlugin({
+      codeBlockLanguages: codeBlockLanguages.reduce((acc, language) => {
+        acc[language] = language;
+        return acc;
+      }, {}),
+    }),
     markdownShortcutPlugin(),
     diffSourcePlugin({ diffMarkdown: initialValue, viewMode: 'rich-text' }),
     imagePlugin({

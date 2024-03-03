@@ -3,6 +3,10 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils'; // Testing components
 
+// Code block syntax highlighting
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dracula';
+
 // Styles
 export type RichTextProps = {
   content?: string;
@@ -13,13 +17,6 @@ export type RichTextProps = {
 /**
  * Shared.RichText
  * Supports markdown, gfm, raw html
- *
- * ¯\_(ツ)_/¯
- * NOTE:
- *      This component always wraps content into <p> (paragraph)
- *      If you need to render without <p> use component <HTML> ->
- *      it supports only raw html, and wraps content into <span>
- *
  * @relation StrapiSharedRichText
  * @param content - content to render
  * @param className - custom className
@@ -39,6 +36,29 @@ export const RichText = ({ content, className, excerpt }: RichTextProps) => {
       className={cn(className, 'prose dark:prose-invert lg:prose-xl', excerpt && 'line-clamp-3')}
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw]}
+      components={{
+        code(props) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { children, className, node, style, ref, ...rest } = props;
+          const match = /language-(\w+)/.exec(className || '');
+          return match ? (
+            <SyntaxHighlighter
+              {...rest}
+              PreTag="div"
+              lineProps={{ style: { wordBreak: 'break-all', whiteSpace: 'pre-wrap' } }}
+              style={dark}
+              showLineNumbers
+              customStyle={{ background: 'black' }}
+              children={String(children).replace(/\n$/, '')}
+              language={match[1]}
+            />
+          ) : (
+            <code {...rest} className={className}>
+              {children}
+            </code>
+          );
+        },
+      }}
     >
       {content}
     </Markdown>
