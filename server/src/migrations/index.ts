@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
+import { DEFAULT_PASSWORD, USER_ROLES } from '@/config';
 import { Role } from '@/models/role';
-import { USER_ROLES } from '@/config';
 import { User } from '@/models/user';
 
 /**
@@ -29,7 +29,7 @@ import { User } from '@/models/user';
   if (usersCount) return;
   console.log('📦 Create initial users');
 
-  const password = await bcrypt.hash('123', 10); // Hashed password
+  const password = await bcrypt.hash(DEFAULT_PASSWORD, 10); // Hashed password
   const usersToCreate = [
     { idRole: ADMIN, name: 'Admin', email: 'admin@test.com', password },
     { idRole: USER, name: 'John Doe', email: 'jd@test.com', password },

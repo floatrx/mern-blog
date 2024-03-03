@@ -3,11 +3,14 @@ import { Button } from '@/components/ui/button/Button';
 import { DataBoundary } from '@/components/DataBoundary';
 import { Input } from '@/components/ui/form/Input';
 import { X } from 'lucide-react';
+import { selectIsLoggedIn } from '@/store/auth';
+import { useAppSelector } from '@/hooks/redux';
 import { useDebounceCallback, useDebounceValue } from 'usehooks-ts';
 import { useDeleteTagMutation, useSearchTagsQuery } from '@/api/tags';
 import { useState } from 'react';
 
 export const TagsManager = () => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const [isEditMode, setEditMode] = useState(false);
   const [name, setValue] = useDebounceValue('', 500);
   const [deleteTag] = useDeleteTagMutation(); // Delete tag
@@ -21,9 +24,11 @@ export const TagsManager = () => {
     <>
       <div className="mb-6 flex max-w-xl items-center gap-4">
         <Input className="max-w-[400px]" onChange={handleChange} placeholder="Search by name..." />
-        <Button onClick={() => setEditMode(!isEditMode)} variant="secondary">
-          {isEditMode ? 'Done' : 'Edit'}
-        </Button>
+        {isLoggedIn && (
+          <Button onClick={() => setEditMode(!isEditMode)} variant="secondary">
+            {isEditMode ? 'Done' : 'Edit'}
+          </Button>
+        )}
       </div>
       <DataBoundary
         {...queryResult}
