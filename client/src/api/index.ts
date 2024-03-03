@@ -1,5 +1,5 @@
 import qs from 'query-string';
-import { API_BASE_URL } from '@/const';
+import { API_BASE_URL } from '@/config/const';
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { logout } from '@/store/auth';
 import type { RootState } from '@/store/store';
