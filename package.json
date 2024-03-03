@@ -9,7 +9,8 @@
     "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
     "mongo": "cd mongo && docker-compose up -d"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@types/node": "^20.11.24",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@typescript-eslint/parser": "^7.1.0",
     "concurrently": "^8.2.2",

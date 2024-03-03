@@ -4,7 +4,9 @@
   "main": "dist",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src",
-    "dev": "nodemon -q -w \"./**\" --ext \"ts,json\" --exec \"yarn start\""
+    "dev": "nodemon -q -w './**' --ext 'ts,json' --exec 'yarn start'",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "format": "pretty-quick --pattern '**/*.{ts,tsx,js,jsx,json,md}'"
   },
   "keywords": [
     "mongodb",
@@ -20,7 +22,6 @@
     "@types/express-fileupload": "^1.4.4",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^20.11.19",
     "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0"
