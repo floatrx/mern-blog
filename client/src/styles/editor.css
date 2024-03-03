@@ -1,5 +1,5 @@
-@import url("@radix-ui/colors/sky-dark.css");
-@import url("@radix-ui/colors/gray-dark.css");
+@import url("../../node_modules/@radix-ui/colors/sky-dark.css");
+@import url("../../node_modules/@radix-ui/colors/gray-dark.css");
 
 /* Toolbar */
 div[role="toolbar"] {

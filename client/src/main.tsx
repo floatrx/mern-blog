@@ -3,7 +3,7 @@ import { Providers } from '@/components/providers';
 import { createRoot } from 'react-dom/client';
 
 // Styles
-import '@/global.css';
+import '@/styles/global.css';
 
 createRoot(document.getElementById('root')!).render(
   <Providers>

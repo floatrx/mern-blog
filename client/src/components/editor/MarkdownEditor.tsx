@@ -4,7 +4,7 @@ import { MDXEditor, type MDXEditorMethods, type MDXEditorProps } from '@mdxedito
 
 // Styles
 import '@mdxeditor/editor/style.css';
-import '@/editor.css';
+import '@/styles/editor.css';
 
 // Import all plugins
 import { getMarkdownEditorPlugins } from '@/components/editor/editor.plugins';
