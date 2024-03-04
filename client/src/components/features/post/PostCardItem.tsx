@@ -16,9 +16,7 @@ export const PostCardItem = ({ post }: { post: IPost }) => (
         </Link>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-muted-foreground">
-          {post.author.name} • {post.author.email}
-        </span>
+        <span className="text-muted-foreground">{post.author.name}</span>
         <PostDeleteButton id={post.id} />
         <PostEditButton id={post.id} />
       </div>

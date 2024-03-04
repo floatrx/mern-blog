@@ -19,9 +19,7 @@ export const PostSinglePage = () => {
     <div className="prose dark:prose-invert lg:prose-xl">
       {post.thumbnail && <img className="h-full rounded-xl" src={post.thumbnail} alt={post.title} />}
       <div className="mb-10 flex items-center gap-2">
-        <span className="text-muted-foreground">
-          {post.author.name} • {post.author.email}
-        </span>
+        <span className="text-muted-foreground">@{post.author.name}</span>
         <PostEditButton id={post.id} />
         <TogglePostTagsDropdownMenu post={post} />
       </div>
