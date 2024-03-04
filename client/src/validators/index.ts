@@ -6,7 +6,4 @@ export const validateString = (fieldName: string, min: number = 3) =>
 
 export const validateEmail = (fieldName: string) => validateString(fieldName).email({ message: 'Invalid email.' });
 
-export const validatePassword = (fieldName: string) =>
-  validateString(fieldName, 3).regex(/^[a-zA-Z0-9]+$/, {
-    message: 'Password must contain only letters and numbers.',
-  });
+export const validatePassword = (fieldName: string) => validateString(fieldName, 3);

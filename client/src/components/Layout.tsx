@@ -13,8 +13,8 @@ import { TagsCounter } from '@/components/features/tag/TagsCounter';
 
 const menuItems = [
   { type: 'divider' },
-  { to: '/users', label: 'Users', icon: <UsersRound />, counter: <UsersCounter /> },
-  { to: '/tags', label: 'Tags', icon: <Hash />, counter: <TagsCounter /> },
+  { to: '/users', label: 'Users', icon: <UsersRound />, counter: <UsersCounter />, private: true },
+  { to: '/tags', label: 'Tags', icon: <Hash />, counter: <TagsCounter />, private: true },
   { to: '/posts/create', label: 'Post', icon: <SquarePen />, private: true, counter: <PostsCounter /> },
   { type: 'divider' },
 ];

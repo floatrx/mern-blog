@@ -3,8 +3,9 @@ import { Button } from '@/components/ui/button/Button';
 import { CreateUserForm } from '@/components/features/user/CreateUserForm';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+import { withAuth } from '@/components/hoc/withAuth';
 
-export const CreateUserDialog = () => {
+export const CreateUserDialog = withAuth(() => {
   const [open, setOpen] = useState(false);
   return (
     <Dialog onOpenChange={setOpen} open={open}>
@@ -23,4 +24,4 @@ export const CreateUserDialog = () => {
       </DialogContent>
     </Dialog>
   );
-};
+});
