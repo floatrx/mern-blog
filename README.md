@@ -1,6 +1,13 @@
 # Mongoose-express with client app (React)
 A simple express server with mongoose and dotenv with typescript and a client app (React) to manage the data.
 
+Demo https://blog.floatrx.net/
+
+> [!NOTE]
+> I see no point in further developing this project, as its main purpose is to demonstrate the functionality of MongoDB (using Mongoose ORM) and the Express server (Node.js). 
+> The client-side part of the application was created for demonstration purposes. 
+> The best option for a blog would be to use Next.js. 
+> Consequently, the need for Express disappears, as Next.js is a full-stack framework.
 
 ## Pre-requisites
 > ### Database: MongoDB
@@ -43,22 +50,56 @@ yarn dev
 - [x] Add Redux-Toolkit
   - [x] Add endpoints
     - [x] auth
-      - [ ] move session from localstorage to redux -> setup persist
+      - [x] move session from localstorage to redux -> setup persist
     - [x] user
-    - [ ] posts
-      - [ ] create post view with editor (markdown)
+    - [x] posts
+      - [x] create post view with editor (markdown)
     - [ ] tags 
       - [ ] find posts by tag
-      - [ ] create tag
-      - [ ] delete tag
-      - [ ] add tag to post
-      - [ ] remove tag from post
-- [ ] Upd BaseQueryFn ⏳
+      - [x] create tag
+      - [x] delete tag
+      - [x] add tag to post
+      - [x] remove tag from post
+- [x] Upd BaseQueryFn ⏳
 - [x] Add TailwindCSS & ShadCN components
-- [ ] Create Router ⏳
-- [ ] Add Views ⏳
+- [x] Create Router ⏳
+- [x] Add Views ⏳
   - [x] login
   - [x] register
-  - [ ] posts 
-  - [ ] posts 
-  - [ ] tags
+  - [x] posts 
+  - [x] tags
+
+## Deployment
+1. Setup mongo with docker or use a cloud service
+2. Setup server with pm2 and nginx (check ecosystem.config.js for more information)
+3. Setup client with nginx
+### Nginx (example configuration)
+```nginx configuration
+# API
+server {
+    server_name blog-api.floatrx.net;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+    error_log /var/log/nginx/blog-api-error.log;
+}
+# CLIENT
+server {
+    server_name blog.floatrx.net;
+    root /var/www/blog;
+    index index.html;
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+
+> [!NOTE]
+> Use certbot to generate SSL certificates.
+
+Happy coding! 🚀
