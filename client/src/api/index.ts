@@ -1,15 +1,12 @@
 import qs from 'query-string';
 import { API_BASE_URL } from '@/config/const';
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { logout } from '@/store/auth';
 import type { RootState } from '@/store/store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,
   paramsSerializer: (params) => qs.stringify(params, { skipEmptyString: true, skipNull: true }),
   prepareHeaders: (headers, { getState }) => {
-    console.log('Init API with base URL:', API_BASE_URL);
-
     const { accessToken } = (getState() as RootState).auth;
     accessToken && headers.set('Authorization', `Bearer ${accessToken}`);
     return headers;
@@ -24,8 +21,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error?.status === 401) {
-    console.log('Got 401. Try refresh access token');
-    api.dispatch(logout());
+    // console.log('Got 401. Logging out...');
+    // api.dispatch(logout());
     // return baseQuery(args, api, extraOptions); <- TODO: retry
   }
 

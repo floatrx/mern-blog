@@ -11,6 +11,7 @@ declare global {
       NODE_ENV: 'development' | 'production';
       VITE_PORT: string;
       VITE_API_URL: string;
+      VITE_SITE_NAME: string;
     }
   }
 }

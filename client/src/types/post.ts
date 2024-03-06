@@ -12,6 +12,7 @@ export interface IPost extends IPostBase {
   authorId: string;
   author: IUser;
   tags: ITag[];
+  createdAt: string;
 }
 
 export interface IPostCreate extends IPostBase {

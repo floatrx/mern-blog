@@ -6,3 +6,4 @@
 `docker-compose down` # Stop the mongodb
 
 OR use [CloudMongoDB](https://cloud.mongodb.com/).
+💻🌐 #FullStack #Express #MongoDB #React #Vite #TailwindCSS #ModernDevelopment #WebDevelopment
