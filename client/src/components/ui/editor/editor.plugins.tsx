@@ -12,7 +12,6 @@ import {
   InsertImage,
   InsertTable,
   InsertThematicBreak,
-  linkDialogPlugin,
   linkPlugin,
   listsPlugin,
   ListsToggle,
@@ -28,6 +27,11 @@ import { store } from '@/store/store';
 
 const codeBlockLanguages = ['', 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'scss', 'json', 'yaml', 'shell', 'markdown'];
 
+/**
+ * Handle image upload
+ * TODO: Test this feature
+ * @param file
+ */
 const handleImageUpload = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -43,7 +47,7 @@ export const getMarkdownEditorPlugins = (mode: 'default' | 'view' = 'default', i
     quotePlugin(),
     headingsPlugin({ allowedHeadingLevels: [1, 2, 3, 4, 5, 6] }),
     linkPlugin(),
-    linkDialogPlugin(),
+    // linkDialogPlugin(),
     tablePlugin(),
     thematicBreakPlugin(),
     frontmatterPlugin(),

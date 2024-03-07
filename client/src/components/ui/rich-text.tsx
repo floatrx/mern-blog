@@ -3,8 +3,28 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import { cn } from '@/lib/utils'; // Testing components
 // Code block syntax highlighting
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+
+// Default theme
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dracula';
+
+// Language parsers
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
+
+const languageParserMap = {
+  js: tsx,
+  javascript: tsx,
+  typescript: tsx,
+  jsx: tsx,
+  ts: tsx,
+  tsx,
+  json,
+};
+
+Object.entries(languageParserMap).forEach(([language, parser]) => {
+  SyntaxHighlighter.registerLanguage(language, parser);
+});
 
 // Styles
 export type RichTextProps = {

@@ -31,16 +31,13 @@ export function MobileNav({ items }: IProps) {
         <ScrollArea className="h-full">
           <div className="mt-6 min-h-[calc(100vh-140px)] space-y-6">
             <h4 className="font-medium text-muted-foreground">Menu:</h4>
-            {items.map(
-              ({ Icon, to, label }) =>
-                to && (
-                  <Fragment key={to}>
-                    <Link to={to} onClick={toggleOpen} className="stack text-xl">
-                      {Icon && <Icon />} {label}
-                    </Link>
-                  </Fragment>
-                ),
-            )}
+            {items.map(({ Icon, to, label }, idx) => (
+              <Fragment key={idx}>
+                <Link to={to} onClick={toggleOpen} className="stack text-xl">
+                  <Icon /> {label}
+                </Link>
+              </Fragment>
+            ))}
           </div>
           <UserProfileButton className="w-full" />
         </ScrollArea>

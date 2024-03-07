@@ -5,11 +5,10 @@ import { defineConfig, loadEnv } from 'vite';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   process.env = Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
+  const port = parseInt(process.env.VITE_PORT || '4000');
   return {
     plugins: [react()],
-    server: {
-      port: parseInt(process.env.VITE_PORT || '4000'),
-    },
+    server: { port },
     optimizeDeps: {
       exclude: ['js-big-decimal'],
     },
@@ -17,6 +16,11 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
+    },
+    build: {
+      modulePreload: false,
+      minify: true,
+      sourcemap: false,
     },
   };
 });

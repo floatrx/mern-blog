@@ -18,26 +18,30 @@ export const Header = () => {
 
         <nav className="flex-auto">
           <ul className="stack gap-4">
+            <li className="flex-1" />
             {mainNavItems.map(({ Icon, Counter, ...item }, idx) => (
               <li key={idx} className={cn(!item.to && 'flex-1', 'hidden sm:block' /* show only sm & larger screens */)}>
-                {item.to && (!item.private || (item.private && isLoggedIn)) && (
+                {(!item.private || (item.private && isLoggedIn)) && (
                   <Link to={item.to} className="stack">
-                    {Icon && <Icon />} <span className="text-nowrap">{item.label}</span>
-                    <span className="text-nowrap">{Counter && <Counter />}</span>
+                    <Icon /> <span className="text-nowrap">{item.label}</span>
+                    <span className="text-nowrap">
+                      <Counter />
+                    </span>
                   </Link>
                 )}
               </li>
             ))}
-            <li className="hidden md:block">
+            <li className="flex-1" />
+            <li className={cn(isLoggedIn && 'hidden md:block')}>
               <ThemeToggle />
             </li>
-            <li className="hidden md:block">
+            <li className={cn(isLoggedIn && 'hidden lg:block')}>
               <UserProfileButton />
             </li>
           </ul>
         </nav>
 
-        <MobileNav items={mainNavItems} />
+        {isLoggedIn && <MobileNav items={mainNavItems} />}
       </div>
     </header>
   );

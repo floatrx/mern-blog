@@ -1,8 +1,8 @@
 import type { IPost } from '@/types/post';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { RichText } from '@/components/ui/rich-text';
 import { TagsList } from '@/components/features/tag/tags-list';
+import { Content } from '@/components/ui/content';
 import { PostMeta } from '@/components/features/post/post-meta';
 
 export const PostCard = ({ post }: { post: IPost }) => (
@@ -18,7 +18,7 @@ export const PostCard = ({ post }: { post: IPost }) => (
     </CardHeader>
     <CardContent className="space-y-2">
       <TagsList tags={post.tags} />
-      <RichText content={post.body} excerpt />
+      <Content text={post.body} />
     </CardContent>
   </Card>
 );
