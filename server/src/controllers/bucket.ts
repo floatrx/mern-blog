@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
-import { S3Client } from '@aws-sdk/client-s3';
-import { Upload } from '@aws-sdk/lib-storage';
-import type { UploadedFile } from 'express-fileupload';
+import { Request, Response } from "express";
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import type { UploadedFile } from "express-fileupload";
 
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '@/config';
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from "@/config";
 
 /**
  * Bucket Controller contains static methods for file upload operations
@@ -13,13 +13,13 @@ import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '
 export class BucketController {
   static async uploadToS3(file: UploadedFile) {
     // Check file size
-    if (file.size > 2 * 1024 * 1024) {
-      // 2MB limit
-      throw new Error('File size exceeds 2MB limit.');
+    if (file.size > 4 * 1024 * 1024) {
+      // 4MB limit
+      throw new Error('File size exceeds 4MB limit.');
     }
 
     // Check file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']; // Allowed image MIME types
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']; // Allowed image MIME types
     if (!allowedTypes.includes(file.mimetype)) {
       throw new Error('Only image files (JPEG, PNG, WEBP) are allowed.');
     }
@@ -38,7 +38,7 @@ export class BucketController {
       client: s3Client,
       params: {
         Bucket: S3_BUCKET,
-        Key: file.name.replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '_'),
+        Key: file.name.replace(/[^a-zA-Z0-9-.\s]/g, '').replace(/\s+/g, '-'),
         Body: file.data,
         ContentType: file.mimetype,
         ContentDisposition: 'inline', // Set Content-Disposition to 'inline' to display the file in the browser
