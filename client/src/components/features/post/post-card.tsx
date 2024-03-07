@@ -19,7 +19,7 @@ export const PostCard = ({ post }: { post: IPost }) => (
       </Link>
       <PostMeta post={post} />
     </CardHeader>
-    <CardContent className="space-y-2 border border-red-500">
+    <CardContent className="space-y-2">
       <TagsList tags={post.tags} />
       <Content text={post.body} />
     </CardContent>
