@@ -13,12 +13,7 @@ export const PostCard = ({ post }: { post: IPost }) => (
     <CardHeader className="space-y-4">
       <Link to={`/posts/${post.id}`} className="space-y-5 text-blue-500">
         {post.thumbnail && (
-          <img
-            loading="lazy"
-            src={post.thumbnail}
-            alt="post"
-            className="-mt-14 mb-2 h-52 w-full rounded-xl object-cover shadow-xl shadow-cyan-500/5"
-          />
+          <img src={post.thumbnail} alt="post" className="-mt-14 mb-2 h-52 w-full rounded-xl object-cover shadow-xl shadow-cyan-500/5" />
         )}
         <h2 className="line-clamp-2 text-2xl">{post.title}</h2>
       </Link>
