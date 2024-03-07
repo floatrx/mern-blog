@@ -1,7 +1,8 @@
 import { Hash, SquarePen, UsersRound } from 'lucide-react';
-import { UsersCounter } from '@/components/features/user/users-counter';
-import { TagsCounter } from '@/components/features/tag/tags-counter';
+
 import { PostsCounter } from '@/components/features/post/posts-counter';
+import { TagsCounter } from '@/components/features/tag/tags-counter';
+import { UsersCounter } from '@/components/features/user/users-counter';
 
 export type MainNavItem = {
   // path to navigate

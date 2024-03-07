@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { cn } from '@/lib/utils';
-import { useAppSelector } from '@/hooks/redux';
-import { selectIsLoggedIn } from '@/store/auth';
-import { UserProfileButton } from '@/components/features/user/user-profile-button';
-import { MobileNav } from '@/components/ui/mobile-nav';
-import { Logo } from '@/components/ui/layout/logo';
+
 import { mainNavItems } from '@/config/nav';
+import { useAppSelector } from '@/hooks/redux';
+import { cn } from '@/lib/utils';
+import { selectIsLoggedIn } from '@/store/auth';
+
+import { UserProfileButton } from '@/components/features/user/user-profile-button';
+
+import { Logo } from '@/components/ui/layout/logo';
+import { MobileNav } from '@/components/ui/mobile-nav';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -20,7 +23,7 @@ export const Header = () => {
           <ul className="stack gap-4">
             <li className="flex-1" />
             {mainNavItems.map(({ Icon, Counter, ...item }, idx) => (
-              <li key={idx} className={cn(!item.to && 'flex-1', 'hidden sm:block' /* show only sm & larger screens */)}>
+              <li key={idx} className={cn(!item.to && 'flex-1', 'hidden md:block' /* show only sm & larger screens */)}>
                 {(!item.private || (item.private && isLoggedIn)) && (
                   <Link to={item.to} className="stack">
                     <Icon /> <span className="text-nowrap">{item.label}</span>
@@ -32,11 +35,11 @@ export const Header = () => {
               </li>
             ))}
             <li className="flex-1" />
-            <li className={cn(isLoggedIn && 'hidden md:block')}>
+            <li>
               <ThemeToggle />
             </li>
-            <li className={cn(isLoggedIn && 'hidden lg:block')}>
-              <UserProfileButton />
+            <li className={cn(isLoggedIn && 'hidden md:block')}>
+              <UserProfileButton asDropdown />
             </li>
           </ul>
         </nav>

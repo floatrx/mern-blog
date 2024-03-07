@@ -1,5 +1,6 @@
 import { RootState } from '@/store/store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import type { IUser } from '@/types/user';
 
 export interface AuthState {

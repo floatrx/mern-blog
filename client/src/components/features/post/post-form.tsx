@@ -1,14 +1,17 @@
-import type { IPostCreate } from '@/types/post';
+import { useForm } from 'react-hook-form';
+
+import { useToast } from '@/hooks/use-toast';
+import { createPostSchema } from '@/validators/post';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Button } from '@/components/ui/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MarkdownEditor } from '@/components/ui/editor/markdown-editor';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
-import { MarkdownEditor } from '@/components/ui/editor/markdown-editor';
 import { Upload } from '@/components/ui/form/upload';
-import { createPostSchema } from '@/validators/post';
-import { useForm } from 'react-hook-form';
-import { useToast } from '@/hooks/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
+
+import type { IPostCreate } from '@/types/post';
 
 interface IProps {
   onSubmit: (values: IPostCreate) => Promise<void>;
@@ -40,7 +43,7 @@ export const PostForm = (props: IProps) => {
     <Card>
       <CardHeader className="flex gap-2">
         <CardTitle className="flex gap-2">
-          <span>{props.id ? 'Update' : 'Add'} a new post</span>
+          <span>{props.id ? 'Update' : 'Add a new'} post</span>
         </CardTitle>
       </CardHeader>
 

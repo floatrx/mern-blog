@@ -1,5 +1,6 @@
-import { lazy } from "react";
-import type { RouteItem } from "@/types/route";
+import { lazy } from 'react';
+
+import type { RouteItem } from '@/types/route';
 
 /**
  * Lazy loaded components

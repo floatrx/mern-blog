@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
+
 import { SITE_NAME } from '@/config/const';
 import { upperFirst } from '@/lib/utils';
 

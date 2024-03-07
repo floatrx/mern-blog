@@ -1,9 +1,10 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { api } from '@/api';
 import auth from '@/store/auth';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+// defaults to localStorage for web
 
 // Combine reducers
 export const rootReducer = combineReducers({

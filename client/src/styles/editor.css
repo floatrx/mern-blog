@@ -3,7 +3,7 @@
 
 /* Toolbar */
 div[role="toolbar"] {
-    @apply rounded-xl border bg-transparent;
+    @apply rounded-xl border bg-card;
 }
 
 /* Editor */

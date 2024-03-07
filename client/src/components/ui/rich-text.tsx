@@ -1,16 +1,16 @@
 import Markdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import { cn } from '@/lib/utils'; // Testing components
+// Testing components
 // Code block syntax highlighting
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
+// Language parsers
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 // Default theme
 import dark from 'react-syntax-highlighter/dist/esm/styles/prism/dracula';
 
-// Language parsers
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
+import { cn } from '@/lib/utils';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 const languageParserMap = {
   js: tsx,

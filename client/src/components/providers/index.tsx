@@ -1,7 +1,8 @@
 import type { PropsWithChildren } from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
+
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { persistor, store } from '@/store/store';
 

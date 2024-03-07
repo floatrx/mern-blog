@@ -3,9 +3,10 @@
  * @description A component that manages tags
  * TODO: Finish implementing this component
  */
-import { Badge } from '@/components/ui/badge';
-import { DataRenderer } from '@/components/hoc/data-renderer';
 import { useSearchTagsQuery } from '@/api/tags';
+import { DataRenderer } from '@/components/hoc/data-renderer';
+
+import { Badge } from '@/components/ui/badge';
 
 export const TagsManager = () => {
   // const isLoggedIn = useAppSelector(selectIsLoggedIn);

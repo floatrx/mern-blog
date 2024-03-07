@@ -1,18 +1,22 @@
+import { Lock } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+
+import { useLazyCheckQuery, useLoginMutation } from '@/api/auth';
+import { useAppSelector } from '@/hooks/redux';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { selectIsLoggedIn, selectUser } from '@/store/auth';
+import { loginUserSchema } from '@/validators/user';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { UserLogoutButton } from '@/components/features/user/user-logout-button';
+
 import { Button } from '@/components/ui/button/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
-import { Lock } from 'lucide-react';
-import { UserLogoutButton } from '@/components/features/user/user-logout-button';
-import { cn } from '@/lib/utils';
-import { loginUserSchema } from '@/validators/user';
-import { selectIsLoggedIn, selectUser } from '@/store/auth';
-import { useAppSelector } from '@/hooks/redux';
-import { useForm } from 'react-hook-form';
-import { useLazyCheckQuery, useLoginMutation } from '@/api/auth';
-import { zodResolver } from '@hookform/resolvers/zod';
+
 import type { IAuthLoginRequest } from '@/types/auth';
-import { useToast } from '@/hooks/use-toast';
 
 const formFields = {
   email: {

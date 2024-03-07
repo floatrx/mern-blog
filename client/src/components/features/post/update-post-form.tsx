@@ -1,7 +1,10 @@
-import { useGetPostQuery, useUpdatePostMutation } from '@/api/posts';
-import { PostForm } from '@/components/features/post/post-form';
-import type { IPostCreate } from '@/types/post';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { useGetPostQuery, useUpdatePostMutation } from '@/api/posts';
+
+import { PostForm } from '@/components/features/post/post-form';
+
+import type { IPostCreate } from '@/types/post';
 
 export const UpdatePostForm = () => {
   const id = useParams().id;

@@ -1,4 +1,5 @@
 import { api } from '@/api/index';
+
 import type { IPost, IPostCreate } from '@/types/post';
 
 const path = '/posts';

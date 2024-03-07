@@ -1,12 +1,16 @@
 import { ReactElement, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Spinner } from '@/components/ui/spinner';
+
 import { ErrorBoundary } from '@/components/hoc/error-boundary';
-import { useDocumentTitle } from '@/hooks/use-document-title';
-import type { RouteItem } from '@/types/route';
 import { useAppSelector } from '@/hooks/redux';
+import { useDocumentTitle } from '@/hooks/use-document-title';
 import { selectIsLoggedIn } from '@/store/auth';
+
 import LoginUserForm from '@/components/features/user/login-user-form';
+
+import { Spinner } from '@/components/ui/spinner';
+
+import type { RouteItem } from '@/types/route';
 
 /**
  * LazyComponent HOC with ErrorBoundary and Suspense

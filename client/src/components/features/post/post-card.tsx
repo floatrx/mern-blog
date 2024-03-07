@@ -1,9 +1,12 @@
-import type { IPost } from '@/types/post';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { TagsList } from '@/components/features/tag/tags-list';
-import { Content } from '@/components/ui/content';
+
 import { PostMeta } from '@/components/features/post/post-meta';
+import { TagsList } from '@/components/features/tag/tags-list';
+
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Content } from '@/components/ui/content';
+
+import type { IPost } from '@/types/post';
 
 export const PostCard = ({ post }: { post: IPost }) => (
   <Card className="mt-10">

@@ -1,7 +1,9 @@
-import { Button } from '@/components/ui/button/button';
 import { RefreshCw } from 'lucide-react';
 import { useCallback } from 'react';
+
 import { useToast } from '@/hooks/use-toast';
+
+import { Button } from '@/components/ui/button/button';
 
 interface IProps {
   onClick: () => void;

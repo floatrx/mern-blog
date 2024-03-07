@@ -1,11 +1,13 @@
-import type { IPost } from '@/types/post';
-import { useSearchTagsQuery } from '@/api/tags';
-import { useToggleTagMutation } from '@/api/posts';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button/button';
 import { Hash } from 'lucide-react';
 
+import { useToggleTagMutation } from '@/api/posts';
+import { useSearchTagsQuery } from '@/api/tags';
 import { onlyAuth } from '@/components/hoc/only-auth';
+
+import { Button } from '@/components/ui/button/button';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+
+import type { IPost } from '@/types/post';
 
 export const TogglePostTagsButton = onlyAuth(({ post }: { post: IPost }) => {
   const { data: tags } = useSearchTagsQuery({});
@@ -14,7 +16,7 @@ export const TogglePostTagsButton = onlyAuth(({ post }: { post: IPost }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="text-foreground">
           <Hash />
         </Button>
       </DropdownMenuTrigger>

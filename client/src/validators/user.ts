@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { validateEmail, validatePassword, validateString } from '@/validators/index';
+import { z } from 'zod';
 
 export const createUserSchema = z.object({
   name: validateString('Username').regex(/^[a-zA-Z\s]+$/, { message: 'Username must contain only letters.' }),

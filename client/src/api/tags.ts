@@ -1,4 +1,5 @@
 import { api } from '@/api/index';
+
 import type { ITag, ITagCreate } from '@/types/tag';
 
 const path = '/tags';

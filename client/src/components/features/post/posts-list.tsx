@@ -1,7 +1,9 @@
-import { DataRenderer } from '@/components/hoc/data-renderer';
-import { PostCard } from '@/components/features/post/post-card';
 import { useSearchPostsQuery } from '@/api/posts';
+import { DataRenderer } from '@/components/hoc/data-renderer';
 import { useDebounceCallback, useDebounceValue } from 'usehooks-ts';
+
+import { PostCard } from '@/components/features/post/post-card';
+
 import { Input } from '@/components/ui/form/input';
 
 export const PostsList = () => {

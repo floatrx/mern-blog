@@ -1,11 +1,14 @@
-import type { ITagCreate } from '@/types/tag';
+import { useForm } from 'react-hook-form';
+
+import { useCreateTagMutation } from '@/api/tags';
+import { createTagSchema } from '@/validators/tag';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Button } from '@/components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
-import { createTagSchema } from '@/validators/tag';
-import { useCreateTagMutation } from '@/api/tags';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+
+import type { ITagCreate } from '@/types/tag';
 
 export const CreateTag = () => {
   const [createTag, { isLoading }] = useCreateTagMutation(); // Create tag

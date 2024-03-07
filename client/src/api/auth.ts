@@ -1,5 +1,6 @@
 import { api } from '@/api/index';
 import { setToken, setUser } from '@/store/auth';
+
 import type { IAuthLoginRequest, IAuthLoginResponse } from '@/types/auth';
 
 const path = '/auth';

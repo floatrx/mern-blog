@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { validateString } from '@/validators/index';
+import { z } from 'zod';
 
 export const createPostSchema = z.object({
   title: validateString('Title'),

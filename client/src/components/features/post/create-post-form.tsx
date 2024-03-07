@@ -1,7 +1,10 @@
-import type { IPostCreate } from '@/types/post';
-import { PostForm } from '@/components/features/post/post-form';
-import { useCreatePostMutation } from '@/api/posts';
 import { useNavigate } from 'react-router-dom';
+
+import { useCreatePostMutation } from '@/api/posts';
+
+import { PostForm } from '@/components/features/post/post-form';
+
+import type { IPostCreate } from '@/types/post';
 
 export const CreatePostForm = () => {
   const [createPost, { isLoading }] = useCreatePostMutation(); // Create user

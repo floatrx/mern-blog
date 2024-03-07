@@ -1,6 +1,7 @@
-import type { IUser } from '@/types/user';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
+
+import type { IUser } from '@/types/user';
 
 export const UserCardItem = ({ user }: { user: IUser }) => (
   <Card>

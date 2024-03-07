@@ -1,7 +1,10 @@
-import { useGetPostQuery } from '@/api/posts';
 import { useParams } from 'react-router';
-import { Spinner } from '@/components/ui/spinner';
+
+import { useGetPostQuery } from '@/api/posts';
+
 import { PostContent } from '@/components/features/post/post-content';
+
+import { Spinner } from '@/components/ui/spinner';
 
 export const PostSinglePage = () => {
   const { id } = useParams();

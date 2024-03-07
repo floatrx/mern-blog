@@ -1,6 +1,8 @@
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import type { SerializedError } from '@reduxjs/toolkit';
 import { ReactNode } from 'react';
+
+import type { SerializedError } from '@reduxjs/toolkit';
+
 import { Spinner } from '@/components/ui/spinner';
 
 export type DataBoundaryProps<Item> = {

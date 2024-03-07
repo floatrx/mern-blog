@@ -1,12 +1,15 @@
-import type { IUserCreateRequest } from '@/types/user';
+import { useForm } from 'react-hook-form';
+
+import { useCreateUserMutation } from '@/api/users';
+import { useToast } from '@/hooks/use-toast';
+import { createUserSchema } from '@/validators/user';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { Button } from '@/components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
-import { createUserSchema } from '@/validators/user';
-import { useCreateUserMutation } from '@/api/users';
-import { useForm } from 'react-hook-form';
-import { useToast } from '@/hooks/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
+
+import type { IUserCreateRequest } from '@/types/user';
 
 const formFields = {
   name: {

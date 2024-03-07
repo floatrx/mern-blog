@@ -1,29 +1,29 @@
+import { uploadApi } from '@/api/upload';
+import { store } from '@/store/store';
 import {
   BoldItalicUnderlineToggles,
-  codeBlockPlugin,
-  codeMirrorPlugin,
   CodeToggle,
   CreateLink,
-  diffSourcePlugin,
   DiffSourceToggleWrapper,
-  frontmatterPlugin,
-  headingsPlugin,
-  imagePlugin,
   InsertImage,
   InsertTable,
   InsertThematicBreak,
+  ListsToggle,
+  UndoRedo,
+  codeBlockPlugin,
+  codeMirrorPlugin,
+  diffSourcePlugin,
+  frontmatterPlugin,
+  headingsPlugin,
+  imagePlugin,
   linkPlugin,
   listsPlugin,
-  ListsToggle,
   markdownShortcutPlugin,
   quotePlugin,
   tablePlugin,
   thematicBreakPlugin,
   toolbarPlugin,
-  UndoRedo,
 } from '@mdxeditor/editor';
-import { uploadApi } from '@/api/upload';
-import { store } from '@/store/store';
 
 const codeBlockLanguages = ['', 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'scss', 'json', 'yaml', 'shell', 'markdown'];
 

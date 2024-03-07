@@ -1,5 +1,5 @@
-import type { IUser } from '@/types/user';
 import type { ITag } from '@/types/tag';
+import type { IUser } from '@/types/user';
 
 interface IPostBase {
   title: string;

@@ -1,12 +1,16 @@
-import { Link } from 'react-router-dom';
 import { Leaf } from 'lucide-react';
-import { SITE_NAME } from '@/config/const';
+import { Link } from 'react-router-dom';
 
-export const Logo = () => (
-  <span className="text-md sm:text-2xl">
-    <Link to="/" className="flex items-center gap-1 font-bold">
-      <Leaf />
-      <span>{SITE_NAME}</span>
-    </Link>
-  </span>
+import { SITE_NAME } from '@/config/const';
+import { cn } from '@/lib/utils';
+
+interface IProps {
+  className?: string;
+}
+
+export const Logo = ({ className }: IProps) => (
+  <Link to="/" className={cn('flex items-center gap-1 text-2xl font-bold', className)}>
+    <Leaf />
+    <span>{SITE_NAME}</span>
+  </Link>
 );

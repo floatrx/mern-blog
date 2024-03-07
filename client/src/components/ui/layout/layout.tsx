@@ -1,7 +1,9 @@
 import { type PropsWithChildren } from 'react';
-import { Toaster } from '@/components/ui/toaster';
-import { Header } from '@/components/ui/layout/header';
+
 import { SITE_NAME } from '@/config/const';
+
+import { Header } from '@/components/ui/layout/header';
+import { Toaster } from '@/components/ui/toaster';
 
 /**
  * Main layout

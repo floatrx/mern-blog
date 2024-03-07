@@ -1,9 +1,11 @@
-import type { IPost } from '@/types/post';
 import { PostEditButton } from '@/components/features/post/post-edit-button';
 import { PostMeta } from '@/components/features/post/post-meta';
-import { RichText } from '@/components/ui/rich-text';
 import { TagsList } from '@/components/features/tag/tags-list';
 import { TogglePostTagsButton } from '@/components/features/tag/toggle-post-tags-button';
+
+import { RichText } from '@/components/ui/rich-text';
+
+import type { IPost } from '@/types/post';
 
 export const PostContent = ({ post }: { post: IPost | undefined }) =>
   !!post && (
@@ -17,7 +19,7 @@ export const PostContent = ({ post }: { post: IPost | undefined }) =>
         </div>
       </div>
       <TagsList tags={post.tags} />
-      <h1>111{post.title}</h1>
+      <h1>{post.title}</h1>
       <RichText content={post.body} />
     </div>
   );

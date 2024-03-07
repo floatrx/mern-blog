@@ -1,7 +1,8 @@
-import qs from 'query-string';
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { API_BASE_URL } from '@/config/const';
-import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import type { RootState } from '@/store/store';
+import qs from 'query-string';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,

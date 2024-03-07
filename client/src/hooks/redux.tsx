@@ -2,8 +2,9 @@
  * Redux hooks
  * Docs: https://redux-toolkit.js.org/tutorials/typescript#define-typed-hooks
  */
-import { AppDispatch, RootState } from '@/store/store';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+
+import { AppDispatch, RootState } from '@/store/store';
 
 /**
  * Typed useAppDispatch

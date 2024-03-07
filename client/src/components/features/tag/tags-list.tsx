@@ -1,5 +1,6 @@
-import type { ITag } from '@/types/tag';
 import { Badge } from '@/components/ui/badge';
+
+import type { ITag } from '@/types/tag';
 
 export const TagsList = ({ tags }: { tags: ITag[] | undefined }) => {
   if (!tags) return null;

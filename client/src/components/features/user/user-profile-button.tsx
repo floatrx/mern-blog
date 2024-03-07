@@ -1,14 +1,26 @@
-import { Link } from 'react-router-dom';
 import { CircleUserRound, LogIn } from 'lucide-react';
-import { UserLogoutButton } from '@/components/features/user/user-logout-button';
+import { Link } from 'react-router-dom';
+
+import { useAppSelector } from '@/hooks/redux';
+import { useToggle } from '@/hooks/use-toggle';
 import { cn } from '@/lib/utils';
 import { selectUser } from '@/store/auth';
-import { useAppSelector } from '@/hooks/redux';
+import { useMediaQuery } from 'usehooks-ts';
+
+import { UserLogoutButton } from '@/components/features/user/user-logout-button';
+
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
-export const UserProfileButton = (props: { className?: string }) => {
+interface IProps {
+  className?: string;
+  asDropdown?: boolean; // If true, render as dropdown
+}
+
+export const UserProfileButton = ({ className, asDropdown }: IProps) => {
   const user = useAppSelector(selectUser);
-  const classNames = cn(`flex items-center gap-2 text-nowrap`, props.className);
+  const { isOpen, setOpen } = useToggle();
+  const smallScreen = useMediaQuery('(max-width: 767px)'); // auto-close on mobile
+  const classNames = cn(`flex items-center gap-2 text-nowrap`, className);
 
   if (!user.id) {
     return (
@@ -21,9 +33,9 @@ export const UserProfileButton = (props: { className?: string }) => {
   const name = user.name.split(' ');
   const displayName = name.length > 1 ? `${name[0]} ${name[1][0]}.` : user.name;
 
-  return (
+  return asDropdown ? (
     <div className="flex items-center gap-2">
-      <DropdownMenu>
+      <DropdownMenu open={isOpen && !smallScreen} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild className="outline-0">
           <Link to="/profile" className={cn(classNames)}>
             <CircleUserRound />
@@ -43,6 +55,15 @@ export const UserProfileButton = (props: { className?: string }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+    </div>
+  ) : (
+    // Inline
+    <div className={cn('stack justify-between border font-semibold', className)}>
+      <Link to="/profile" className="stack">
+        <CircleUserRound />
+        <span className="max-w-[11ch] truncate sm:max-w-[18ch] md:max-w-[7ch] lg:max-w-[15ch]">{user.name}12198218291829182</span>
+      </Link>
+      <UserLogoutButton circle />
     </div>
   );
 };

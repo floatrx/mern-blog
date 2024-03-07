@@ -1,10 +1,10 @@
 import { forwardRef, useEffect, useRef } from 'react';
-import { cn } from '@/lib/utils';
-import { MDXEditor, type MDXEditorMethods, type MDXEditorProps } from '@mdxeditor/editor';
 
+import { cn } from '@/lib/utils';
+import '@/styles/editor.css';
+import { MDXEditor, type MDXEditorMethods, type MDXEditorProps } from '@mdxeditor/editor';
 // Styles
 import '@mdxeditor/editor/style.css';
-import '@/styles/editor.css';
 
 // Import all plugins
 import { getMarkdownEditorPlugins } from '@/components/ui/editor/editor.plugins';

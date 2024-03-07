@@ -1,5 +1,5 @@
-import { useAppSelector } from "@/hooks/redux";
-import { selectIsLoggedIn } from "@/store/auth";
+import { useAppSelector } from '@/hooks/redux';
+import { selectIsLoggedIn } from '@/store/auth';
 
 /**
  * [Guard decorator] Decorate private components

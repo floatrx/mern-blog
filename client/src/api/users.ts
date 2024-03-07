@@ -1,4 +1,5 @@
 import { api } from '@/api/index';
+
 import type { IUser, IUserCreateRequest, IUserUpdateRequest } from '@/types/user';
 
 const path = '/users';

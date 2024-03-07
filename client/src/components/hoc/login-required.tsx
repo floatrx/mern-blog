@@ -1,7 +1,9 @@
-import { LoginUserForm } from '@/components/features/user/login-user-form';
-import { selectIsLoggedIn } from '@/store/auth';
-import { useAppSelector } from '@/hooks/redux';
 import type { ReactNode } from 'react';
+
+import { useAppSelector } from '@/hooks/redux';
+import { selectIsLoggedIn } from '@/store/auth';
+
+import { LoginUserForm } from '@/components/features/user/login-user-form';
 
 interface IProps {
   element: ReactNode;

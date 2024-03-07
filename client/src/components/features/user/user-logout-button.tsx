@@ -1,8 +1,10 @@
-import { useAppDispatch } from '@/hooks/redux';
-import { logout } from '@/store/auth';
-import { Button } from '@/components/ui/button/button';
 import { LogOut } from 'lucide-react';
+
+import { useAppDispatch } from '@/hooks/redux';
 import { cn } from '@/lib/utils';
+import { logout } from '@/store/auth';
+
+import { Button } from '@/components/ui/button/button';
 
 interface IProps {
   circle?: boolean;

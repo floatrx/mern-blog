@@ -1,23 +1,28 @@
-import { Button } from '@/components/ui/button/button';
+import { Menu } from 'lucide-react';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+
+import type { MainNavItem } from '@/config/nav';
+import { useToggle } from '@/hooks/use-toggle';
+import { useMediaQuery } from 'usehooks-ts';
+
+import { UserProfileButton } from '@/components/features/user/user-profile-button';
+
+import { Button } from '@/components/ui/button/button';
 import { Logo } from '@/components/ui/layout/logo';
-import { Menu } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { UserProfileButton } from '@/components/features/user/user-profile-button';
-import { useFlag } from '@/hooks/use-flag';
-import type { MainNavItem } from '@/config/nav';
 
 interface IProps {
   items: MainNavItem[];
 }
 
 export function MobileNav({ items }: IProps) {
-  const [open, toggleOpen, setOpen] = useFlag(false);
+  const { isOpen, setOpen, close } = useToggle();
+  const smallScreen = useMediaQuery('(max-width: 767px)'); // auto-close on desktop
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={isOpen && smallScreen} onOpenChange={setOpen} modal>
       <SheetTrigger asChild>
         <Button variant="ghost" className="!bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden">
           <Menu />
@@ -25,20 +30,22 @@ export function MobileNav({ items }: IProps) {
         </Button>
       </SheetTrigger>
       <SheetContent side="right">
-        <div onClick={toggleOpen}>
-          <Logo />
+        <div onClick={close}>
+          <Logo className="gap-3 text-2xl" />
         </div>
         <ScrollArea className="h-full">
-          <div className="mt-6 min-h-[calc(100vh-140px)] space-y-6">
-            <h4 className="font-medium text-muted-foreground">Menu:</h4>
+          <div className="mt-6 min-h-[calc(100vh-160px)] space-y-7">
+            <hr />
+            <h4 className="font-medium opacity-40">Menu:</h4>
             {items.map(({ Icon, to, label }, idx) => (
               <Fragment key={idx}>
-                <Link to={to} onClick={toggleOpen} className="stack text-xl">
+                <Link to={to} onClick={close} className="stack gap-3 text-2xl [&>svg]:opacity-40">
                   <Icon /> {label}
                 </Link>
               </Fragment>
             ))}
           </div>
+          <hr className="py-2" />
           <UserProfileButton className="w-full" />
         </ScrollArea>
       </SheetContent>

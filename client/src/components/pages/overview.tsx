@@ -1,5 +1,6 @@
-import { Heading } from '@/components/ui/heading';
 import { PostsList } from '@/components/features/post/posts-list';
+
+import { Heading } from '@/components/ui/heading';
 
 export const Overview = () => (
   <div className="flex flex-col space-y-4">

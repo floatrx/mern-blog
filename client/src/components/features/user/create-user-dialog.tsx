@@ -1,8 +1,10 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button/button';
-import { CreateUserForm } from '@/components/features/user/create-user-form';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
+
+import { CreateUserForm } from '@/components/features/user/create-user-form';
+
+import { Button } from '@/components/ui/button/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 export const CreateUserDialog = () => {
   const [open, setOpen] = useState(false);
