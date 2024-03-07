@@ -58,7 +58,7 @@ export const UserProfileButton = ({ className, asDropdown }: IProps) => {
     </div>
   ) : (
     // Inline
-    <div className={cn('stack justify-between border font-semibold', className)}>
+    <div className={cn('stack justify-between font-semibold', className)}>
       <Link to="/profile" className="stack">
         <CircleUserRound />
         <span className="max-w-[11ch] truncate sm:max-w-[18ch] md:max-w-[7ch] lg:max-w-[15ch]">{user.name}12198218291829182</span>

@@ -34,7 +34,7 @@ export function MobileNav({ items }: IProps) {
           <Logo className="gap-3 text-2xl" />
         </div>
         <ScrollArea className="h-full">
-          <div className="mt-6 min-h-[calc(100vh-160px)] space-y-7">
+          <div className="mt-6 min-h-[calc(100vh-200px)] space-y-7">
             <hr />
             <h4 className="font-medium opacity-40">Menu:</h4>
             {items.map(({ Icon, to, label }, idx) => (
