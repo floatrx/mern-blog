@@ -10,7 +10,7 @@ import type { IPost } from '@/types/post';
 export const PostContent = ({ post }: { post: IPost | undefined }) =>
   !!post && (
     <div className="prose mx-auto mt-16 space-y-8 rounded-xl bg-card p-10 shadow-lg dark:prose-invert lg:prose-xl">
-      {post.thumbnail && <img className="!-mt-20 block h-full rounded-3xl" src={post.thumbnail} alt={post.title} />}
+      {post.thumbnail && <img className="!-mt-20 object-cover block h-full rounded-3xl" src={post.thumbnail} alt={post.title} />}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <PostMeta post={post} />
         <div className="stack">
@@ -23,3 +23,6 @@ export const PostContent = ({ post }: { post: IPost | undefined }) =>
       <RichText content={post.body} />
     </div>
   );
+
+// https://blog.floatrx.net/posts/65e92ee0c9b2e7d417712384
+// https://blog.floatrx.net/posts/65e92ee0c9b2e7d417712384
