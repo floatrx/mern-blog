@@ -22,4 +22,4 @@ mongo/data
 __tmp__
 .husky/
 
-eco-system.config.js
+ecosystem.config.js
