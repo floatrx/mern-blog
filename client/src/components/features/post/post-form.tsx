@@ -30,6 +30,7 @@ export const PostForm = (props: IProps) => {
 
   const handleSubmit = async (values: IPostCreate) => {
     try {
+      console.log('New post values:', values);
       await props.onSubmit(values);
       toast({ title: `Post ${props.id ? 'updated' : 'created'}` });
       form.reset();

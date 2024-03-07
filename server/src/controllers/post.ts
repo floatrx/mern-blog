@@ -1,7 +1,7 @@
-import type { IPost, IPostCreatePayload } from '@/types/post';
-import { Post } from '@/models/post';
-import { Request, Response } from 'express';
-import { User } from '@/models/user';
+import type { IPost, IPostCreatePayload, IPostUpdatePayload } from "@/types/post";
+import { Post } from "@/models/post";
+import { Request, Response } from "express";
+import { User } from "@/models/user";
 
 /**
  * Post Controller contains static methods for post operations
@@ -89,7 +89,7 @@ export class PostController {
    * Update post by ID
    * @returns status 200 if OK
    */
-  static async update(req: Request<{ id: string }, never, IPost>, res: Response) {
+  static async update(req: Request<{ id: string }, IPost, IPostUpdatePayload>, res: Response) {
     const { id } = req.params;
 
     if (!id) {
@@ -97,8 +97,8 @@ export class PostController {
     }
 
     try {
-      const { title, body, author } = req.body;
-      const updatedPost = await Post.findByIdAndUpdate(id, { title, body, author });
+      const { title, body, thumbnail } = req.body;
+      const updatedPost = await Post.findByIdAndUpdate(id, { title, body, thumbnail });
       return res.status(200).json(updatedPost);
     } catch (e) {
       console.log('error', e.message);
