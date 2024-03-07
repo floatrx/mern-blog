@@ -9,7 +9,7 @@ import type { IPost } from '@/types/post';
 
 export const PostContent = ({ post }: { post: IPost | undefined }) =>
   !!post && (
-    <div className="prose mx-auto mt-16 space-y-8 rounded-xl bg-card p-10 shadow-lg dark:prose-invert lg:prose-xl">
+    <div className="prose md:mx-auto mt-16 space-y-8 rounded-xl bg-card md:p-10 shadow-lg dark:prose-invert lg:prose-xl">
       {post.thumbnail && <img className="!-mt-20 object-cover block rounded-3xl" src={post.thumbnail} alt={post.title} />}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <PostMeta post={post} />
