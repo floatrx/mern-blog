@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MarkdownEditor } from '@/components/ui/editor/markdown-editor';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
-import { Upload } from '@/components/ui/form/upload';
+import { UploadImage } from '@/components/ui/form/upload-image';
 
 import type { IPostCreate } from '@/types/post';
 
@@ -78,7 +78,7 @@ export const PostForm = (props: IProps) => {
                 return (
                   <FormItem>
                     <FormControl>
-                      <Upload {...field} />
+                      <UploadImage {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

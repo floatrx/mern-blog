@@ -2,6 +2,7 @@ import { Trash2 } from 'lucide-react';
 import { forwardRef, useRef } from 'react';
 
 import { useUploadMutation } from '@/api/upload';
+import { useToast } from '@/hooks/use-toast';
 
 import { Button } from '@/components/ui/button/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,7 +16,8 @@ interface IProps {
 
 type TUpload = React.ForwardRefExoticComponent<IProps & React.RefAttributes<HTMLInputElement>>;
 
-export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) => {
+export const UploadImage: TUpload = forwardRef(({ onChange, value, ...props }, ref) => {
+  const { toast } = useToast();
   const uploadRef = useRef<HTMLInputElement>(null);
   const [uploadFile, { isLoading }] = useUploadMutation(); // Upload file
 
@@ -32,7 +34,14 @@ export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) =
     }
 
     const maxFileSize = 2 * 1024 * 1024; // 2MB in bytes
-    if (file.size > maxFileSize) return;
+    if (file.size > maxFileSize) {
+      toast({
+        title: 'File too large',
+        description: 'File should be no larger than 2MB',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     // Prepare form data for file upload
     const formData = new FormData();
@@ -41,7 +50,9 @@ export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) =
     try {
       const { location } = await uploadFile(formData).unwrap(); // Upload file
       onChange?.(location); // Pass the file location to the parent component
+      toast({ title: 'Upload successful' });
     } catch (e) {
+      toast({ title: 'Upload failed', description: e.message, variant: 'destructive' });
       console.error('Error uploading file:', e.message);
     }
   };
@@ -49,10 +60,10 @@ export const Upload: TUpload = forwardRef(({ onChange, value, ...props }, ref) =
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-start justify-between gap-5">
+        <CardTitle className="flex flex-wrap items-start justify-between gap-5">
           {/* Thumbnail */}
           {value && (
-            <div>
+            <div className="shrink-0">
               <img alt="thumbnail" className="h-48 w-full rounded-xl object-cover" src={value} />
             </div>
           )}
