@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: { port },
+
     optimizeDeps: {
       exclude: ['js-big-decimal'],
     },
@@ -17,7 +18,15 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, './src'),
       },
     },
+    esbuild: {
+      // configure this value when the browser version of the development environment is lower
+      // minimum support es2015
+      // https://esbuild.github.io/api/#target
+      target: 'es2020',
+      include: /\.(ts|tsx)$/,
+    },
     build: {
+      target: 'es2020',
       modulePreload: false,
       minify: true,
       sourcemap: false,
