@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { safePostExcerpt } from '@/lib/post';
+
 import { PostMeta } from '@/components/features/post/post-meta';
 import { TagsList } from '@/components/features/tag/tags-list';
 
@@ -21,7 +23,7 @@ export const PostCard = ({ post }: { post: IPost }) => (
     </CardHeader>
     <CardContent className="space-y-2">
       <TagsList tags={post.tags} />
-      <Content text={post.body} />
+      <Content text={safePostExcerpt(post.body)} />
     </CardContent>
   </Card>
 );
