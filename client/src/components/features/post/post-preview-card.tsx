@@ -53,13 +53,13 @@ export const PostPreviewCard = ({ post }: IProps) => {
   return (
     <div className="mt-7 cursor-pointer" onClick={() => setIsSelected(!isSelected)}>
       {/* Overlay */}
-      <motion.div layout className={cn(isPreview && 'bg-background/50 absolute inset-0 backdrop-blur-sm')} />
+      <motion.div layout className={cn(isPreview && 'fixed inset-0 bg-background/50 backdrop-blur-sm z-10')} />
       {/* Wrapper */}
       <motion.div
         ref={cardRef}
         className={cn(
           // Default classes
-          'select-none relative origin-center z-0',
+          'select-none relative origin-center',
           // Animate card
           isPreview && 'fixed w-screen h-screen inset-0 flex justify-center z-40 pt-20 max-h-fit overflow-y-auto',
         )}
