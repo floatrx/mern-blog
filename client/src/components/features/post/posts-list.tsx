@@ -2,7 +2,7 @@ import { useSearchPostsQuery } from '@/api/posts';
 import { DataRenderer } from '@/components/hoc/data-renderer';
 import { useDebounceCallback, useDebounceValue } from 'usehooks-ts';
 
-import { PostCard } from '@/components/features/post/post-card';
+import { PostPreviewCard } from '@/components/features/post/post-preview-card';
 
 import { Input } from '@/components/ui/form/input';
 
@@ -17,7 +17,7 @@ export const PostsList = () => {
   return (
     <>
       <Input className="max-w-[400px]" onChange={handleChange} placeholder="Search by title..." />
-      <DataRenderer className="grid-auto" {...postsQuery} render={(post) => <PostCard key={post.id} post={post} />} />
+      <DataRenderer className="grid-auto" {...postsQuery} render={(post) => <PostPreviewCard key={post.id} post={post} />} />
     </>
   );
 };

@@ -23,6 +23,3 @@ export const PostContent = ({ post }: { post: IPost | undefined }) =>
       <RichText content={post.body} />
     </div>
   );
-
-// https://blog.floatrx.net/posts/65e92ee0c9b2e7d417712384
-// https://blog.floatrx.net/posts/65e92ee0c9b2e7d417712384

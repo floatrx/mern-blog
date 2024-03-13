@@ -52,7 +52,7 @@ export const RichText = ({ content, className, excerpt }: RichTextProps) => {
     <Markdown
       allowedElements={allowedElements}
       remarkRehypeOptions={{ allowDangerousHtml: true }}
-      className={cn(className, 'prose dark:prose-invert lg:prose-xl', excerpt && 'line-clamp-3')}
+      className={cn(className, 'prose dark:prose-invert lg:prose-2xl max-w-[860px]', excerpt && 'line-clamp-3')}
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw]}
       components={{

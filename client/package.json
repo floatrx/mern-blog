@@ -27,6 +27,7 @@
         "@types/node": "^20.11.24",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.0",
+        "framer-motion": "^11.0.12",
         "lucide-react": "^0.338.0",
         "query-string": "^8.2.0",
         "react": "^18.2.0",

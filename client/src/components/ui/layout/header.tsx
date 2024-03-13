@@ -15,7 +15,7 @@ export const Header = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   return (
-    <header className="top-0 z-40 w-full bg-card p-1 shadow">
+    <header className="top-0 z-40 w-full bg-background/80 p-1 shadow backdrop-blur">
       <div className="container flex h-16 items-center space-x-4 sm:space-x-0">
         <Logo />
 
