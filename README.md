@@ -1,10 +1,15 @@
 # Mongoose-express with client app (React)
-A simple express server with mongoose (ODM) with typescript and a client app (Vite/React) to manage the blog posts and other data.
 
+A simple express server with mongoose (ODM) with typescript and a client app (Vite/React) to manage the blog posts and other data.
 Demo https://blog.floatrx.net/
 
+![blog](./client/public/post-view.png)
+
+### MdxEditor (client)
+![blog](./client/public/post-editor.png)
+
 > [!NOTE]
-> I see no point in further improving this project, as its main purpose is to demonstrate the functionality of MongoDB (using Mongoose ODM) with Express server (Node.js). 
+> Main purpose is to demonstrate the functionality of MongoDB (using Mongoose ODM) with Express server (Node.js). 
 > The client-side part of the single page application was created just for demonstration. 
 > The best option for a seo-optimized blog would be to use Next.js. 
 > Consequently, the need for Express disappears, as Next.js is a full-stack framework.
@@ -68,6 +73,8 @@ yarn dev
   - [x] register
   - [x] posts 
   - [x] tags
+### Total progress
+`[==========.........] 50%`
 
 ## Deployment
 1. Setup mongo with docker or use a cloud service

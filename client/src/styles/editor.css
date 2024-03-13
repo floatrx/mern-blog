@@ -2,8 +2,8 @@
 @import url("../../node_modules/@radix-ui/colors/gray-dark.css");
 
 /* Toolbar */
-div[role="toolbar"] {
-    @apply rounded-xl border bg-card;
+div.mdxeditor-toolbar {
+    @apply rounded-xl border bg-card text-card-foreground;
 }
 
 /* Editor */
