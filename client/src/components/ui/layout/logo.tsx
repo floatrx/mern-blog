@@ -18,7 +18,11 @@ export const Logo = ({ className }: IProps) => (
       >
         <Leaf />
       </motion.span>
-      <motion.span initial={{ x: -15, opacity: 0 }} animate={{ x: 0, opacity: 1, transition: { type: 'spring', delay: 0.3 } }}>
+      <motion.span
+        className="hidden xs:inline-flex"
+        initial={{ x: -15, opacity: 0 }}
+        animate={{ x: 0, opacity: 1, transition: { type: 'spring', delay: 0.3 } }}
+      >
         {SITE_NAME.split('').map((char, idx) => (
           <motion.span
             key={idx}
