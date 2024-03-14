@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const Logo = ({ className }: IProps) => (
-  <Link to="/" className={cn('text-2xl font-bold', className)}>
+  <Link to="/" className={cn('text-xl sm:text-2xl font-bold', className)}>
     <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.02 }} whileTap={{ scale: 1 }}>
       <motion.span
         initial={{ opacity: 0, rotate: 15, scale: 0.8 }}

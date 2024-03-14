@@ -26,7 +26,7 @@ export const PostContent = ({ post }: IProps) => {
         exit={{ opacity: 0, translateY: -40 }}
         className="mt-10 prose prose-xl max-w-[860px] mx-auto dark:prose-invert lg:prose-xl pointer-events-auto"
       >
-        <Card className="px-5">
+        <Card className="sm:px-5">
           <CardHeader>
             {post.thumbnail && (
               <motion.img
