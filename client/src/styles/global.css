@@ -12,11 +12,11 @@
     body {
         @apply min-h-screen font-sans text-foreground antialiased;
         background:
-            url("/public/waves.svg") center / cover,
+            url("/public/waves.svg") center / 150% no-repeat fixed,
             hsl(var(--background));
         .dark & {
             background:
-                url("/public/waves.svg") center / cover,
+                url("/public/waves.svg") center / 150% no-repeat fixed,
                 radial-gradient(circle, rgba(0, 51, 255, 0.3) 0%, rgba(0, 0, 0, 100%) 100%),
                 hsl(var(--background));
         }

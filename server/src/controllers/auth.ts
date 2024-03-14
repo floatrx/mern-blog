@@ -38,7 +38,8 @@ export class AuthController {
 
     // Generate access token
     const tokenPayload: ITokenPayload = { id: user._id, email: user.email };
-    const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1d' });
+    // Generate access token -> 1 week (1w for test purposes, use 5-15m in production)
+    const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1w' });
 
     res.json({ accessToken, profile: user.toJSON() });
   }

@@ -1,6 +1,8 @@
+// TODO: Check token on app start
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { API_BASE_URL } from '@/config/const';
+import { logout } from '@/store/auth';
 import type { RootState } from '@/store/store';
 import qs from 'query-string';
 
@@ -22,8 +24,8 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
   const result = await baseQuery(args, api, extraOptions);
 
   if (result.error?.status === 401) {
-    // console.log('Got 401. Logging out...');
-    // api.dispatch(logout());
+    console.log('Got 401. Logging out...');
+    api.dispatch(logout());
     // return baseQuery(args, api, extraOptions); <- TODO: retry
   }
 

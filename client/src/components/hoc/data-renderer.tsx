@@ -7,7 +7,7 @@ import { Spinner } from '@/components/ui/spinner';
 
 export type DataBoundaryProps<Item> = {
   data?: Item[] | undefined;
-  render?: (item: Item) => ReactNode; // pass a render function to render the items
+  render?: (item: Item, idx: number) => ReactNode; // pass a render function to render the items
   name?: string; // name of the items (e.g. "Tags")
   isLoading: boolean; // if the query is 1st loading
   error?: FetchBaseQueryError | SerializedError | undefined;

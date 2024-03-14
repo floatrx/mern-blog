@@ -3,16 +3,28 @@ import { cn } from '@/lib/utils';
 interface IProps {
   className?: string;
   spinning?: boolean;
+  size?: 'sm' | 'default' | 'lg' | 'xl';
 }
 
-export const Spinner = ({ className, spinning }: IProps) => {
+const sizes = {
+  sm: 'size-4',
+  default: 'size-6',
+  lg: 'size-8',
+  xl: 'size-12',
+};
+
+export const Spinner = ({ className, spinning, size }: IProps) => {
   if (!spinning) return null;
   return (
     <div role="status">
       <svg
-        style={{ width: '2.3ch', height: '2.3ch' }}
+        // style={{ width: '2.3ch', height: '2.3ch' }}
         aria-hidden="true"
-        className={cn(className, 'animate-spin fill-blue-500 text-blue-100 duration-500 dark:fill-blue-100 dark:text-blue-900')}
+        className={cn(
+          className,
+          'animate-spin fill-blue-500 text-blue-100 duration-500 dark:fill-blue-100 dark:text-blue-900',
+          sizes[size ?? 'default'],
+        )}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

@@ -1,11 +1,11 @@
-import { PostsList } from '@/components/features/post/posts-list';
+import { PostsListWithPreview } from '@/components/features/post/posts-list-with-preview';
 
 import { Heading } from '@/components/ui/heading';
 
 export const Overview = () => (
   <div className="flex flex-col space-y-4">
     <Heading text="Latest posts" />
-    <PostsList />
+    <PostsListWithPreview />
   </div>
 );
 
