@@ -21,7 +21,7 @@ export const Header = () => {
 
         <nav className="flex-auto">
           <ul className="stack gap-4">
-            <li className="flex-1" />
+            <li className="flex-1 hidden sm:flex" />
             {mainNavItems.map(({ Icon, Counter, ...item }, idx) => (
               <li key={idx} className={cn(!item.to && 'flex-1', 'hidden md:block' /* show only sm & larger screens */)}>
                 {(!item.private || (item.private && isLoggedIn)) && (
