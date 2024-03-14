@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { motion } from 'framer-motion';
 
@@ -12,8 +12,10 @@ interface IProps {
 }
 
 export const PostPreviewModal = ({ post, onClose }: IProps) => {
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to ref top on mount
+    ref.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
   return (
     <>
@@ -23,16 +25,17 @@ export const PostPreviewModal = ({ post, onClose }: IProps) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         key="overlay"
-        className="fixed inset-0 bg-background/50 backdrop-blur-sm border-4 border-cyan"
+        className="fixed inset-0 bg-background/50 sm:backdrop-blur-sm"
         onClick={() => onClose?.()}
       />
       {/* Preview modal */}
       <motion.div
+        ref={ref}
         layoutId={post.id} // layoutId must sync with the card
         layoutRoot // prevents layout scaling
-        className="absolute top-[72px] inset-x-0 flex items-start pointer-events-none"
+        className="absolute top-[72px] inset-x-0 flex items-start pointer-events-none b2"
       >
-        <PostContent post={post} />
+        <PostContent onDismiss={onClose} post={post} />
       </motion.div>
     </>
   );

@@ -42,6 +42,7 @@ export const PostsListWithPreview = () => {
             {...postsQuery}
             render={(post, idx) => (
               <motion.div
+                key={post.id}
                 layoutRoot // prevents layout scaling
                 layoutId={post.id} // use the same id for the preview
                 // Show animation (on mount)
