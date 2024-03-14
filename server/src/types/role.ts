@@ -1,8 +1,13 @@
 import { Document, Model } from 'mongoose';
 
+export enum RoleEnum {
+  ADMIN = 1,
+  USER ,
+}
+
 // Interface for Role
 export interface IRole {
-  idRole: number;
+  idRole: RoleEnum;
   name: string;
 }
 

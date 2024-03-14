@@ -3,7 +3,11 @@ import type { IUser } from '@/types/user';
 export interface ITokenPayload {
   id: string;
   email: string;
+  iat?: number;
+  exp?: number;
 }
+
+export interface IDecodedToken extends Required<ITokenPayload> {}
 
 export interface ILoginPayload {
   email: string;
@@ -12,6 +16,7 @@ export interface ILoginPayload {
 
 export interface ILoginResponse {
   accessToken: string;
+  refreshToken: string;
   profile: IUser;
 }
 
@@ -20,6 +25,7 @@ declare global {
   namespace Express {
     interface Request {
       userData?: ITokenPayload; // [!] Add userData to the Request object
+      token?: string;
     }
   }
 }

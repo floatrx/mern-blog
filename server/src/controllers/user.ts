@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import type { IUserCreatePayload } from '@/types/user';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
+import { RoleEnum } from "@/types/role";
 
 /**
  * User Controller contains static methods for user operations
@@ -23,7 +24,7 @@ export class UserController {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
-      idRole: 2,
+      idRole: RoleEnum.USER, // <- default role is "user"
       name,
       email,
       password: hashedPassword,

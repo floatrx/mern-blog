@@ -7,7 +7,6 @@ declare global {
     interface ProcessEnv {
       PORT: string;
       MONGO_URI: string;
-      SECRET_KEY: string;
       NODE_ENV: 'development' | 'production';
 
       // Initial data
@@ -18,6 +17,11 @@ declare global {
       AWS_SECRET_ACCESS_KEY: string;
       S3_REGION: string;
       S3_BUCKET: string;
+
+      // JWT
+      TOKEN_SECRET_KEY: string;
+      ACCESS_TOKEN_EXPIRES_IN: string;
+      REFRESH_TOKEN_EXPIRES_IN: string;
     }
   }
 }

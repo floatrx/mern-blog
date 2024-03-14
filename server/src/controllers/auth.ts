@@ -1,8 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type { ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
+import type { IDecodedToken, ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
+import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN, TOKEN_SECRET_KEY } from '@/config';
+import { pick } from '@/lib/pick';
 
 /**
  * Auth Controller contains static methods for auth operations
@@ -38,20 +40,55 @@ export class AuthController {
 
     // Generate access token
     const tokenPayload: ITokenPayload = { id: user._id, email: user.email };
-    // Generate access token -> 1 week (1w for test purposes, use 5-15m in production)
-    const accessToken = jwt.sign(tokenPayload, 'secret-key', { expiresIn: '1w' });
 
-    res.json({ accessToken, profile: user.toJSON() });
+    // Generate tokens
+    const [accessToken, refreshToken] = [ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN].map((expiresIn) =>
+      jwt.sign(tokenPayload, TOKEN_SECRET_KEY, { expiresIn }),
+    );
+
+    console.log('EXP:', [ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN]);
+
+    res.json({ accessToken, refreshToken, profile: user.toJSON() });
   }
 
   /**
-   * Check if session is valid
+   * Check if session is valid ->
+   * Use after "requireAuth" middleware
    * @returns status 200 if OK
    */
   static check(req: Request, res: Response) {
-    res.json({
-      message: 'Session is valid',
-      auth: req.userData, // <- test requireAuth middleware
-    });
+    res.json({ message: 'Session is valid', auth: req.userData });
+  }
+
+  /**
+   * Refresh access token
+   * @returns status 200 if OK
+   * @returns status 400 if missing parameters
+   * @returns status 401 if invalid refreshToken
+   */
+  static refreshToken(req: Request, res: Response) {
+    const { refreshToken } = req.body;
+    if (!refreshToken) {
+      return res.status(400).json({ message: 'RefreshToken is required' });
+    }
+
+    try {
+      // Verify refreshToken
+      const tokenPayload = jwt.verify(refreshToken, TOKEN_SECRET_KEY) as IDecodedToken;
+      // Generate new access token
+      const accessToken = jwt.sign(pick(tokenPayload, ['id', 'email']), TOKEN_SECRET_KEY, { expiresIn: ACCESS_TOKEN_EXPIRES_IN });
+
+      // __ FOR DEBUG PURPOSES __
+      // Get new expiresIn
+      const { exp } = jwt.decode(accessToken) as IDecodedToken;
+      // Convert expiresIn to ISO string (for debugging)
+      const date = new Date(exp * 1000).toISOString();
+      // ------------------------
+
+      // Send new accessToken
+      res.json({ accessToken, exp, date });
+    } catch (error) {
+      return res.status(401).json({ message: 'Invalid refreshToken', error: error.message });
+    }
   }
 }
