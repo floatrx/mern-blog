@@ -1,4 +1,5 @@
 import { useMotionValue, useTransform } from 'framer-motion';
+import { useMediaQuery } from 'usehooks-ts';
 
 type TMotionValue = ReturnType<typeof useMotionValue<number>>;
 type TTransform = ReturnType<typeof useTransform<number, number>>;
@@ -32,6 +33,8 @@ type UseDragTransform = () => [
  * @returns tuple with props and other values for framer-motion
  */
 export const useDragTransform: UseDragTransform = () => {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const rotateX = useTransform(y, [-100, 100], [60, -60]);
@@ -48,7 +51,7 @@ export const useDragTransform: UseDragTransform = () => {
     style,
     drag: true,
     dragConstraints: { top: 0, left: 0, right: 0, bottom: 0 },
-    dragElastic: 0.05,
+    dragElastic: isMobile ? 0.15 : 0.05,
     dragTransition: { bounceDamping: 10, timeConstant: 150 },
   };
 
