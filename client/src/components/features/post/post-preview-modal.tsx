@@ -33,9 +33,10 @@ export const PostPreviewModal = ({ post, onClose }: IProps) => {
         ref={ref}
         layoutId={post.id} // layoutId must sync with the card
         layoutRoot // prevents layout scaling
-        className="fixed top-[72px] inset-x-0 flex items-start pointer-events-none b2 overflow-y-auto"
+        className="fixed top-[64px] inset-x-0 pointer-events-none max-h-[calc(100vh-64px)] overflow-y-auto border border-l-green-400-500"
       >
         <PostContent onDismiss={onClose} post={post} />
+        <hr className="my-10" />
       </motion.div>
     </>
   );
