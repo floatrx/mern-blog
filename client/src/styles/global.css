@@ -17,8 +17,8 @@
             hsl(var(--background));
         .dark & {
             background:
-                url("/public/waves.svg") -25vw -75vh / 200% no-repeat fixed,
-                radial-gradient(circle at top center, rgba(0, 51, 255, 0.3) 0%, rgba(0, 0, 0, 100%) 100%) no-repeat fixed,
+                url("/public/waves.svg") center 100% / 150% no-repeat fixed,
+                radial-gradient(circle at top center, rgba(0, 51, 255, 0.2) 0%, rgba(0, 0, 0, 100%) 100%) no-repeat fixed,
                 hsl(var(--background));
         }
 
