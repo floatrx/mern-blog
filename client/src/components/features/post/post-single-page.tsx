@@ -16,7 +16,7 @@ export const PostSinglePage = () => {
 
   if (isLoading) return <Spinner spinning />;
 
-  return <PostContent post={post} />;
+  return <PostContent viewMode="full" post={post} />;
 };
 
 export default PostSinglePage;

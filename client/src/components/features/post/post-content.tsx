@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { useDragTransform } from '@/hooks/framer/use-drag-transform';
 import { type ResolvedValues, motion } from 'framer-motion';
 
@@ -15,13 +17,22 @@ interface IProps {
   post: IPost | undefined;
   onDismiss?: () => void;
   rotateDirection?: 'left' | 'right';
+  viewMode?: 'preview' | 'full';
 }
 
-export const PostContent = ({ post, onDismiss }: IProps) => {
+export const PostContent = ({ post, onDismiss, viewMode }: IProps) => {
   const [imgDragTransformProps] = useDragTransform();
-  const handleDragDismiss = (latest: ResolvedValues) => {
-    if (+latest.y > 15) onDismiss?.(); // todo: debug this delta
-  };
+
+  const handleDragDismiss = useCallback(
+    (latest: ResolvedValues) => {
+      +latest.y > 20 && onDismiss?.();
+      // TODO:   ^^^ debug this delta ->
+      //             dragElastic prop increases the delta sensitivity
+      //             (check useDragTransform)
+    },
+    [onDismiss],
+  );
+
   return (
     !!post && (
       <motion.article
@@ -36,26 +47,18 @@ export const PostContent = ({ post, onDismiss }: IProps) => {
             <motion.img
               // Implicitly provided key prevents reload image on toggle preview mode
               key={post.thumbnail}
-              layout
               // layoutId must sync with same element in PostPreviewModal
               layoutId={`thumbnail-${post.id}`}
               // Swoosh animation
-              initial={{ y: -30 }}
-              animate={{ y: 0, transition: { type: 'spring', stiffness: 400, damping: 30 } }}
+              initial={{ y: viewMode === 'full' ? -30 : 0 }}
+              animate={{ y: 0, transition: { duration: 1.3, type: 'tween', stiffness: 200, damping: 30 } }}
               // Stylish
-              // className="!-mt-14 b1 origin-center w-full object-cover block rounded-3xl select-none aspect-video z-50 min-w-full"
               className="!-mt-14 select-none rounded-xl shadow-2xl shadow-cyan-500/15 object-cover sm:aspect-video z-30 w-full"
               src={post.thumbnail}
               alt={post.title}
               // Enable 3d transform on drag
               {...imgDragTransformProps}
               onUpdate={handleDragDismiss}
-              onAnimationComplete={() => {
-                console.log('Animation complete');
-              }}
-              onDragTransitionEnd={() => {
-                console.log('Transition end');
-              }}
             />
             <div className="flex flex-wrap items-center justify-between gap-2 select-none">
               {/* AUTHOR / CREATED DATE */}
