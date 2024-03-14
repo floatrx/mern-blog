@@ -41,7 +41,7 @@ export const PostContent = ({ post, onDismiss }: IProps) => {
               layoutId={`thumbnail-${post.id}`}
               // Swoosh animation
               initial={{ y: -30 }}
-              animate={{ y: 0, transition: { type: 'spring', stiffness: 200, damping: 30, delay: 0.1 } }}
+              animate={{ y: 0, transition: { type: 'spring', stiffness: 400, damping: 30 } }}
               // Stylish
               // className="!-mt-14 b1 origin-center w-full object-cover block rounded-3xl select-none aspect-video z-50 min-w-full"
               className="!-mt-14 select-none rounded-xl shadow-2xl shadow-cyan-500/15 object-cover aspect-video z-30"
