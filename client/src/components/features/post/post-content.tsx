@@ -20,7 +20,7 @@ interface IProps {
 export const PostContent = ({ post, onDismiss }: IProps) => {
   const [imgDragTransformProps] = useDragTransform();
   const handleDragDismiss = (latest: ResolvedValues) => {
-    if (+latest.y > 18) onDismiss?.();
+    if (+latest.y > 10) onDismiss?.(); // todo: debug this delta
   };
   return (
     !!post && (
