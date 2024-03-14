@@ -1,4 +1,5 @@
-@import "./colors.css";
+@import "colors.css";
+/*@import "debug.css";*/
 
 @tailwind base;
 @tailwind components;
@@ -19,6 +20,10 @@
                 url("/public/waves.svg") center / 150% no-repeat fixed,
                 radial-gradient(circle, rgba(0, 51, 255, 0.3) 0%, rgba(0, 0, 0, 100%) 100%),
                 hsl(var(--background));
+        }
+
+        &:has(.no-body-scroll) {
+            overflow: clip;
         }
     }
 
@@ -44,6 +49,6 @@
 /* Grid */
 .grid-auto {
     display: grid;
-    grid-template-columns: repeat(auto-fill, clamp(20rem, 100%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }

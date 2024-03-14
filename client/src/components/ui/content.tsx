@@ -8,17 +8,14 @@ interface Html {
 
   // custom className for wrapper (will be ignored when render as simple text)
   className?: string;
-
-  // don't check for html tags -> always render as html (there are some cases when html tags are not detected but &nbsp; and other html entities are present)
-  forceHtml?: boolean;
 }
 
 /**
  * Render content with HTML tags if it has any or just text
  */
-export const Content = ({ text, as: Wrapper = 'span', className, forceHtml }: Html) => {
+export const Content = ({ text, as: Wrapper = 'span', className }: Html) => {
   if (!text) return null;
-  return forceHtml || text.match(/<.*?>/g) ? (
+  return text.match(/<.*?>/g) ? (
     <Wrapper className={cn('prose dark:prose-invert', className)} dangerouslySetInnerHTML={{ __html: text }} />
   ) : (
     text

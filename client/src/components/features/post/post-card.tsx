@@ -29,27 +29,29 @@ interface IProps {
  * Animated card with post preview (framer-motion)
  */
 export const PostCard = ({ post, onClick, isLoading }: IProps) => (
-  <div className="mt-10 cursor-pointer">
+  <div className="mt-10 cursor-pointer relative">
     <Card className="space-y-4" onClick={() => onClick?.(post.id)}>
       <CardHeader>
-        {post.thumbnail && (
-          <motion.img
-            key={post.thumbnail}
-            layoutId={`thumbnail-${post.id}`}
-            src={post.thumbnail}
-            alt="post"
-            className="-mt-14 pointer-events-none origin-center mb-2 h-52 w-full rounded-xl shadow-xl shadow-cyan-500/5 object-cover lg:max-w-[860px]"
-          />
-        )}
-        <motion.div transition={{ type: 'inertia' }} className="line-clamp-2 text-2xl flex items-center gap-2">
-          {post.title}
-          <Spinner spinning={isLoading} />
-        </motion.div>
+        <motion.img
+          // Implicitly provided key prevents reload image on toggle preview mode
+          key={post.thumbnail}
+          // layoutId must sync with same element in PostPreviewModal
+          layoutId={`thumbnail-${post.id}`}
+          src={post.thumbnail}
+          alt={post.title}
+          className="!-mt-10 select-none rounded-xl shadow-xl shadow-cyan-500/5 object-cover aspect-video w-full h-auto"
+        />
+        <div className="flex justify-between gap-2 font-semibold py-2">
+          <p className="text-2xl line-clamp-2">{post.title}</p>
+          <div className="absolute top-14 left-1/2 translate-x-[-50%]">
+            <Spinner spinning={isLoading} size="xl" />
+          </div>
+        </div>
         <PostMeta post={post} />
       </CardHeader>
       <CardContent className="space-y-2">
         <TagsList tags={post.tags} />
-        <Content text={safePostExcerpt(post.body)} />
+        <Content as="div" className="line-clamp-1" text={safePostExcerpt(post.body)} />
       </CardContent>
       <CardFooter>
         <Link

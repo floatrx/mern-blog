@@ -15,7 +15,7 @@ export const PostPreviewModal = ({ post, onClose }: IProps) => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     // Scroll to ref top on mount
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    // ref.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
   return (
     <>
@@ -25,7 +25,7 @@ export const PostPreviewModal = ({ post, onClose }: IProps) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         key="overlay"
-        className="fixed inset-0 bg-background/50 sm:backdrop-blur-sm"
+        className="fixed inset-0 bg-background/50 sm:backdrop-blur-sm no-body-scroll"
         onClick={() => onClose?.()}
       />
       {/* Preview modal */}
@@ -33,7 +33,7 @@ export const PostPreviewModal = ({ post, onClose }: IProps) => {
         ref={ref}
         layoutId={post.id} // layoutId must sync with the card
         layoutRoot // prevents layout scaling
-        className="absolute top-[72px] inset-x-0 flex items-start pointer-events-none b2"
+        className="fixed top-[72px] inset-x-0 flex items-start pointer-events-none b2 overflow-y-auto"
       >
         <PostContent onDismiss={onClose} post={post} />
       </motion.div>
