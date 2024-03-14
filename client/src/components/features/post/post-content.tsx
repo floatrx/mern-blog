@@ -24,11 +24,11 @@ export const PostContent = ({ post, onDismiss }: IProps) => {
   };
   return (
     !!post && (
-      <motion.div
+      <motion.article
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 1.3, type: 'spring', stiffness: 200, damping: 30 } }}
         exit={{ opacity: 0, y: -40 }}
-        className="mt-10 prose prose-xl mx-auto dark:prose-invert lg:prose-2xl pointer-events-auto max-w-full md:max-w-[860px]"
+        className="mt-10 prose sm:prose-xl lg:prose-2xl dark:prose-invert mx-auto pointer-events-auto max-w-full md:max-w-[860px]"
       >
         <Card className="sm:px-5">
           <CardHeader>
@@ -77,7 +77,7 @@ export const PostContent = ({ post, onDismiss }: IProps) => {
             <RichText content={post.body} />
           </CardContent>
         </Card>
-      </motion.div>
+      </motion.article>
     )
   );
 };
