@@ -35,8 +35,8 @@ export const PostContent = ({ post }: IProps) => {
                 // layoutId must sync with same element in PostPreviewModal
                 layoutId={`thumbnail-${post.id}`}
                 // Swoosh animation
-                initial={{ y: -50, rotate: 3 }}
-                animate={{ y: 0, rotate: 0, transition: { duration: 2, type: 'spring', stiffness: 300, damping: 10, delay: 0.1 } }}
+                initial={{ y: -30, rotate: 3 }}
+                animate={{ y: 0, rotate: 0, transition: { duration: 2, type: 'spring', stiffness: 300, damping: 40, delay: 0.1 } }}
                 // Stylish
                 className="!-mt-14 origin-center w-full object-cover block rounded-3xl select-none aspect-video z-50 min-w-full"
                 src={post.thumbnail}

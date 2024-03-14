@@ -37,6 +37,7 @@ const injectedRtkApi = api.injectEndpoints({
 export const {
   useSearchPostsQuery,
   useGetPostQuery,
+  useLazyGetPostQuery,
   useCreatePostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
