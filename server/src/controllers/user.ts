@@ -2,7 +2,8 @@ import bcrypt from 'bcryptjs';
 import type { IUserCreatePayload } from '@/types/user';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
-import { RoleEnum } from "@/types/role";
+import { RoleEnum } from '@/types/role';
+import { filterObject } from '@/lib/filter-object';
 
 /**
  * User Controller contains static methods for user operations
@@ -67,12 +68,18 @@ export class UserController {
   static async update(req: Request<{ id: string }, never, IUserCreatePayload>, res: Response) {
     const { id } = req.params;
     const { name, email, password } = req.body;
+
     if (!id) {
       return res.status(400).json({ message: 'id is required' });
     }
 
     try {
-      const updatedUser = await User.findByIdAndUpdate(id, { name, email, password });
+      // Hash password if present
+      const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+      // Filter object to remove falsy values
+      const data = filterObject({ name, email, password: hashedPassword });
+      // Update user and send response
+      const updatedUser = await User.findByIdAndUpdate(id, data);
       return res.json(updatedUser);
     } catch (e) {
       return res.status(400).json({ message: 'User not found' });
