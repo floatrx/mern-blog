@@ -25,7 +25,7 @@ export const authApi = api.injectEndpoints({
     checkAuth: query<ICheckAuthResponse, void>({
       query: () => ({ url: `${path}/check` }),
       extraOptions: {
-        test: 'test',
+        maxRetries: 0,
       },
     }),
   }),
