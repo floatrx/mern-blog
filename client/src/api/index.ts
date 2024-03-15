@@ -8,16 +8,18 @@
  * NOTE: Ensure to check for token updates from the auth/refresh endpoint.
  *       Either through the refresh mechanism or when an entry is added to the store (authSlice).
  */
-import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
 import { API_BASE_URL } from '@/config/const';
 import { logout } from '@/store/auth';
 import type { RootState } from '@/store/store';
+import { Mutex } from 'async-mutex';
 import qs from 'query-string';
 
 import type { BaseQueryHandler } from '@/types/rtkq';
 
-let refreshPromise: Promise<any> | null = null; // flag to prevent multiple refresh token requests
+// let refreshPromise: Promise<any> | null = null; // flag to prevent multiple refresh token requests
+const mutex = new Mutex();
 
 /**
  * Base query with custom header
@@ -34,6 +36,7 @@ const baseQuery = fetchBaseQuery({
 
 /**
  * Handle errors
+ * TODO: check mutex https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#preventing-multiple-unauthorized-errors
  */
 const baseQueryWithErrorHandlers: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
   args,
@@ -50,7 +53,9 @@ const baseQueryWithErrorHandlers: BaseQueryFn<string | FetchArgs, unknown, Fetch
 
   // Handle 401 Unauthorized & refresh token -> "refreshPromise" wait other requests to finish
   if (status === 401) {
-    await refreshAccessTokenAndRetry(args, api, extraOptions);
+    // Prevent multiple refresh token requests
+    await mutex.waitForUnlock();
+    return await refreshAccessTokenAndRetry(args, api, extraOptions);
   }
 
   if (status === 403) {
@@ -66,32 +71,31 @@ const baseQueryWithErrorHandlers: BaseQueryFn<string | FetchArgs, unknown, Fetch
 const refreshAccessTokenAndRetry: BaseQueryHandler = async (args, api, extraOptions) => {
   console.log('Handle refresh token and retry');
 
-  // Prevent multiple refresh token requests
-  while (refreshPromise) {
-    console.log('Waiting for access token refresh');
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
+  if (!mutex.isLocked()) {
+    const release = await mutex.acquire();
 
-  try {
-    const { auth } = api.getState() as RootState;
-    const requestBody = { refreshToken: auth.tokens.refreshToken };
-    /**
-     * NOTE: Ensure to check for token updates from the auth/refresh endpoint,
-     * either through the refresh mechanism or when an entry is added to the store (authSlice).
-     */
-    refreshPromise = api.dispatch(getReadyApi().endpoints['refresh'].initiate(requestBody));
-    //                              ^^^^^^ used instead of "api" to avoid errors
+    try {
+      const { auth } = api.getState() as RootState;
+      const requestBody = { refreshToken: auth.tokens.refreshToken };
+      /**
+       * NOTE: Ensure to check for token updates from the auth/refresh endpoint,
+       * either through the refresh mechanism or when an entry is added to the store (authSlice).
+       */
+      await api.dispatch(getReadyApi().endpoints['refresh'].initiate(requestBody));
+      //                              ^^^^^^ used instead of "api" to avoid errors
 
-    // Wait for the refresh token...
-    await refreshPromise;
+      console.log('Refresh token success. Retry', { args, extraOptions });
 
-    // Retry the original request with the new access token
+      return await baseQuery(args, api, extraOptions);
+    } catch (error) {
+      console.error('Refresh token failed:', error);
+      api.dispatch(logout());
+    } finally {
+      release();
+    }
+  } else {
+    await mutex.waitForUnlock();
     return baseQuery(args, api, extraOptions); // retry original request
-  } catch (error) {
-    console.error('Refresh token failed:', error);
-    api.dispatch(logout());
-  } finally {
-    refreshPromise = null;
   }
 };
 
@@ -106,7 +110,7 @@ export const api = createApi({
   tagTypes: ['User', 'Post', 'Tag'],
   refetchOnReconnect: true, // test it
   refetchOnFocus: true, // test it
-  baseQuery: baseQueryWithErrorHandlers,
+  baseQuery: retry(baseQueryWithErrorHandlers, { maxRetries: 3 }),
   endpoints: () => ({}),
 });
 
