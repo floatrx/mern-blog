@@ -11,7 +11,7 @@
     }
 
     body {
-        @apply h-screen font-sans text-foreground antialiased;
+        @apply fancy-scrollbar invisible-scrollbar h-screen font-sans text-foreground antialiased;
         background:
             url("/public/waves.svg") center / 150% no-repeat fixed,
             hsl(var(--background));
@@ -23,7 +23,7 @@
         }
 
         &:has(.no-body-scroll) {
-            overflow: clip;
+            overflow-y: hidden;
         }
     }
 
@@ -43,6 +43,35 @@
     }
     .stack {
         @apply flex items-center gap-1.5;
+    }
+
+    .fancy-scrollbar {
+        /* Hide default scrollbar */
+        &::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Style the scrollbar track */
+        &::-webkit-scrollbar-track {
+            background: hsl(var(--background));
+        }
+
+        /* Style the scrollbar thumb */
+        &::-webkit-scrollbar-thumb {
+            background: hsla(var(--foreground) / 10%);
+            border-radius: 10px;
+        }
+
+        /* Style the thumb on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    }
+    .invisible-scrollbar {
+        &::-webkit-scrollbar {
+            width: 0;
+        }
     }
 }
 
