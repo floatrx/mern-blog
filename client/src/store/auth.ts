@@ -1,12 +1,13 @@
 import { RootState } from '@/store/store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+import type { ITokenPair } from '@/types/auth';
 import type { IUser } from '@/types/user';
 
 export interface AuthState {
   isLoggedIn: boolean;
   user: IUser;
-  accessToken: string;
+  tokens: ITokenPair;
 }
 
 /*
@@ -29,7 +30,10 @@ const userInitialState = {
 export const authInitialState: AuthState = {
   isLoggedIn: false,
   user: userInitialState,
-  accessToken: '',
+  tokens: {
+    accessToken: '',
+    refreshToken: '',
+  },
 };
 
 export const authSlice = createSlice({
@@ -39,9 +43,12 @@ export const authSlice = createSlice({
     setUser: (state: AuthState, { payload }: PayloadAction<IUser | undefined>) => {
       state.user = payload?.id ? payload : userInitialState;
     },
-    setToken: (state: AuthState, { payload }: PayloadAction<string>) => {
-      state.accessToken = payload;
+    setTokens: (state: AuthState, { payload }: PayloadAction<ITokenPair>) => {
+      state.tokens = payload;
       state.isLoggedIn = true;
+    },
+    refreshAccessToken: (state: AuthState, { payload }: PayloadAction<string>) => {
+      state.tokens.accessToken = payload;
     },
     logout: () => authInitialState,
   },
@@ -49,7 +56,7 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { setToken, logout, setUser } = authSlice.actions;
+export const { setTokens, refreshAccessToken, logout, setUser } = authSlice.actions;
 
 // Selectors
 export const selectAuth = ({ auth }: RootState) => auth;

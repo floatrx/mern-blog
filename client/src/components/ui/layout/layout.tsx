@@ -1,6 +1,9 @@
 import { type PropsWithChildren } from 'react';
 
+import { useCheckAuthQuery } from '@/api/auth';
 import { SITE_NAME } from '@/config/const';
+import { useAppSelector } from '@/hooks/redux';
+import { selectIsLoggedIn } from '@/store/auth';
 
 import { Header } from '@/components/ui/layout/header';
 import { Toaster } from '@/components/ui/toaster';
@@ -14,6 +17,11 @@ import { Toaster } from '@/components/ui/toaster';
  * @constructor
  */
 export const Layout = (props: PropsWithChildren) => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+  // Check auth if session artifacts are present (persisted storage)
+  useCheckAuthQuery(undefined, { skip: !isLoggedIn });
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />

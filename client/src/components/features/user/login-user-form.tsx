@@ -1,7 +1,7 @@
 import { Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
-import { useLazyCheckQuery, useLoginMutation } from '@/api/auth';
+import { useLazyCheckAuthQuery, useLoginMutation } from '@/api/auth';
 import { useAppSelector } from '@/hooks/redux';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -35,7 +35,7 @@ export const LoginUserForm = () => {
   const { toast } = useToast();
 
   const [login, { isLoading }] = useLoginMutation(); // Create user
-  const [checkSession] = useLazyCheckQuery(); // just for testing
+  const [checkSession] = useLazyCheckAuthQuery(); // just for testing
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const user = useAppSelector(selectUser);

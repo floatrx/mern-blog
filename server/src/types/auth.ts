@@ -15,9 +15,12 @@ export interface ILoginPayload {
 }
 
 export interface ILoginResponse {
-  accessToken: string;
-  refreshToken: string;
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
   profile: IUser;
+  v?: string; // for testing
 }
 
 // Augment the Express Request type to include the auth property

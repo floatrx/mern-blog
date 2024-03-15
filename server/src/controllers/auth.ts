@@ -46,9 +46,7 @@ export class AuthController {
       jwt.sign(tokenPayload, TOKEN_SECRET_KEY, { expiresIn }),
     );
 
-    console.log('EXP:', [ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN]);
-
-    res.json({ accessToken, refreshToken, profile: user.toJSON() });
+    res.json({ tokens: { accessToken, refreshToken }, profile: user.toJSON(), v: '2' });
   }
 
   /**
