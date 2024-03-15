@@ -14,12 +14,18 @@ export const authApi = api.injectEndpoints({
         dispatch(setTokens(data.tokens));
         dispatch(setUser(data.profile));
       },
+      extraOptions: {
+        maxRetries: 0,
+      },
     }),
     refresh: mutation<IRefreshTokenResponse, { refreshToken: string }>({
       query: (body) => ({ url: `auth/refresh`, method: 'POST', body }),
       onCacheEntryAdded: async (_, { cacheDataLoaded, dispatch }) => {
         const { data } = await cacheDataLoaded;
         dispatch(refreshAccessToken(data.accessToken));
+      },
+      extraOptions: {
+        maxRetries: 0,
       },
     }),
     checkAuth: query<ICheckAuthResponse, void>({
