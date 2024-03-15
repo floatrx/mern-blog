@@ -20,13 +20,15 @@ app.use([serverErrorHandler, syntaxErrorHandler]); // handle errors globally
 // Throttle requests
 // @see https://www.npmjs.com/package/express-rate-limit
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 5 * 60 * 1000, // 15 minutes
   limit: 100, // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
+
+app.set('trust proxy', 1); // Adjust the value based on your proxy setup (see below)
 
 app.use('/api', router); // mount routers
 
