@@ -86,7 +86,7 @@ export class AuthController {
       // Send new accessToken
       res.json({ accessToken, exp, date });
     } catch (error) {
-      return res.status(401).json({ message: 'Invalid refreshToken', error: error.message });
+      return res.status(400).json({ message: 'Invalid refreshToken', error: error.message });
     }
   }
 }
