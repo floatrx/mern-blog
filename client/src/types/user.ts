@@ -17,4 +17,6 @@ export interface IUserCreateRequest extends IUserBase {
   password: string; // password is required when creating a user
 }
 
-export interface IUserUpdateRequest extends Partial<IUserCreateRequest> {} // same as IUserCreate but all fields are optional
+export interface IUserUpdateRequest extends IUserCreateRequest {
+  id: string; // id is required when updating a user
+} // same as IUserCreate but all fields are optional

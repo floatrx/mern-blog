@@ -2,7 +2,7 @@ import { RootState } from '@/store/store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import type { ITokenPair } from '@/types/auth';
-import type { IUser } from '@/types/user';
+import type { IUser, IUserUpdateRequest } from '@/types/user';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -43,6 +43,9 @@ export const authSlice = createSlice({
     setUser: (state: AuthState, { payload }: PayloadAction<IUser | undefined>) => {
       state.user = payload?.id ? payload : userInitialState;
     },
+    updateUser: (state: AuthState, { payload }: PayloadAction<IUserUpdateRequest>) => {
+      state.user = { ...state.user, ...payload };
+    },
     setTokens: (state: AuthState, { payload }: PayloadAction<ITokenPair>) => {
       state.tokens = payload;
       state.isLoggedIn = true;
@@ -56,7 +59,7 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { setTokens, refreshAccessToken, logout, setUser } = authSlice.actions;
+export const { setTokens, refreshAccessToken, logout, setUser, updateUser } = authSlice.actions;
 
 // Selectors
 export const selectAuth = ({ auth }: RootState) => auth;

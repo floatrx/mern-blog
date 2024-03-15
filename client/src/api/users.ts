@@ -1,4 +1,5 @@
 import { api } from '@/api/index';
+import { updateUser } from '@/store/auth';
 
 import type { IUser, IUserCreateRequest, IUserUpdateRequest } from '@/types/user';
 
@@ -20,7 +21,10 @@ const injectedRtkApi = api.injectEndpoints({
       invalidatesTags: [type],
     }),
     updateUser: mutation<IUser, IUserUpdateRequest>({
-      query: (body) => ({ url: path, method: 'PUT', body }),
+      query: ({ id, ...body }) => ({ url: `${path}/${id}`, method: 'PUT', body }),
+      onCacheEntryAdded: (result, { dispatch }) => {
+        dispatch(updateUser(result));
+      },
       invalidatesTags: [type],
     }),
     deleteUser: mutation<IUser, ID>({
@@ -30,4 +34,4 @@ const injectedRtkApi = api.injectEndpoints({
   }),
 });
 
-export const { useSearchUsersQuery, useCreateUserMutation } = injectedRtkApi;
+export const { useSearchUsersQuery, useCreateUserMutation, useUpdateUserMutation } = injectedRtkApi;

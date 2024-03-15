@@ -3,6 +3,8 @@ import { useAppSelector } from '@/hooks/redux';
 import { toast } from '@/hooks/use-toast';
 import { selectAuth } from '@/store/auth';
 
+import { UpdateUserDialog } from '@/components/features/user/update-user-dialog';
+
 import { Button } from '@/components/ui/button/button';
 
 export const ProfilePage = () => {
@@ -23,9 +25,12 @@ export const ProfilePage = () => {
     <div className="prose dark:prose-invert">
       <h1>Profile Page</h1>
       <div className="font-mono my-2">{JSON.stringify(auth.user, null, 2)}</div>
-      <Button type="button" onClick={handleTest} variant="outline">
-        Test session
-      </Button>
+      <div className="stack">
+        <Button type="button" onClick={handleTest} variant="outline">
+          Test session
+        </Button>
+        <UpdateUserDialog initialValues={auth.user} />
+      </div>
     </div>
   );
 };

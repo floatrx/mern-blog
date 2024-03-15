@@ -1,15 +1,13 @@
 import { useForm } from 'react-hook-form';
 
-import { useCreateUserMutation } from '@/api/users';
-import { useToast } from '@/hooks/use-toast';
-import { createUserSchema } from '@/validators/user';
+import { createUserSchema, updateUserSchema } from '@/validators/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form/form';
 import { Input } from '@/components/ui/form/input';
 
-import type { IUserCreateRequest } from '@/types/user';
+import type { IUserCreateRequest, IUserUpdateRequest } from '@/types/user';
 
 const formFields = {
   name: {
@@ -26,31 +24,27 @@ const formFields = {
   },
 };
 
-export const CreateUserForm = ({ onFinish }: { onFinish?: () => void }) => {
-  const [createUser, { isLoading }] = useCreateUserMutation(); // Create user
-  const { toast } = useToast();
+interface IProps {
+  onSubmit?: (values: IUserCreateRequest) => Promise<void>;
+  initialValues?: Omit<IUserUpdateRequest, 'password'>;
+  isLoading: boolean;
+}
 
+export const UserForm = ({ onSubmit, initialValues, isLoading }: IProps) => {
   // Create form
   const form = useForm<IUserCreateRequest>({
-    resolver: zodResolver(createUserSchema),
-    defaultValues: { name: '', email: '', password: '' },
+    resolver: zodResolver(initialValues ? updateUserSchema : createUserSchema),
+    defaultValues: { name: '', email: '', password: '', ...initialValues },
   });
 
-  const handleCreateUser = form.handleSubmit(async (values) => {
-    try {
-      await createUser(values);
-      form.reset();
-      onFinish?.();
-      toast({ title: 'User created', description: 'User has been created successfully' });
-    } catch (e) {
-      console.error(e.message);
-      toast({ title: 'Error', description: e.message });
-    }
+  const handleSubmit = form.handleSubmit(async (values) => {
+    console.log('form values', values);
+    await onSubmit?.(values).then(() => !initialValues && form.reset());
   });
 
   return (
     <Form {...form}>
-      <form onSubmit={handleCreateUser} className="w-full space-y-3">
+      <form onSubmit={handleSubmit} className="w-full space-y-3">
         {Object.entries(formFields).map(([name, { label, placeholder }]) => (
           <FormField
             key={name}
