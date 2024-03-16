@@ -1,4 +1,5 @@
 import { MessagesSquare } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { useGetCommentsThreadQuery } from '@/api/comments';
 import { popUpVariants } from '@/config/animations';
@@ -24,10 +25,11 @@ export interface ICommentItemProps {
 
 export const CommentThread = ({ idPost, onReply }: ICommentThreadProps) => {
   const { data: comments = [], isLoading } = useGetCommentsThreadQuery(idPost);
+  const commentsCount = useMemo(() => comments.reduce((acc, comment) => acc + comment.thread.length + 1, 0), [comments]);
   return (
     <div>
       <h2 className="not-prose stack mb-2">
-        <MessagesSquare /> Comments <Spinner spinning={isLoading} /> <Badge variant="outline">{comments.length}</Badge>
+        <MessagesSquare /> Comments <Spinner spinning={isLoading} /> <Badge variant="outline">{commentsCount}</Badge>
       </h2>
 
       {!!comments.length && (
