@@ -110,7 +110,7 @@ export const api = createApi({
   tagTypes: ['User', 'Post', 'Tag'],
   refetchOnReconnect: true, // test it
   refetchOnFocus: true, // test it
-  baseQuery: retry(baseQueryWithErrorHandlers, { maxRetries: 3 }),
+  baseQuery: retry(baseQueryWithErrorHandlers, { maxRetries: 1 }),
   endpoints: () => ({}),
 });
 

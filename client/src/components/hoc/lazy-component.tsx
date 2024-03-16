@@ -33,7 +33,7 @@ export const LazyComponent = ({ element: Element, title, icon, path, isPrivate }
   if (isPrivate && !isLoggedIn) return <LoginUserForm />;
 
   return (
-    <Suspense fallback={<Spinner size="lg" spinning />}>
+    <Suspense fallback={<Spinner spinning />}>
       <ErrorBoundary>
         <Element title={title} icon={icon} />
       </ErrorBoundary>

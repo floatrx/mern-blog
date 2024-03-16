@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { popupVariants } from '@/config/animations';
+import { popDownVariants } from '@/config/animations';
 import { useToast } from '@/hooks/use-toast';
 import { createPostSchema } from '@/validators/post';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,7 +42,7 @@ export const PostForm = (props: IProps) => {
     }
   };
   return (
-    <motion.div variants={popupVariants.wrapper} initial="hidden" animate="visible">
+    <motion.div variants={popDownVariants.wrapper} initial="hidden" animate="visible">
       <Card>
         <CardHeader className="flex gap-2">
           <CardTitle className="flex gap-2">

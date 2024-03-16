@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { type ReactNode, useCallback } from 'react';
 
 import { useDragTransform } from '@/hooks/framer/use-drag-transform';
 import { type ResolvedValues, motion } from 'framer-motion';
@@ -8,7 +8,7 @@ import { PostMeta } from '@/components/features/post/post-meta';
 import { TagsList } from '@/components/features/tag/tags-list';
 import { TogglePostTagsButton } from '@/components/features/tag/toggle-post-tags-button';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { RichText } from '@/components/ui/rich-text';
 
 import type { IPost } from '@/types/post';
@@ -18,9 +18,10 @@ interface IProps {
   onDismiss?: () => void;
   rotateDirection?: 'left' | 'right';
   viewMode?: 'preview' | 'full';
+  children?: ReactNode;
 }
 
-export const PostContent = ({ post, onDismiss, viewMode }: IProps) => {
+export const PostContent = ({ post, onDismiss, viewMode, children }: IProps) => {
   const [imgDragTransformProps] = useDragTransform();
 
   const handleDragDismiss = useCallback(
@@ -79,6 +80,7 @@ export const PostContent = ({ post, onDismiss, viewMode }: IProps) => {
             {/* BODY */}
             <RichText content={post.body} />
           </CardContent>
+          <CardFooter>{children}</CardFooter>
         </Card>
       </motion.article>
     )

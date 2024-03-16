@@ -1,4 +1,4 @@
-import { popupVariants } from '@/config/animations';
+import { popDownVariants } from '@/config/animations';
 import { motion } from 'framer-motion';
 
 import { CreateTag } from '@/components/features/tag/create-tag';
@@ -8,8 +8,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Heading } from '@/components/ui/heading';
 
 export const TagsSearchPage = () => (
-  <motion.div className="space-y-4" variants={popupVariants.wrapper} initial="hidden" animate="visible">
-    <motion.div variants={popupVariants.item}>
+  <motion.div className="space-y-4" variants={popDownVariants.wrapper} initial="hidden" animate="visible">
+    <motion.div variants={popDownVariants.item}>
       <Card>
         <CardHeader>
           <Heading text="Tags" />
@@ -19,7 +19,7 @@ export const TagsSearchPage = () => (
         </CardContent>
       </Card>
     </motion.div>
-    <motion.div variants={popupVariants.item}>
+    <motion.div variants={popDownVariants.item}>
       <Card>
         <CardHeader>
           <Heading text="Create new" level={3} />

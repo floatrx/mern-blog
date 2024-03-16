@@ -19,7 +19,7 @@ export const popUpAnimation: Variants = {
   },
 };
 
-export const popupVariants: { wrapper: Variants; item: Variants } = {
+export const popDownVariants: { wrapper: Variants; item: Variants } = {
   wrapper: {
     hidden: { opacity: 0, y: -20 },
     visible: {
@@ -40,6 +40,34 @@ export const popupVariants: { wrapper: Variants; item: Variants } = {
         type: 'spring',
         stiffness: 500,
         damping: 50,
+      },
+    },
+  },
+};
+
+export const popUpVariants: { wrapper: Variants; item: Variants } = {
+  wrapper: {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.08,
+        when: 'beforeChildren',
+      },
+    },
+  },
+  item: {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring',
+        stiffness: 400,
+        damping: 30,
+        mass: 0.5,
+        when: 'beforeChildren',
       },
     },
   },
