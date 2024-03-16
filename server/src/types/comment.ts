@@ -6,9 +6,10 @@ export interface IComment {
   text: string;
   createdAt: string;
   updatedAt: string;
-  thread: Omit<IComment, 'post'>[];
-  author: IUser | null;
-  post: IPost;
+  thread: Omit<IComment, 'post'>[]; // if not empty, is the thread of comments
+  author: IUser | null; // if null, is the author is guest
+  post: IPost; // the post where the comment is
+  answer: string | null; // if not null, is the id of the parent comment
 }
 
 export interface ICreateCommentPayload {

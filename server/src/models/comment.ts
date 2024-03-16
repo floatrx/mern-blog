@@ -8,7 +8,8 @@ const commentSchema = new Schema<IComment>(
     post: { type: Schema.Types.ObjectId, ref: 'Post' },
     thread: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     // author is a reference to the User model or null
-    author: { type: Schema.Types.ObjectId, ref: 'User', default: null },
+    author: { type: Schema.Types.ObjectId, ref: 'User' },
+    answer: { type: Schema.Types.ObjectId, ref: 'Comment', default: null },
   },
   {
     timestamps: true,

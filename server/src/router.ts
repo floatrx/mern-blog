@@ -56,5 +56,7 @@ export const router = Router()
 
   // Comment
   .post('/comment', CommentController.post)
+  .delete('/comment/:id', requireAuth, requireAdmin, CommentController.delete)
   .get('/comment', CommentController.list)
-  .get('/comment/threads', CommentController.threads);
+  .get('/comment/threads', CommentController.threads)
+  .get('/comment/post/:id', CommentController.threadByPostId);

@@ -1,7 +1,7 @@
-import type { IPost, IPostCreatePayload, IPostUpdatePayload } from "@/types/post";
-import { Post } from "@/models/post";
-import { Request, Response } from "express";
-import { User } from "@/models/user";
+import type { IPost, IPostCreatePayload, IPostUpdatePayload } from '@/types/post';
+import { Post } from '@/models/post';
+import { Request, Response } from 'express';
+import { User } from '@/models/user';
 
 /**
  * Post Controller contains static methods for post operations
@@ -133,7 +133,12 @@ export class PostController {
     }
   }
 
-  // Tags
+  /**
+   * Toggle tag on post
+   * @returns status 200 if OK
+   * @returns status 400 if post not found
+   * @returns status 500 if internal server error
+   */
   static async toggleTag(req: Request<{ id: string }, IPost, { tagId: string }>, res: Response) {
     const { id } = req.params;
     const { tagId } = req.body;
