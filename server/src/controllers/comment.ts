@@ -34,14 +34,16 @@ export class CommentController {
     }
 
     try {
-      // Check if is a thread comment (answer)
+      // Check if is a thread comment and try to find parent comment
       const parentComment = thread ? await Comment.findById(thread) : null;
+      // If parent comment already has an answer, use it as parent comment -> flatten thread (2nd level)
+      const idThread = parentComment?.answer || parentComment?._id || null; // null means main thread
       // Create a new comment
-      const newComment = await Comment.create({ text, post, author, answer: parentComment ? parentComment._id : null });
+      const newComment = await Comment.create({ text, post, author, answer: idThread });
 
       if (parentComment) {
         // upsert comment to parent thread
-        await Comment.findByIdAndUpdate(thread, { $addToSet: { thread: newComment } });
+        await Comment.findByIdAndUpdate(idThread, { $addToSet: { thread: newComment } });
       }
 
       res.json(newComment);
@@ -63,15 +65,17 @@ export class CommentController {
       return res.status(400).json({ message: 'id is required' });
     }
 
-    const comment = await Comment.findById(id);
-
-    if (!comment) {
+    try {
+      await Comment.findById(id);
+    } catch (e) {
       return res.status(400).json({ message: 'Comment not found' });
     }
 
     try {
       // Find comments which include this comment as thread and delete from thread
       // await Comment.findByIdAndUpdate(comment.id, { $pull: { thread: id } });
+      // Delete all thread comments
+      await Comment.deleteMany({ answer: id });
       // Delete comment
       await Comment.findByIdAndDelete(id);
 
