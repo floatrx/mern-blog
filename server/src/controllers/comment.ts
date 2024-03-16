@@ -143,7 +143,7 @@ export class CommentController {
         answer: { $eq: null }, // main threads
       })
         .populate('author')
-        .populate('thread');
+        .populate({ path: 'thread', populate: 'author' });
 
       res.json(comments);
     } catch (e) {
