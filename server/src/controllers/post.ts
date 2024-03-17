@@ -123,7 +123,6 @@ export class PostController {
 
     try {
       const deletedPost = await Post.findByIdAndDelete(id);
-      console.log('deletedPost', deletedPost);
       if (deletedPost) {
         res.json({ message: `${id} deleted` });
       } else {

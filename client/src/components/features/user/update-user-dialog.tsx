@@ -45,7 +45,7 @@ export const UpdateUserDialog = ({ initialValues, trigger }: IProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Create new user</DialogTitle>
+          <DialogTitle>{initialValues ? `Update` : 'Create new'} user</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2">
           <UserForm onSubmit={handleUpdateUser} isLoading={isLoading} initialValues={initialValues} />
