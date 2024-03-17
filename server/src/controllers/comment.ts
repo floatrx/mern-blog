@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
-import type { IComment, ICreateCommentPayload } from '@/types/comment';
-import { Comment } from '@/models/comment';
 import jwt from 'jsonwebtoken';
+import { Comment } from '@/models/comment';
+import { Request, Response } from 'express';
 import { TOKEN_SECRET_KEY } from '@/config';
+
+import type { IComment, ICreateCommentPayload } from '@/types/comment';
 import type { ITokenPayload } from '@/types/auth';
 
 export class CommentController {
@@ -53,39 +54,6 @@ export class CommentController {
   }
 
   /**
-   * Delete comment
-   * @returns status 200 if OK
-   * @returns status 400 if missing parameters
-   * @returns status 500 if internal server error
-   */
-  static async delete(req: Request<{ id: string }>, res: Response<{ message: string }>) {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ message: 'id is required' });
-    }
-
-    try {
-      await Comment.findById(id);
-    } catch (e) {
-      return res.status(400).json({ message: 'Comment not found' });
-    }
-
-    try {
-      // Find comments which include this comment as thread and delete from thread
-      // await Comment.findByIdAndUpdate(comment.id, { $pull: { thread: id } });
-      // Delete all thread comments
-      await Comment.deleteMany({ answer: id });
-      // Delete comment
-      await Comment.findByIdAndDelete(id);
-
-      res.json({ message: 'Comment deleted' });
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  }
-
-  /**
    * List all comments
    * @returns status 200 if OK
    * @returns status 500 if internal server error
@@ -111,7 +79,7 @@ export class CommentController {
     // get comments when thread array is empty
 
     try {
-      const comments = await Comment.find({ thread: { $exists: true, $ne: [] } })
+      const comments = await Comment.find({ answer: { $eq: null } })
         .populate('author')
         .populate('thread');
 
@@ -124,21 +92,13 @@ export class CommentController {
   /**
    * Get post comments as threads (1st level only)
    * @returns status 200 if OK
-   * @returns status 400 if post not found
    * @returns status 500 if internal server error
    */
   static async threadByPostId(req: Request<{ id: string }>, res: Response<IComment[] | { message: string }>) {
     const { id } = req.params;
 
     if (!id) {
-      return res.status(400).json({ message: 'id is required' });
-    }
-
-    try {
-      // Check if post exists
-      await Comment.findById(id);
-    } catch (e) {
-      res.status(400).json({ message: 'Post not found' });
+      return res.status(400).json({ message: 'Id is required' });
     }
 
     try {
@@ -150,6 +110,37 @@ export class CommentController {
         .populate({ path: 'thread', populate: 'author' });
 
       res.json(comments);
+    } catch (e) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  /**
+   * Delete comment
+   * @returns status 200 if OK
+   * @returns status 400 if missing parameters
+   * @returns status 500 if internal server error
+   */
+  static async delete(req: Request<{ id: string }>, res: Response<{ message: string }>) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: 'id is required' });
+    }
+
+    try {
+      await Comment.findById(id);
+    } catch (e) {
+      return res.status(400).json({ message: 'Comment not found' });
+    }
+
+    try {
+      // Delete all thread comments
+      await Comment.deleteMany({ answer: id });
+      // Delete comment
+      await Comment.findByIdAndDelete(id);
+
+      res.json({ message: 'Comment deleted' });
     } catch (e) {
       res.status(500).json({ message: 'Internal server error' });
     }

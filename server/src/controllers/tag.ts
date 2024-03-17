@@ -1,6 +1,7 @@
-import type { ITag, ITagCreatePayload } from '@/types/tag';
 import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
+
+import type { ITag, ITagCreatePayload } from '@/types/tag';
 
 /**
  * Tag Controller contains static methods for tag operations

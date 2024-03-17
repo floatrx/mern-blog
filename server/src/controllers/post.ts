@@ -1,7 +1,8 @@
-import type { IPost, IPostCreatePayload, IPostUpdatePayload } from '@/types/post';
 import { Post } from '@/models/post';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
+
+import type { IPost, IPostCreatePayload, IPostUpdatePayload } from '@/types/post';
 
 /**
  * Post Controller contains static methods for post operations

@@ -1,9 +1,10 @@
 import bcrypt from 'bcryptjs';
-import type { IUserCreatePayload } from '@/types/user';
 import { Request, Response } from 'express';
-import { User } from '@/models/user';
 import { RoleEnum } from '@/types/role';
+import { User } from '@/models/user';
 import { filterObject } from '@/lib/filter-object';
+
+import type { IUserCreatePayload } from '@/types/user';
 
 /**
  * User Controller contains static methods for user operations

@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
-import { S3Client } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import type { UploadedFile } from "express-fileupload";
+import { Request, Response } from 'express';
+import { S3Client } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
 
-import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from "@/config";
+import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '@/config';
+
+import type { UploadedFile } from 'express-fileupload';
 
 /**
  * Bucket Controller contains static methods for file upload operations

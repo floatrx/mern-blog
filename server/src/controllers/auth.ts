@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type { IDecodedToken, ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
+import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN, TOKEN_SECRET_KEY } from '@/config';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
-import { ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN, TOKEN_SECRET_KEY } from '@/config';
 import { pick } from '@/lib/pick';
+
+import type { IDecodedToken, ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
 
 /**
  * Auth Controller contains static methods for auth operations
