@@ -6,18 +6,25 @@ import { defineConfig, loadEnv } from 'vite';
 export default defineConfig(({ mode }) => {
   process.env = Object.assign(process.env, loadEnv(mode, process.cwd(), ''));
   const port = parseInt(process.env.VITE_PORT || '4000');
+  /**
+   * Setup proxy for development environment
+   * @see https://vitejs.dev/config/#server-proxy
+   */
+  const proxy =
+    mode === 'development'
+      ? {
+          '/api': {
+            target: process.env.VITE_API_URL,
+            changeOrigin: true,
+            rewrite: (path: string) => path.replace(/^\/api/, ''),
+          },
+        }
+      : undefined;
   return {
     plugins: [react()],
     server: {
       port,
-      // https://vitejs.dev/config/#server-proxy
-      proxy: {
-        '/api': {
-          target: process.env.VITE_API_URL,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
+      proxy,
     },
 
     optimizeDeps: {

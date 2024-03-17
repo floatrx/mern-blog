@@ -10,6 +10,7 @@
  */
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 
+import { API_BASE_URL, isDev } from '@/config/const';
 import { logout } from '@/store/auth';
 import type { RootState } from '@/store/store';
 import { Mutex } from 'async-mutex';
@@ -24,7 +25,7 @@ const mutex = new Mutex();
  * Base query with custom header
  */
 const baseQuery = fetchBaseQuery({
-  baseUrl: '/api', // @see vite.config.ts server.proxy
+  baseUrl: isDev ? '/api' : API_BASE_URL, // @see vite.config.ts server.proxy
   paramsSerializer: (params) => qs.stringify(params, { skipEmptyString: true, skipNull: true }),
   prepareHeaders: (headers, { getState }) => {
     const { accessToken } = (getState() as RootState).auth.tokens;
