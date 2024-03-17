@@ -69,7 +69,7 @@ export const PostContent = ({ post, onDismiss, viewMode, children }: IProps) => 
               <div className="stack">
                 <PostEditButton id={post.id} />
                 <TogglePostTagsButton post={post} />
-                <PostDeleteButton id={post.id} />
+                <PostDeleteButton id={post.id} onDelete={onDismiss} />
               </div>
             </div>
           </CardHeader>
