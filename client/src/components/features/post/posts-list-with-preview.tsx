@@ -20,8 +20,8 @@ export const PostsListWithPreview = () => {
   // Preview
   const [previewId, setPreviewId] = useState<boolean | string>(false);
   // -- Post full for preview
-  const { data: post, isLoading, isFetching } = useGetPostQuery(String(previewId), { skip: !previewId });
-  const isViewing = !!(previewId && post && !isLoading && !isFetching);
+  const { data: post, isLoading } = useGetPostQuery(String(previewId), { skip: !previewId });
+  const isViewing = !!(previewId && post && !isLoading);
 
   const handleChange = useDebounceCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
