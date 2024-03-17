@@ -16,7 +16,7 @@ export const TogglePostTagsButton = onlyAuth(({ post }: { post: IPost }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-foreground">
+        <Button size="icon" variant="ghost">
           <Hash />
         </Button>
       </DropdownMenuTrigger>

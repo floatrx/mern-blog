@@ -6,14 +6,20 @@ import { useToast } from '@/hooks/use-toast';
 
 import { Button } from '@/components/ui/button/button';
 
-export const PostDeleteButton = onlyAuth((props: { id: string }) => {
+interface IProps {
+  id: string;
+  onDelete?: () => void;
+}
+
+export const PostDeleteButton = onlyAuth<IProps>(({ id, onDelete }) => {
   const { toast } = useToast();
   const [deletePost] = useDeletePostMutation();
 
   const handleDelete = async () => {
     try {
-      await deletePost(props.id);
-      toast({ title: `Post ${props.id} deleted` });
+      await deletePost(id);
+      onDelete?.();
+      toast({ title: `Post ${id} deleted` });
     } catch (e) {
       console.error('Error deleting post:', e.message);
       toast({ title: 'Error', description: e.error.message, variant: 'destructive' });
@@ -21,8 +27,8 @@ export const PostDeleteButton = onlyAuth((props: { id: string }) => {
   };
 
   return (
-    <Button size="icon" className="size-8 p-2" variant="outline" onClick={handleDelete}>
-      <Trash2 size={20} />
+    <Button size="icon" variant="ghost" onClick={handleDelete}>
+      <Trash2 />
     </Button>
   );
 });

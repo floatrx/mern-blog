@@ -3,6 +3,7 @@ import { type ReactNode, useCallback } from 'react';
 import { useDragTransform } from '@/hooks/framer/use-drag-transform';
 import { type ResolvedValues, motion } from 'framer-motion';
 
+import { PostDeleteButton } from '@/components/features/post/post-delete-button';
 import { PostEditButton } from '@/components/features/post/post-edit-button';
 import { PostMeta } from '@/components/features/post/post-meta';
 import { TagsList } from '@/components/features/tag/tags-list';
@@ -54,7 +55,7 @@ export const PostContent = ({ post, onDismiss, viewMode, children }: IProps) => 
               initial={{ y: viewMode === 'full' ? -30 : 0 }}
               animate={{ y: 0, transition: { duration: 0.5, type: 'spring', stiffness: 200, damping: 30 } }}
               // Stylish
-              className="!-mt-14 select-none rounded-xl shadow-2xl shadow-cyan-500/15 object-cover sm:aspect-video z-30 w-full"
+              className="!-mt-14 select-none rounded-xl shadow-2xl shadow-cyan-500/15 dark:shadow-black object-cover sm:aspect-video z-30 w-full"
               src={post.thumbnail}
               alt={post.title}
               // Enable 3d transform on drag
@@ -68,6 +69,7 @@ export const PostContent = ({ post, onDismiss, viewMode, children }: IProps) => 
               <div className="stack">
                 <PostEditButton id={post.id} />
                 <TogglePostTagsButton post={post} />
+                <PostDeleteButton id={post.id} />
               </div>
             </div>
           </CardHeader>

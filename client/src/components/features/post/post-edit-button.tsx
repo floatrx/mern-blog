@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button/button';
 
 export const PostEditButton = onlyAuth((props: { id: string }) => (
   <Link to={`/posts/${props.id}/edit`}>
-    <Button size="icon" variant="ghost" className="text-foreground">
+    <Button size="icon" variant="ghost">
       <Pencil />
     </Button>
   </Link>

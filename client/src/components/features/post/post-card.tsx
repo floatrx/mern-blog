@@ -39,7 +39,7 @@ export const PostCard = ({ post, onClick, isLoading }: IProps) => (
           layoutId={`thumbnail-${post.id}`}
           src={post.thumbnail}
           alt={post.title}
-          className="!-mt-10 select-none rounded-xl shadow-xl shadow-cyan-500/5 object-cover aspect-video w-full h-auto"
+          className="!-mt-10 select-none rounded-2xl shadow-xl shadow-cyan-500/5 dark:shadow-black object-cover aspect-video w-full h-auto"
         />
         <div className="flex justify-between gap-2 font-semibold py-2">
           <p className="text-2xl line-clamp-2">{post.title}</p>

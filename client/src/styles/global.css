@@ -12,13 +12,14 @@
 
     body {
         @apply fancy-scrollbar invisible-scrollbar h-screen font-sans text-foreground antialiased;
-        background:
-            url("/public/waves.svg") center / 150% no-repeat fixed,
-            hsl(var(--background));
+
+        --waves-bg: url("/src/media/waves.svg") center 100% / 150% no-repeat fixed;
+
+        background: linear-gradient(to top, hsla(var(--background) / 80%) 0%, hsla(var(--background) / 50%) 100%), var(--waves-bg);
         .dark & {
             background:
-                url("/public/waves.svg") center 100% / 150% no-repeat fixed,
-                radial-gradient(circle at top center, rgba(0, 51, 255, 0.2) 0%, rgba(0, 0, 0, 100%) 100%) no-repeat fixed,
+                var(--waves-bg),
+                radial-gradient(circle at top center, rgba(0, 51, 255, 0.1) 0%, rgba(0, 0, 0, 100%) 100%) no-repeat fixed,
                 hsl(var(--background));
         }
 

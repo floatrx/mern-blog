@@ -14,7 +14,7 @@ import { selectIsLoggedIn } from '@/store/auth';
  * );
  */
 export const onlyAuth =
-  <P extends Record<string, unknown>>(WrappedComponent: React.ComponentType<P>) =>
+  <P extends Record<string, any>>(WrappedComponent: React.ComponentType<P>) =>
   (props: P) => {
     const isLoggedIn = useAppSelector(selectIsLoggedIn);
 

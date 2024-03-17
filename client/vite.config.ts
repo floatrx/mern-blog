@@ -8,7 +8,17 @@ export default defineConfig(({ mode }) => {
   const port = parseInt(process.env.VITE_PORT || '4000');
   return {
     plugins: [react()],
-    server: { port },
+    server: {
+      port,
+      // https://vitejs.dev/config/#server-proxy
+      proxy: {
+        '/api': {
+          target: process.env.VITE_API_URL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
 
     optimizeDeps: {
       exclude: ['js-big-decimal'],

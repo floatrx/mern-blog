@@ -41,7 +41,7 @@ export const CommentThread = ({ idPost, onReply }: ICommentThreadProps) => {
         </motion.div>
       )}
 
-      {!comments.length && !isLoading && <div>No comments yet</div>}
+      {!comments.length && !isLoading && <div className="text-muted-foreground">No comments yet</div>}
     </div>
   );
 };
