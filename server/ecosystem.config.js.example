@@ -2,7 +2,7 @@
 module.exports = {
   apps: [
     {
-      name: 'mongo-express-api', // Change this to your app's name
+      name: 'mern-blog-api', // Change this to your app's name
       script: 'npm', // Change this to the entry point of your application (e.g., server>
       args: 'start',
       instances: 1, // Automatically scale based on available CPU cores
