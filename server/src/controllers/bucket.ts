@@ -5,6 +5,7 @@ import { Upload } from '@aws-sdk/lib-storage';
 import { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET, S3_REGION } from '@/config';
 
 import type { UploadedFile } from 'express-fileupload';
+import { handleError } from '@/middleware/handleError';
 
 /**
  * Bucket Controller contains static methods for file upload operations
@@ -12,6 +13,7 @@ import type { UploadedFile } from 'express-fileupload';
  * @class
  */
 export class BucketController {
+  @handleError()
   static async uploadToS3(file: UploadedFile) {
     // Check file size
     if (file.size > 4 * 1024 * 1024) {
@@ -59,6 +61,7 @@ export class BucketController {
    * @returns status 400 if no file uploaded
    * @returns status 500 if server error
    */
+  @handleError()
   static async uploadOne(req: Request, res: Response) {
     const file = req.files?.file as UploadedFile; // Assuming you're using multer or similar middleware for handling file uploads
 
@@ -82,6 +85,7 @@ export class BucketController {
    * @returns status 400 if no files uploaded
    * @returns status 500 if server error
    */
+  @handleError()
   static async uploadBulk(req: Request, res: Response) {
     const files = req.files?.files as UploadedFile[]; // Assuming you're using multer or similar middleware for handling file uploads
 
@@ -89,13 +93,8 @@ export class BucketController {
       return res.status(400).send('No files uploaded.');
     }
 
-    try {
-      // Upload all files to S3 in parallel
-      const results = await Promise.all(files.map((file) => BucketController.uploadToS3(file)));
-      res.status(200).send(results); // OK
-    } catch (err) {
-      console.error('Error uploading files:', err.message);
-      res.status(500).send('Error uploading files to S3.');
-    }
+    // Upload all files to S3 in parallel
+    const results = await Promise.all(files.map((file) => BucketController.uploadToS3(file)));
+    res.status(200).send(results); // OK
   }
 }

@@ -5,6 +5,7 @@ import { User } from '@/models/user';
 import { filterObject } from '@/lib/filter-object';
 
 import type { IUserCreatePayload } from '@/types/user';
+import { handleError } from '@/middleware/handleError';
 
 /**
  * User Controller contains static methods for user operations
@@ -16,6 +17,7 @@ export class UserController {
    * @returns status 201 if OK
    * @returns status 400 if missing parameters
    */
+  @handleError()
   static async create(req: Request<never, never, IUserCreatePayload>, res: Response) {
     const { name, email, password } = req.body;
 
@@ -66,6 +68,7 @@ export class UserController {
    * @returns status 200 if OK with updated user
    * @returns status 400 if missing parameters
    */
+  @handleError()
   static async update(req: Request<{ id: string }, never, IUserCreatePayload>, res: Response) {
     const { id } = req.params;
     const { name, email, password } = req.body;
@@ -92,12 +95,13 @@ export class UserController {
    * @returns status 204 if OK
    * @returns status 400 if missing parameters
    */
+  @handleError()
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {
       return res.status(400).json({ message: 'id is required' });
     }
     await User.findByIdAndDelete(id);
-    return res.status(204).send();
+    return res.status(204).send(); // http 204 no content
   }
 }

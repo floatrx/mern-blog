@@ -6,6 +6,7 @@ import { User } from '@/models/user';
 import { pick } from '@/lib/pick';
 
 import type { IDecodedToken, ILoginPayload, ILoginResponse, ITokenPayload } from '@/types/auth';
+import { handleError } from '@/middleware/handleError';
 
 /**
  * Auth Controller contains static methods for auth operations
@@ -19,6 +20,7 @@ export class AuthController {
    * @returns status 401 if invalid username or password
    * @returns status 500 if server error
    */
+  @handleError()
   static async login(req: Request<never, never, ILoginPayload>, res: Response<ILoginResponse | { message: string }>) {
     const { email, password } = req.body;
 
@@ -55,6 +57,7 @@ export class AuthController {
    * Use after "requireAuth" middleware
    * @returns status 200 if OK
    */
+  @handleError()
   static check(req: Request, res: Response) {
     res.json({ message: 'Session is valid', auth: req.userData });
   }
@@ -65,6 +68,7 @@ export class AuthController {
    * @returns status 400 if missing parameters
    * @returns status 401 if invalid refreshToken
    */
+  @handleError()
   static refreshToken(req: Request, res: Response) {
     const { refreshToken } = req.body;
     if (!refreshToken) {

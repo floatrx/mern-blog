@@ -13,6 +13,10 @@ import { CommentController } from '@/controllers/comment';
  * @version 1.0
  * @see Post
  * @see UserController
+ * @see TagController
+ * @see AuthController
+ * @see BucketController
+ * @see CommentController
  */
 export const router = Router()
   // Welcome route

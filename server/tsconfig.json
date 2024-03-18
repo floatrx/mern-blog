@@ -10,6 +10,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "strict": true,
     "resolveJsonModule": true,

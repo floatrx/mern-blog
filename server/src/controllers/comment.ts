@@ -5,6 +5,7 @@ import { TOKEN_SECRET_KEY } from '@/config';
 
 import type { IComment, ICreateCommentPayload } from '@/types/comment';
 import type { ITokenPayload } from '@/types/auth';
+import { handleError } from '@/middleware/handleError';
 
 export class CommentController {
   /**
@@ -14,6 +15,7 @@ export class CommentController {
    * @returns status 400 if missing parameters
    * @returns status 500 if internal server error
    */
+  @handleError()
   static async post(req: Request<never, never, ICreateCommentPayload>, res: Response<IComment | { message: string }>) {
     const { text, thread, post } = req.body;
 
@@ -34,23 +36,19 @@ export class CommentController {
       }
     }
 
-    try {
-      // Check if is a thread comment and try to find parent comment
-      const parentComment = thread ? await Comment.findById(thread) : null;
-      // If parent comment already has an answer, use it as parent comment -> flatten thread (2nd level)
-      const idThread = parentComment?.answer || parentComment?._id || null; // null means main thread
-      // Create a new comment
-      const newComment = await Comment.create({ text, post, author, answer: idThread });
+    // Check if is a thread comment and try to find parent comment
+    const parentComment = thread ? await Comment.findById(thread) : null;
+    // If parent comment already has an answer, use it as parent comment -> flatten thread (2nd level)
+    const idThread = parentComment?.answer || parentComment?._id || null; // null means main thread
+    // Create a new comment
+    const newComment = await Comment.create({ text, post, author, answer: idThread });
 
-      if (parentComment) {
-        // upsert comment to parent thread
-        await Comment.findByIdAndUpdate(idThread, { $addToSet: { thread: newComment } });
-      }
-
-      res.json(newComment);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server errors' });
+    if (parentComment) {
+      // upsert comment to parent thread
+      await Comment.findByIdAndUpdate(idThread, { $addToSet: { thread: newComment } });
     }
+
+    res.json(newComment);
   }
 
   /**
@@ -58,16 +56,13 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
+  @handleError()
   static async list(_req: Request, res: Response<IComment[] | { message: string }>) {
     // get comments when thread array is empty
 
-    try {
-      const comments = await Comment.find().populate('author');
+    const comments = await Comment.find().populate('author');
 
-      res.json(comments);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    res.json(comments);
   }
 
   /**
@@ -75,18 +70,15 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
+  @handleError()
   static async threads(_req: Request, res: Response<IComment[] | { message: string }>) {
     // get comments when thread array is empty
 
-    try {
-      const comments = await Comment.find({ answer: { $eq: null } })
-        .populate('author')
-        .populate('thread');
+    const comments = await Comment.find({ answer: { $eq: null } })
+      .populate('author')
+      .populate('thread');
 
-      res.json(comments);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    res.json(comments);
   }
 
   /**
@@ -94,6 +86,7 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
+  @handleError()
   static async threadByPostId(req: Request<{ id: string }>, res: Response<IComment[] | { message: string }>) {
     const { id } = req.params;
 
@@ -101,18 +94,14 @@ export class CommentController {
       return res.status(400).json({ message: 'Id is required' });
     }
 
-    try {
-      const comments = await Comment.find({
-        post: id,
-        answer: { $eq: null }, // main threads
-      })
-        .populate('author')
-        .populate({ path: 'thread', populate: 'author' });
+    const comments = await Comment.find({
+      post: id,
+      answer: { $eq: null }, // main threads
+    })
+      .populate('author')
+      .populate({ path: 'thread', populate: 'author' });
 
-      res.json(comments);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    res.json(comments);
   }
 
   /**
@@ -121,6 +110,7 @@ export class CommentController {
    * @returns status 400 if missing parameters
    * @returns status 500 if internal server error
    */
+  @handleError()
   static async delete(req: Request<{ id: string }>, res: Response<{ message: string }>) {
     const { id } = req.params;
 
@@ -134,15 +124,11 @@ export class CommentController {
       return res.status(400).json({ message: 'Comment not found' });
     }
 
-    try {
-      // Delete all thread comments
-      await Comment.deleteMany({ answer: id });
-      // Delete comment
-      await Comment.findByIdAndDelete(id);
+    // Delete all thread comments
+    await Comment.deleteMany({ answer: id });
+    // Delete comment
+    await Comment.findByIdAndDelete(id);
 
-      res.json({ message: 'Comment deleted' });
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    res.json({ message: 'Comment deleted' });
   }
 }

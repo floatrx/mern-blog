@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
 
 import type { ITag, ITagCreatePayload } from '@/types/tag';
+import { handleError } from '@/middleware/handleError';
 
 /**
  * Tag Controller contains static methods for tag operations
@@ -13,6 +14,7 @@ export class TagController {
    * @returns status 400 if missing parameters
    * @returns status 404 if author not found
    */
+  @handleError()
   static async create(req: Request<never, never, ITagCreatePayload>, res: Response) {
     const { name } = req.body;
 
@@ -21,31 +23,24 @@ export class TagController {
       return res.status(400).json({ message: 'missing name' });
     }
 
-    try {
-      // Create a new tag with the provided author
-      const tag = await Tag.create({ name });
+    // Create a new tag with the provided author
+    const tag = await Tag.create({ name });
 
-      // Respond with the created tag
-      res.status(201).json(tag);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
-    }
+    // Respond with the created tag
+    res.status(201).json(tag);
   }
 
   /**
    * Get all tags
    * @returns status 200 if OK
    */
+  @handleError()
   static async list(req: Request<never, never, never, { name: string }>, res: Response) {
     const { name = '' } = req.query;
 
-    try {
-      const query = { name: { $regex: new RegExp(name, 'i') } };
-      const tags = await Tag.find(query); // populate author field with user data
-      res.json(tags);
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server errors' });
-    }
+    const query = { name: { $regex: new RegExp(name, 'i') } };
+    const tags = await Tag.find(query); // populate author field with user data
+    res.json(tags);
   }
 
   /**
@@ -53,20 +48,17 @@ export class TagController {
    * @returns status 200 if OK
    * @returns status 404 if tag not found
    */
+  @handleError()
   static async show(req: Request<{ id: string }>, res: Response) {
     const { id } = req.params;
     if (!id) {
       res.status(400).json({ message: 'id is required' });
     }
-    try {
-      const tag = await Tag.findById(id);
-      if (tag) {
-        res.json(tag); // OK
-      } else {
-        res.status(404).json({ message: 'tag not found' });
-      }
-    } catch (e) {
-      res.status(400).json({ status: 'failed', message: e.message });
+    const tag = await Tag.findById(id);
+    if (tag) {
+      res.json(tag); // OK
+    } else {
+      res.status(404).json({ message: 'tag not found' });
     }
   }
 
@@ -74,6 +66,7 @@ export class TagController {
    * Update tag by ID
    * @returns status 200 if OK
    */
+  @handleError()
   static async update(req: Request<{ id: string }, never, ITag>, res: Response) {
     const { id } = req.params;
 
@@ -81,14 +74,9 @@ export class TagController {
       return res.status(400).json({ message: 'id is required' });
     }
 
-    try {
-      const { name } = req.body;
-      const updatedTag = await Tag.findByIdAndUpdate(id, { name });
-      return res.status(200).json(updatedTag);
-    } catch (e) {
-      console.log('error', e.message);
-      return res.status(400).json({ status: 'failed', message: e.message });
-    }
+    const { name } = req.body;
+    const updatedTag = await Tag.findByIdAndUpdate(id, { name });
+    return res.status(200).json(updatedTag);
   }
 
   /**
@@ -96,21 +84,18 @@ export class TagController {
    * @returns status 204 if OK
    * @returns status 400 if tag already deleted
    */
+  @handleError()
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {
       res.status(400).json({ message: 'id is required' });
     }
 
-    try {
-      const deletedTag = await Tag.findByIdAndDelete(id);
-      if (deletedTag) {
-        res.json({ message: `${id} deleted` });
-      } else {
-        res.status(400).json({ message: 'tag already deleted' });
-      }
-    } catch (e) {
-      res.status(500).json({ message: 'Internal server error' });
+    const deletedTag = await Tag.findByIdAndDelete(id);
+    if (deletedTag) {
+      res.json({ message: `${id} deleted` });
+    } else {
+      res.status(400).json({ message: 'tag already deleted' });
     }
   }
 }

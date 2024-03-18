@@ -4,10 +4,7 @@ import mongoose from 'mongoose';
 import type { ITag } from '@/types/tag';
 
 const tagSchema = new mongoose.Schema<ITag>({
-  name: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true, unique: true },
 });
 
 const Tag = mongoose.model<ITag>('Tag', setupJSONTransform(tagSchema));
