@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { Tag } from '@/models/tag';
+import { handleAsyncErrors } from '@/middleware/handle-error';
 
 import type { ITag, ITagCreatePayload } from '@/types/tag';
-import { handleError } from '@/middleware/handleError';
 
 /**
  * Tag Controller contains static methods for tag operations
  */
+@handleAsyncErrors
 export class TagController {
   /**
    * Create a new tag
@@ -14,7 +15,6 @@ export class TagController {
    * @returns status 400 if missing parameters
    * @returns status 404 if author not found
    */
-  @handleError()
   static async create(req: Request<never, never, ITagCreatePayload>, res: Response) {
     const { name } = req.body;
 
@@ -34,7 +34,6 @@ export class TagController {
    * Get all tags
    * @returns status 200 if OK
    */
-  @handleError()
   static async list(req: Request<never, never, never, { name: string }>, res: Response) {
     const { name = '' } = req.query;
 
@@ -48,7 +47,6 @@ export class TagController {
    * @returns status 200 if OK
    * @returns status 404 if tag not found
    */
-  @handleError()
   static async show(req: Request<{ id: string }>, res: Response) {
     const { id } = req.params;
     if (!id) {
@@ -66,7 +64,6 @@ export class TagController {
    * Update tag by ID
    * @returns status 200 if OK
    */
-  @handleError()
   static async update(req: Request<{ id: string }, never, ITag>, res: Response) {
     const { id } = req.params;
 
@@ -84,7 +81,6 @@ export class TagController {
    * @returns status 204 if OK
    * @returns status 400 if tag already deleted
    */
-  @handleError()
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {

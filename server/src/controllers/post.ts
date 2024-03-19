@@ -1,14 +1,15 @@
 import { Post } from '@/models/post';
 import { Request, Response } from 'express';
 import { User } from '@/models/user';
+import { handleAsyncErrors } from '@/middleware/handle-error';
 
 import type { IPost, IPostCreatePayload, IPostUpdatePayload } from '@/types/post';
-import { handleError } from '@/middleware/handleError';
 
 /**
  * Post Controller contains static methods for post operations
  * @class
  */
+@handleAsyncErrors
 export class PostController {
   /**
    * Create a new post
@@ -16,7 +17,6 @@ export class PostController {
    * @returns status 400 if missing parameters
    * @returns status 404 if author not found
    */
-  @handleError()
   static async create(req: Request<never, never, IPostCreatePayload>, res: Response) {
     const { title, body, thumbnail } = req.body;
 
@@ -47,7 +47,6 @@ export class PostController {
    * Get all posts
    * @returns status 200 if OK
    */
-  @handleError()
   static async search(req: Request<never, IPost[], never, { title: string }>, res: Response) {
     const { title = '' } = req.query;
     const query = { title: { $regex: new RegExp(title, 'i') } };
@@ -64,7 +63,6 @@ export class PostController {
    * @returns status 200 if OK
    * @returns status 404 if post not found
    */
-  @handleError()
   static async show(req: Request<{ id: string }>, res: Response) {
     const { id } = req.params;
     if (!id) {
@@ -82,7 +80,6 @@ export class PostController {
    * Update post by ID
    * @returns status 200 if OK
    */
-  @handleError()
   static async update(req: Request<{ id: string }, IPost, IPostUpdatePayload>, res: Response) {
     const { id } = req.params;
 
@@ -105,7 +102,6 @@ export class PostController {
    * @returns status 204 if OK
    * @returns status 400 if post already deleted
    */
-  @handleError()
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {
@@ -129,7 +125,6 @@ export class PostController {
    * @returns status 400 if post not found
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async toggleTag(req: Request<{ id: string }, IPost, { tagId: string }>, res: Response) {
     const { id } = req.params;
     const { tagId } = req.body;

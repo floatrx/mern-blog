@@ -3,21 +3,21 @@ import { Request, Response } from 'express';
 import { RoleEnum } from '@/types/role';
 import { User } from '@/models/user';
 import { filterObject } from '@/lib/filter-object';
+import { handleAsyncErrors } from '@/middleware/handle-error';
 
 import type { IUserCreatePayload } from '@/types/user';
-import { handleError } from '@/middleware/handleError';
 
 /**
  * User Controller contains static methods for user operations
  * @class
  */
+@handleAsyncErrors
 export class UserController {
   /**
    * Create a new user
    * @returns status 201 if OK
    * @returns status 400 if missing parameters
    */
-  @handleError()
   static async create(req: Request<never, never, IUserCreatePayload>, res: Response) {
     const { name, email, password } = req.body;
 
@@ -68,7 +68,6 @@ export class UserController {
    * @returns status 200 if OK with updated user
    * @returns status 400 if missing parameters
    */
-  @handleError()
   static async update(req: Request<{ id: string }, never, IUserCreatePayload>, res: Response) {
     const { id } = req.params;
     const { name, email, password } = req.body;
@@ -95,7 +94,6 @@ export class UserController {
    * @returns status 204 if OK
    * @returns status 400 if missing parameters
    */
-  @handleError()
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     if (!id) {

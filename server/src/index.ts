@@ -8,7 +8,7 @@ import { connectToMongo } from '@/mongo';
 import { PORT } from '@/config';
 
 import { router } from '@/router';
-import { fingerPrint } from '@/middleware/fingerPrint';
+import { fingerprint } from '@/middleware/fingerprint';
 
 // App
 const app = express();
@@ -31,7 +31,7 @@ app.use(limiter);
 
 app.set('trust proxy', 1); // Adjust the value based on your proxy setup (see below)
 
-app.use('/api', [fingerPrint, router]); // mount routers
+app.use('/api', [fingerprint, router]); // mount routers
 
 // Start server
 (async () => {

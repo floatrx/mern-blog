@@ -2,11 +2,12 @@ import jwt from 'jsonwebtoken';
 import { Comment } from '@/models/comment';
 import { Request, Response } from 'express';
 import { TOKEN_SECRET_KEY } from '@/config';
+import { handleAsyncErrors } from '@/middleware/handle-error';
 
 import type { IComment, ICreateCommentPayload } from '@/types/comment';
 import type { ITokenPayload } from '@/types/auth';
-import { handleError } from '@/middleware/handleError';
 
+@handleAsyncErrors
 export class CommentController {
   /**
    * Create comment for a post
@@ -15,7 +16,6 @@ export class CommentController {
    * @returns status 400 if missing parameters
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async post(req: Request<never, never, ICreateCommentPayload>, res: Response<IComment | { message: string }>) {
     const { text, thread, post } = req.body;
 
@@ -56,7 +56,6 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async list(_req: Request, res: Response<IComment[] | { message: string }>) {
     // get comments when thread array is empty
 
@@ -70,7 +69,6 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async threads(_req: Request, res: Response<IComment[] | { message: string }>) {
     // get comments when thread array is empty
 
@@ -86,7 +84,6 @@ export class CommentController {
    * @returns status 200 if OK
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async threadByPostId(req: Request<{ id: string }>, res: Response<IComment[] | { message: string }>) {
     const { id } = req.params;
 
@@ -110,7 +107,6 @@ export class CommentController {
    * @returns status 400 if missing parameters
    * @returns status 500 if internal server error
    */
-  @handleError()
   static async delete(req: Request<{ id: string }>, res: Response<{ message: string }>) {
     const { id } = req.params;
 

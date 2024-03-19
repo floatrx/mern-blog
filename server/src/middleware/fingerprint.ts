@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export const fingerPrint = async (req: Request, res: Response, next: NextFunction) => {
+export const fingerprint = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { headers } = req;
     const { 'user-agent': userAgent } = headers;
