@@ -4,15 +4,16 @@ import type { NextFunction, Request, Response } from 'express';
  * Handle async errors
  */
 export function handleMethodError() {
-  return function (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) {
+  return function (_target: any, methodName: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (req: Request, res: Response, _next: NextFunction) {
+    descriptor.value = async function (req: Request, res: Response, next: NextFunction) {
       try {
-        await originalMethod.call(this, req, res);
+        console.log('Calling method:', methodName);
+        await originalMethod.call(this, req, res, next);
       } catch (error) {
         // Handle errors here
-        console.error('An error occurred:', { error: error.message, action: _propertyKey });
+        console.error('An error occurred:', { error: error.message, action: methodName });
         res.status(500).json({ error: 'Internal Server Error', message: error.message });
       }
     };
@@ -24,25 +25,18 @@ export function handleMethodError() {
 type Constructor<T = object> = new (...args: any[]) => T;
 
 export function handleAsyncErrors<T extends Constructor>(target: T) {
-  const originalMethods = Object.getOwnPropertyNames(target.prototype);
+  const originalMethods = Object.getOwnPropertyNames(target);
 
   originalMethods.forEach((methodName) => {
-    const descriptor = Object.getOwnPropertyDescriptor(target.prototype, methodName);
+    if (methodName !== 'constructor') {
+      // Skip constructor
+      const descriptor = Object.getOwnPropertyDescriptor(target, methodName);
+      console.log('Method:', methodName);
 
-    if (descriptor && typeof descriptor.value === 'function') {
-      const originalMethod = descriptor.value;
-
-      descriptor.value = async function (...args: any[]) {
-        try {
-          return await originalMethod.apply(this, args);
-        } catch (error) {
-          console.error('An error occurred:', error);
-          // You can handle the error here, for example, sending a response
-          throw new Error('Internal Server Error');
-        }
-      };
-
-      Object.defineProperty(target.prototype, methodName, descriptor);
+      if (descriptor && typeof descriptor.value === 'function') {
+        // Apply method decorator
+        Object.defineProperty(target, methodName, handleMethodError()(target, methodName, descriptor));
+      }
     }
   });
 
