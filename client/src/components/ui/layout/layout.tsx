@@ -34,7 +34,7 @@ export const Layout = (props: PropsWithChildren) => {
             © 2021 {SITE_NAME}. Test project for learning purposes.{' '}
             <a href="https://github.com/floatrx/mern-blog" target="_blank" rel="noopener" className="text-blue-500">
               GitHub.
-            </a>{' '}
+            </a>
           </p>
         </div>
       </footer>

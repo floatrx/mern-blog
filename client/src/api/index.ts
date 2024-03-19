@@ -86,7 +86,9 @@ const refreshAccessTokenAndRetry: BaseQueryHandler = async (args, api, extraOpti
 
       console.log('Refresh token success. Retry', { args, extraOptions });
 
-      return await baseQuery(args, api, extraOptions);
+      if (!extraOptions.maxRetries) return; // TODO: Check if it's needed
+
+      return await baseQuery(args, api, extraOptions); // retry original request
     } catch (error) {
       console.error('Refresh token failed:', error);
       api.dispatch(logout());

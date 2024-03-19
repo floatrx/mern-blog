@@ -7,9 +7,10 @@ import { motion } from 'framer-motion';
 
 interface IProps {
   className?: string;
+  animate?: boolean;
 }
 
-export const Logo = ({ className }: IProps) => (
+export const Logo = ({ className, animate = true }: IProps) => (
   <Link to="/" className={cn('text-xl sm:text-2xl font-bold', className)}>
     <motion.span className="flex items-center gap-2" whileHover={{ scale: 1.02 }} whileTap={{ scale: 1 }}>
       <motion.span
@@ -23,22 +24,24 @@ export const Logo = ({ className }: IProps) => (
         initial={{ x: -15, opacity: 0 }}
         animate={{ x: 0, opacity: 1, transition: { type: 'spring', delay: 0.3 } }}
       >
-        {SITE_NAME.split('').map((char, idx) => (
-          <motion.span
-            key={idx}
-            className="inline-block"
-            initial={{ x: 30, opacity: 0, scale: 2, rotate: Math.floor(Math.random() * (idx % 2 === 0 ? 50 : -50)) }}
-            animate={{
-              x: 0,
-              opacity: 1,
-              scale: 1,
-              rotate: 0,
-              transition: { type: 'spring', stiffness: 500, damping: 40, delay: 0.2 * idx },
-            }}
-          >
-            {char}
-          </motion.span>
-        ))}
+        {animate
+          ? SITE_NAME.split('').map((char, idx) => (
+              <motion.span
+                key={idx}
+                className="inline-block"
+                initial={{ x: 30, opacity: 0, scale: 2, rotate: Math.floor(Math.random() * (idx % 2 === 0 ? 50 : -50)) }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                  scale: 1,
+                  rotate: 0,
+                  transition: { type: 'spring', stiffness: 500, damping: 40, delay: 0.2 * idx },
+                }}
+              >
+                {char}
+              </motion.span>
+            ))
+          : SITE_NAME}
       </motion.span>
     </motion.span>
   </Link>
