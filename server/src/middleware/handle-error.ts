@@ -9,7 +9,6 @@ export function handleMethodError() {
 
     descriptor.value = async function (req: Request, res: Response, next: NextFunction) {
       try {
-        console.log('Calling method:', methodName);
         await originalMethod.call(this, req, res, next);
       } catch (error) {
         // Handle errors here
@@ -37,8 +36,6 @@ export function handleAsyncErrors<T extends Constructor>(target: T) {
     if (methodName !== 'constructor') {
       // Skip constructor
       const descriptor = Object.getOwnPropertyDescriptor(target, methodName);
-      console.log('Method:', methodName);
-
       if (descriptor && typeof descriptor.value === 'function') {
         // Apply method decorator
         Object.defineProperty(target, methodName, handleMethodError()(target, methodName, descriptor));
