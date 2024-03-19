@@ -24,6 +24,12 @@ export function handleMethodError() {
 
 type Constructor<T = object> = new (...args: any[]) => T;
 
+/**
+ * Handle async errors all class static methods
+ * @param target
+ * @example @handleAsyncErrors
+ *  export class SomeControllerClass { ... }
+ */
 export function handleAsyncErrors<T extends Constructor>(target: T) {
   const originalMethods = Object.getOwnPropertyNames(target);
 
