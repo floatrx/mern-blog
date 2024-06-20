@@ -38,7 +38,7 @@ export const UpdateUserDialog = ({ initialValues, trigger }: IProps) => {
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button variant="outline" size="icon">
+          <Button data-testid={`edit-${initialValues.id}`} variant="outline" size="icon">
             <Pencil size={24} />
           </Button>
         )}

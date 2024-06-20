@@ -20,7 +20,7 @@ export const UserCardItem = ({ user }: { user: IUser }) => (
         <UpdateUserDialog
           initialValues={user}
           trigger={
-            <Button variant="outline" size="xs" className="px-1">
+            <Button data-testid={`edit-${user.email}`} variant="outline" size="xs" className="px-1">
               <Pencil size={14} />
             </Button>
           }

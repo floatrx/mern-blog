@@ -53,14 +53,14 @@ export const UserForm = ({ onSubmit, initialValues, isLoading }: IProps) => {
               <FormItem>
                 <FormLabel>{label}</FormLabel>
                 <FormControl>
-                  <Input placeholder={placeholder} {...field} />
+                  <Input data-testid={name} placeholder={placeholder} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         ))}
-        <Button type="submit" loading={isLoading} variant="outline" size="lg">
+        <Button data-testid="submit" type="submit" loading={isLoading} variant="outline" size="lg">
           Submit
         </Button>
       </form>

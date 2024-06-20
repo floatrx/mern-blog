@@ -103,7 +103,7 @@ export const LoginUserForm = () => {
                   <FormItem>
                     <FormLabel>{label}</FormLabel>
                     <FormControl>
-                      <Input type={type} placeholder={placeholder} {...field} />
+                      <Input data-testid={name} type={type} placeholder={placeholder} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,7 +111,14 @@ export const LoginUserForm = () => {
               />
             ))}
             <div className="flex gap-4">
-              <Button type="submit" variant={isLoading ? 'ghost' : 'default'} className="w-[90px]" loading={isLoading}>
+              <Button
+                data-testid="login"
+                type="submit"
+                variant={isLoading ? 'ghost' : 'default'}
+                className="w-[90px]"
+                disabled={isLoading}
+                loading={isLoading}
+              >
                 Login
               </Button>
             </div>
