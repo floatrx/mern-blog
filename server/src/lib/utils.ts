@@ -27,6 +27,6 @@ export const syntaxErrorHandler = (err: any, _req: Request, res: Response, next:
  * @returns void - throws an error with the message
  * @deprecated
  */
-export const _handleError = (msg: string): void => {
+export const handleError = (msg: string): void => {
   throw new Error(msg);
 };
