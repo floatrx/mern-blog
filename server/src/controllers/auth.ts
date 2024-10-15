@@ -32,13 +32,13 @@ export class AuthController {
     // Find user by email
     const user = await User.findOne({ email }); // Find user by email
     if (!user) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(400).json({ message: 'Invalid username or password' });
     }
 
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(400).json({ message: 'Invalid username or password' });
     }
 
     // Generate access token

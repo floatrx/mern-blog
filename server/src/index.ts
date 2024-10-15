@@ -22,7 +22,7 @@ app.use([serverErrorHandler, syntaxErrorHandler]); // handle errors globally
 // @see https://www.npmjs.com/package/express-rate-limit
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  limit: 100, // limit each IP to 15 requests per windowMs
+  limit: 100, // limit each IP to N requests per windowMs
   message: 'Too many requests from this IP, please try again after a few minutes',
 });
 
