@@ -4,13 +4,15 @@ name: mongo-express
 
 services:
   mongodb:
-    image: mongo:latest
+    build:
+      context: ./mongo
+      dockerfile: Dockerfile
     container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/data/db
+      - ./mongo/data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: user

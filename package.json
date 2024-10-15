@@ -7,7 +7,7 @@
     "client": "cd client && yarn dev",
     "server": "cd server && yarn dev",
     "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
-    "mongo": "cd mongo && docker-compose up -d"
+    "mongo": "docker compose up -d"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
