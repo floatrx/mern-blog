@@ -1,5 +1,12 @@
 # Mongo, express
 
+### Test credentials
+>url: https://blog.floatrx.net/login
+> 
+>login: `admin@test.com`
+> 
+>password: `123456`
+
 ### MongoDB
 `docker-compose up -d` # Start the mongodb
 
