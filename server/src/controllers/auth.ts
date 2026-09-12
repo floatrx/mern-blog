@@ -42,7 +42,7 @@ export class AuthController {
     }
 
     // Generate access token
-    const tokenPayload: ITokenPayload = { id: user._id, email: user.email };
+    const tokenPayload: ITokenPayload = { id: String(user._id), email: user.email };
 
     // Generate tokens
     const [accessToken, refreshToken] = [ACCESS_TOKEN_EXPIRES_IN, REFRESH_TOKEN_EXPIRES_IN].map((expiresIn) =>

@@ -1,6 +1,10 @@
 import 'dotenv/config';
 import * as process from 'process'; // Load .env file
 
+import type { SignOptions } from 'jsonwebtoken';
+
+type TokenExpiresIn = SignOptions['expiresIn'];
+
 export const PORT = process.env.PORT || 3000;
 export const MONGO_URI = process.env.MONGO_URI || '';
 export const MONGO_HOST = MONGO_URI.split('@').pop() || '<unknown>';
@@ -17,5 +21,5 @@ export const S3_BUCKET = process.env.S3_BUCKET || 'floatrx';
 
 // JWT
 export const TOKEN_SECRET_KEY = process.env.ACCESS_TOKEN_SECRET || 'secret-key';
-export const ACCESS_TOKEN_EXPIRES_IN = process.env.ACCESS_TOKEN_EXPIRES_IN || '1m';
-export const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN || '1d';
+export const ACCESS_TOKEN_EXPIRES_IN = (process.env.ACCESS_TOKEN_EXPIRES_IN || '1m') as TokenExpiresIn;
+export const REFRESH_TOKEN_EXPIRES_IN = (process.env.REFRESH_TOKEN_EXPIRES_IN || '1d') as TokenExpiresIn;

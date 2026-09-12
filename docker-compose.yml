@@ -1,13 +1,12 @@
-version: '3.8'
-
 name: mongo-express
 
 services:
   mongodb:
-    build:
-      context: ./mongo
-      dockerfile: Dockerfile
-    container_name: mongodb
+    # Official image already ships `mongosh` — no custom build needed.
+    # Pinned to 7.x: MongoDB 8.x refuses to start on Linux kernels 6.19–7.0.13
+    # (Docker Desktop's VM runs 7.0.x-linuxkit) — see SERVER-121912.
+    image: mongo:7
+    container_name: mern-blog-mongodb
     restart: always
     ports:
       - "27017:27017"

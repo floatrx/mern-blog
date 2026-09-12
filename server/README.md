@@ -6,11 +6,11 @@ MONGO_URI=mongodb://user:user@localhost:27017 # MongoDB URI
 ```
 
 ### Express
-`yarn install` # Install the dependencies
+`pnpm install` # Install the dependencies
 
-`yarn start` # Start the server
+`pnpm start` # Start the server
 
-`yarn dev` # Start the server in development mode
+`pnpm dev` # Start the server in development mode
 
 ### Dependencies
 - express - Web framework

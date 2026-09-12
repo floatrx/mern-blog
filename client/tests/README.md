@@ -4,31 +4,31 @@
 
 Runs the end-to-end tests.
 
-`yarn playwright test`
+`pnpm playwright test`
 
 Starts the interactive UI mode.
 
-`yarn playwright test --ui`
+`pnpm playwright test --ui`
 
 Runs the tests only on Desktop Chrome.
 
-`yarn playwright test --project=chromium`
+`pnpm playwright test --project=chromium`
 
 Runs the tests in a specific file.
 
-`yarn playwright test example`
+`pnpm playwright test example`
 
 Runs the tests in debug mode.
 
-`yarn playwright test --debug`
+`pnpm playwright test --debug`
 
 Auto generate tests with Codegen.
 
-`yarn playwright codegen`
+`pnpm playwright codegen`
 
 We suggest that you begin by typing:
 
-`yarn playwright test`
+`pnpm playwright test`
 
 And check out the following files:
 - ./tests/example.spec.ts - Example end-to-end test

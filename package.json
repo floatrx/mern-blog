@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "license": "ISC",
   "author": "floatrx",
+  "packageManager": "pnpm@11.25.0",
   "scripts": {
-    "client": "cd client && yarn dev",
-    "server": "cd server && yarn dev",
-    "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
+    "client": "cd client && pnpm dev",
+    "server": "cd server && pnpm dev",
+    "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'pnpm server' 'pnpm client'",
     "mongo": "docker compose up -d"
   },
   "devDependencies": {

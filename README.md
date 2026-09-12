@@ -22,7 +22,7 @@ Demo https://blog.floatrx.net/
 
 ## Development
 ```shell
-yarn dev
+pnpm dev
 ```
 
 > [!NOTE]
