@@ -27,7 +27,7 @@ export const PostContent = ({ post, onDismiss, viewMode, children }: IProps) => 
 
   const handleDragDismiss = useCallback(
     (latest: ResolvedValues) => {
-      +latest.y > 20 && onDismiss?.();
+      if (+latest.y > 20) onDismiss?.();
       // TODO:   ^^^ debug this delta ->
       //             dragElastic prop increases the delta sensitivity
       //             (check useDragTransform)

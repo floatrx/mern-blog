@@ -49,7 +49,7 @@ export const CommentForm = ({ postId, selectedComment }: IProps) => {
       await createComment(payload);
 
       form.reset();
-    } catch (e) {
+    } catch {
       toast({ title: 'Comment creation failed', variant: 'destructive' });
     }
   };

@@ -1,5 +1,5 @@
 // Interface for the Post model
-import type { IUser } from "@/types/user";
+import type { IUser } from '@/types/user';
 
 export interface IPost {
   title: string;

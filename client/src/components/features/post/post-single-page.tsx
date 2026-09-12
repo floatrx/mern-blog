@@ -27,7 +27,7 @@ export const PostSinglePage = () => {
     setSelectedComment((prev) => {
       const activeComment = prev?.id === comment?.id ? null : comment;
       // if activeComment selected try to focus on comment form (without ref)
-      activeComment && focusOnCommentForm();
+      if (activeComment) focusOnCommentForm();
       return activeComment;
     });
   }, []);

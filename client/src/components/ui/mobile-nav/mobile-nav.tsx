@@ -33,7 +33,7 @@ export function MobileNav({ items }: IProps) {
    * onExitComplete -> unlock the button after the animation is finished
    */
   const handleSafeToggle = useCallback(() => {
-    isOpen && setIsDisabled(true);
+    if (isOpen) setIsDisabled(true);
     toggleOpen();
   }, [isOpen, toggleOpen]);
 
@@ -43,7 +43,7 @@ export function MobileNav({ items }: IProps) {
   const handleDismiss = useCallback(
     (_e: MouseEvent, panInfo: PanInfo) => {
       if (!panInfo) return;
-      panInfo?.offset?.x > 100 && setTimeout(close, 100); // timeout to prevent exception
+      if (panInfo?.offset?.x > 100) setTimeout(close, 100); // timeout to prevent exception
     },
     [close],
   );

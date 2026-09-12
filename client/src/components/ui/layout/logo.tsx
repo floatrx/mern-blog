@@ -29,6 +29,7 @@ export const Logo = ({ className, animate = true }: IProps) => (
               <motion.span
                 key={idx}
                 className="inline-block"
+                // eslint-disable-next-line react-hooks/purity -- decorative jitter for the intro animation only
                 initial={{ x: 30, opacity: 0, scale: 2, rotate: Math.floor(Math.random() * (idx % 2 === 0 ? 50 : -50)) }}
                 animate={{
                   x: 0,

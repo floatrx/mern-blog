@@ -18,7 +18,7 @@ export const fingerprint = async (req: Request, res: Response, next: NextFunctio
     req.fingerPrint = bcrypt.hashSync(`${userAgent}${req.ip}`, 10);
 
     next();
-  } catch (error) {
+  } catch {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };

@@ -21,7 +21,7 @@ export const UpdatePostForm = () => {
     try {
       await updatePost({ id, ...values }).unwrap();
       navigate(`/posts/${id}`); // Redirect to updated post
-    } catch (e) {
+    } catch {
       // ignore
     }
   };

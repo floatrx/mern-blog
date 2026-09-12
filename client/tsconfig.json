@@ -28,5 +28,8 @@
         }
     },
     "include": ["**/*.ts", "**/*.tsx"],
+    // vite.config.ts belongs to the referenced composite project below;
+    // leaving it in both makes plain `tsc` fail with TS6305.
+    "exclude": ["vite.config.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

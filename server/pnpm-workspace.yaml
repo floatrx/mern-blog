@@ -1,3 +1,6 @@
 # pnpm 11+ reads settings from here (the package.json "pnpm" field is ignored).
 allowBuilds:
   aws-sdk: true
+minimumReleaseAgeExclude:
+  - '@aws-sdk/client-s3@3.1131.0'
+  - '@aws-sdk/lib-storage@3.1131.0'

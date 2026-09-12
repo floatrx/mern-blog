@@ -1,7 +1,10 @@
-import 'dotenv/config';
-import * as process from 'process'; // Load .env file
+import { config as loadEnv } from 'dotenv';
+import * as process from 'process';
 
 import type { SignOptions } from 'jsonwebtoken';
+
+// Load .env — dotenv 17 flipped `quiet` to false, which logs a banner on every boot.
+loadEnv({ quiet: true });
 
 type TokenExpiresIn = SignOptions['expiresIn'];
 

@@ -31,7 +31,7 @@ export class CommentController {
       try {
         const decodedToken = jwt.verify(token, TOKEN_SECRET_KEY) as ITokenPayload;
         author = decodedToken.id; // set author to user id
-      } catch (e) {
+      } catch {
         // no need to handle error
       }
     }
@@ -116,7 +116,7 @@ export class CommentController {
 
     try {
       await Comment.findById(id);
-    } catch (e) {
+    } catch {
       return res.status(400).json({ message: 'Comment not found' });
     }
 

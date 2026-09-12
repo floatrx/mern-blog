@@ -30,7 +30,7 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
     req.token = token;
 
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 };
@@ -55,13 +55,13 @@ export const requireAdmin = async (req: Request, res: Response, next: NextFuncti
       if (!user || user.idRole !== RoleEnum.ADMIN) {
         return res.status(403).json({ error: 'Permission denied' });
       }
-    } catch (e) {
+    } catch {
       return res.status(500).json({ error: 'Internal server error' });
     }
 
     // If user is admin, pass to the next middleware
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 };

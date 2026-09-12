@@ -29,7 +29,7 @@ const baseQuery = fetchBaseQuery({
   paramsSerializer: (params) => qs.stringify(params, { skipEmptyString: true, skipNull: true }),
   prepareHeaders: (headers, { getState }) => {
     const { accessToken } = (getState() as RootState).auth.tokens;
-    accessToken && headers.set('Authorization', `Bearer ${accessToken}`);
+    if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
     return headers;
   },
 });

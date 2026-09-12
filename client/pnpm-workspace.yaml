@@ -2,3 +2,5 @@
 allowBuilds:
   esbuild: true
   es5-ext: true
+minimumReleaseAgeExclude:
+  - react-hook-form@7.88.0

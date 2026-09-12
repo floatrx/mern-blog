@@ -32,7 +32,7 @@ export class PostController {
 
     try {
       await User.findById(authorId); // Check if user with specified authorId exists
-    } catch (e) {
+    } catch {
       return res.status(404).json({ message: 'user not found' });
     }
 
