@@ -22,12 +22,34 @@ Demo https://blog.floatrx.net/
 
 ## Development
 ```shell
-pnpm dev
+pnpm mongo   # start the MongoDB container
+pnpm dev     # start api (:3000) and client (:3001)
+pnpm lint    # lint both packages
 ```
 
 > [!NOTE]
 > Mount the `mongo` container before running the server.
 
+### Test credentials
+
+Throwaway accounts for the demo — the same ones on https://blog.floatrx.net/login.
+
+| Role  | Email            | Password |
+|-------|------------------|----------|
+| admin | `admin@test.com` | `123456` |
+| user  | `jd@test.com`    | `123456` |
+
+Both are created by [`server/src/migrations`](./server/src/migrations/index.ts) on boot,
+hashed from `DEFAULT_PASSWORD` in `server/.env`. Change that value and the seeded password
+changes with it.
+
+> [!IMPORTANT]
+> The migration seeds users **only when the collection is empty**. After changing
+> `DEFAULT_PASSWORD`, clear the users and restart the server to re-seed:
+> ```shell
+> docker exec mern-blog-mongodb mongosh -u user -p user --quiet \
+>   --eval 'db.getSiblingDB("test").users.deleteMany({})'
+> ```
 
 ## Roadmap
 - [ ] OAuth2 (GitHub)
